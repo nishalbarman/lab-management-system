@@ -45,7 +45,7 @@ a:hover {
   text-decoration: underline;
 }
 
-button {
+#button {
   display: block !important;
   margin: 32px auto;
 }

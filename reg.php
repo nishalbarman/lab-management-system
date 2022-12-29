@@ -16,45 +16,49 @@ if (isset($_SESSION['logged']) && $_SESSION('logged') !== null) { // If season n
     }
 }
 
+include('includes/config/connect.php');
+
 if (isset($_POST['submit'])) {
 
-    $sql = "INSERT INTO `auth` (`name`,`email`,`phone`,`password`,`role`) VALUES(?,?,?,?,?)";
+    $sql = "INSERT INTO `auth` (`name`,`email`,`phone`,`password`,`role`, `image`) VALUES(?,?,?,?,?,?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssi", $name, $email, $phone, $password, $role);
+    $stmt->bind_param("ssssis", $name, $email, $phone, $password, $role, $pic);
 
+    $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $phone = $_POST['phone'];
     $role = $_POST['role'];
+    $pic = time() . "_" . $_FILES['image']['name'];
 
-    $stmt->execute();
-    $stmt->close();
+    $destination = "uploads/profile_pic/" . $pic;
+    ;
 
-    $sql = "SELECT * FROM `auth` WHERE email= '$email'";
-    $result = $conn->query($sql);
+    $check = getimagesize($_FILES['image']['tmp_name']);
 
-    if ($result->num_rows > 0) {
-        $_SESSION = array();
-        session_destroy();
-        session_start();
-        $_SESSION['email'] = $email;
-        $_SESSION['phone'] = $phone;
-        $_SESSION['role'] = $role;
-
-        $conn->close();
-
-        echo "<script>
+    if ($check !== false) {
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
+            $stmt->execute();
+            $stmt->close();
+            echo "<script>
                 alert('Registration Successfull, You May Login Now.');
-                window.location = './login.php';
+                window.location = './auth.php';
             </script>";
-        exit;
+            exit;
 
+        } else {
+
+            echo "<script>
+                alert('Registration Failed, Please try again.');
+            </script>";
+            // Call an modal
+        }
     } else {
         echo "<script>
                 alert('Registration Failed, Please try again.');
             </script>";
+        // Call an modal
     }
-
 
 }
 
@@ -77,7 +81,7 @@ if (isset($_POST['submit'])) {
 <body>
 
 
-    <form class="registration" method="post" action="">
+    <form action="" class="registration" method="post" enctype="multipart/form-data">
         <h1>Register</h1>
 
         <label class="pure-material-textfield-outlined">
@@ -100,13 +104,13 @@ if (isset($_POST['submit'])) {
 
         <div class="mb-3">
             <label for="formFile" class="form-label">Profile Picture</label>
-            <input class="form-control" type="file" id="formFile" name="pic">
+            <input name="image" class="form-control" type="file" id="formFile" accept="image/*">
         </div>
 
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">Role
             </label>
-            <select class="form-select" id="inputGroupSelect01" name="roll">
+            <select name="role" class="form-select" id="inputGroupSelect01">
                 <option selected>Choose...</option>
                 <option value="2">User</option>
                 <option value="1">Admin</option>
@@ -124,16 +128,14 @@ if (isset($_POST['submit'])) {
                 id="inputPassword" placeholder="Confirm Password" name="cpassword">
         </label>
 
-
-
-
-        <!-- <label class="pure-material-checkbox">
+        <label class="pure-material-checkbox">
             <input type="checkbox" required>
             <span>I agree to the <a href="https://codepen.io/collection/nZKBZe/" target="_blank"
                     title="Actually not a Terms of Service">Terms of Service</a></span>
-        </label> -->
+        </label>
 
-        <button type="submit" style="width: 70%" class="btn btn-outline-success btn-lg" name="submit">Log In</button>
+        <input id="button" name="submit" type="submit" style="width: 70%" class="btn btn-outline-success btn-lg"
+            value="SignUp">
 
         <div class="done">
             <h1>👌 Registering!</h1>
@@ -160,7 +162,7 @@ if (isset($_POST['submit'])) {
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
-    </script>
+        </script>
 </body>
 
 </html>

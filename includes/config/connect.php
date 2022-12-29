@@ -1,10 +1,10 @@
 <?php
 
 // Initialize database variables
-$user = "root";
-$pass = "";
-$host = "localhost";
-$database = "healthk";
+$username = "root";
+$password = "";
+$servername = "localhost";
+$dbname = "healthk";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

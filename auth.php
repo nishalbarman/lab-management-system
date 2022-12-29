@@ -16,33 +16,49 @@ if (isset($_SESSION['logged']) && $_SESSION('logged') !== null) { // If season n
     }
 }
 
+include('includes/config/connect.php');
+
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    // $phone = $_POST['phone'];
     $role = $_POST['role'];
+    $role = (int) $role;
 
-    $sql = "select * from auth where email='$email' and password='$password' and role='$role'";
-    $result = $conn->query($sql);
+    $sql = "SELECT * FROM `auth` WHERE `email`=? AND `password`=? AND `role`=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $email, $password, $role);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    // $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $_SESSION = array();
         session_destroy();
-        session_start();
-        $_SESSION['email'] = $email;
-        $_SESSION['role'] = $role;
 
-        if ($_SESSION['role'] === 0) { // If technician
+        session_start();
+        while ($row = $result->fetch_assoc()) {
+            $_SESSION['name'] = $row['name'];
+            $_SESSION['email'] = $row['email'];
+            $_SESSION['phone'] = $row['phone'];
+            $_SESSION['role'] = $row['role'];
+        }
+
+        if ((int) $_SESSION['role'] === 0) { // If technician
             header("location: ./technician/index.php");
             exit;
-        } else if ($_SESSION['role'] === 1) { // If admin
+        } else if ((int) $_SESSION['role'] === 1) { // If admin
             header("location: ./csr-admin/index.php");
             exit;
-        } else if ($_SESSION['role'] === 2) { // If normal user
+        } else if ((int) $_SESSION['role'] === 2) { // If normal user
             header("location: ./client/index.php");
             exit;
         }
 
+    } else {
+        echo "<script>
+        alert('Log In Failed.');
+    </script>";
+        // Call Modal here
     }
 }
 
@@ -65,7 +81,7 @@ if (isset($_POST['submit'])) {
 <body>
 
 
-    <form class="registration" method="post" action="">
+    <form class="registration" action="" method="post" enctype="multipart/form-data">
         <h1>👋 Welcome!</h1>
 
         <label class="pure-material-textfield-outlined">
@@ -76,13 +92,13 @@ if (isset($_POST['submit'])) {
 
         <label class="pure-material-textfield-outlined">
             <input type="password" class="form-control" aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-lg" id="inputPassword" placeholder="Password">
+                aria-describedby="inputGroup-sizing-lg" id="inputPassword" placeholder="Password" name="password">
         </label>
 
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">Role
+        <div class=" input-group mb-3">
+            <label class=" input-group-text" for="inputGroupSelect01">Role
             </label>
-            <select class="form-select" id="inputGroupSelect01" name="roll">
+            <select class="form-select" id="inputGroupSelect01" name="role">
                 <option selected>Choose...</option>
                 <option value="2">User</option>
                 <option value="1">Admin</option>
@@ -98,7 +114,8 @@ if (isset($_POST['submit'])) {
                     title="Actually not a Terms of Service">Terms of Service</a></span>
         </label> -->
 
-        <button type="submit" style="width: 70%" class="btn btn-outline-success btn-lg" name="submit">Log In</button>
+        <input id="button" type="submit" style="width: 70%" class="btn btn-outline-success btn-lg" name="submit"
+            value="Log In">
 
         <div class="done">
             <h1>👌 Authenticating!</h1>

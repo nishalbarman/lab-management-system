@@ -1,7 +1,5 @@
 <?php
 include('C:\Users\Nischal\Documents\xampp\htdocs\hk_new\core\session.php');
-
-
 ?>
 
 <!DOCTYPE html>
