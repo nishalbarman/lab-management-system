@@ -1,7 +1,6 @@
 <?php
 
-include '../config.php';
-$conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+include '../../includes/config/connect.php';
 
 $token = getToken($conn);
 $serial = getSerial($link);
@@ -38,7 +37,7 @@ $rowCheck = mysqli_query($conn, $sq);
 $count = mysqli_num_rows($rowCheck);
 
 // if($serial === $serial_new) {
-if($count > 0) {
+if ($count > 0) {
 
     $ch = curl_init($fn_url);
     $save_file_loc = "temp.pdf";
@@ -51,17 +50,17 @@ if($count > 0) {
 
     // $sql ="select `file_name` from files where id = '$serial'";
     // $result = mysqli_query($conn, $sql);
-    while($row = mysqli_fetch_assoc($rowCheck)) {
+    while ($row = mysqli_fetch_assoc($rowCheck)) {
         $file = $row["file_name"];
     }
-    $old_file = "../uploads/".$file;
+    $old_file = "../uploads/" . $file;
     $new_file = "temp.pdf";
     $mergedName = mergePdf($old_file, $new_file);
     unlink($old_file);
     unlink($new_file);
     rename($mergedName, $old_file);
     $save_file_loc = $old_file;
-    
+
 } else {
     $ch = curl_init($fn_url);
     $save_file_loc = '../uploads/' . $filename;
@@ -73,8 +72,8 @@ if($count > 0) {
     fclose($fp);
 
     // if (checkMain($conn) === "false") {
-        $sql = "INSERT INTO files (patient_name, patient_age, file_name, size, downloads, report_name) VALUES ('$p_name', '$p_age', '$filename', $size, 0, '$reportname')";
-        $conn->query($sql);
+    $sql = "INSERT INTO files (patient_name, patient_age, file_name, size, downloads, report_name) VALUES ('$p_name', '$p_age', '$filename', $size, 0, '$reportname')";
+    $conn->query($sql);
     // }
 }
 
@@ -86,14 +85,15 @@ $back_up = 'backups/' . $serial . '_' . $p_name;
 file_put_contents($back_up, base64_decode($url_enc) . '                                                  ' . $url_enc);
 
 date_default_timezone_set("Asia/Calcutta");
-$date =  'Available ('.$date = date('d/m/Y h:i:s a', time()).')';
+$date = 'Available (' . $date = date('d/m/Y h:i:s a', time()) . ')';
 
 $sql = "UPDATE `payments` SET `pdf_created` = 1, `pdf_onserver` = '$date' WHERE serial = '$serial_new'";
 $res = mysqli_query($link, $sql);
 
 header("location: http://healthkind.is-great.net/$save_file_loc");
 
-function mergePdf($firstPdf, $secondPdf) {
+function mergePdf($firstPdf, $secondPdf)
+{
     $target_url = 'http://13.234.114.167:3000/mergepdf';
 
     $fPdf = curl_file_create($firstPdf);

@@ -1,5 +1,6 @@
 <?php
-include '../../config.php';
+include '../includes/config/connect.php';
+include '../includes/config/base_url.php';
 
 $form_fname = $_POST["firstname"];
 $form_age = $_POST['patient_age'];
@@ -72,10 +73,10 @@ if (empty($db_name) && empty($db_status) && empty($db_serial) && empty($db_creat
 
             date_default_timezone_set("Asia/Calcutta");
             $date = 'Updated (' . $date = date('d/m/Y h:i:s a', time()) . ')';
-            
+
             $sql = "UPDATE `payments` SET `pdf_onserver`='$date'";
             mysqli_query($link, $sql);
-            
+
             $data = array('success' => true, 'message' => "Report Updated Successfully");
             print_r(json_encode($data));
             exit;

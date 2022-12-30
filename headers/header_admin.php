@@ -1,8 +1,3 @@
-<?php
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,8 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link href="../includes/css/headers.css" rel="stylesheet">
     <style>
     .hide {
@@ -45,10 +39,10 @@
                     <li><a href="http://localhost/hk_new/csr-admin/dashboard.php"
                             class="nav-link px-2 link-dark">Dashboard</a></li>
                     <li><a href="http://localhost/hk_new/csr-admin/services.php"
-                            class="nav-link px-2 link-dark">Reports</a></li>
+                            class="nav-link px-2 link-dark">Templates</a></li>
 
                     <li><a href="../templates/decl-temp/tmp_declare.php"
-                            class="nav-link px-2 link-dark">Generate-Template</a></li>
+                            class="nav-link px-2 link-dark">Generate-New-Template</a></li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -84,7 +78,8 @@
                     <ul class="dropdown-menu text-small">
                         <!-- <li><a class="dropdown-item" href="#">New project...</a></li> -->
                         <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Server Settings</a></li>
+                        <li><a class="dropdown-item" href="../services/server-setting.php">Server
+                                Settings</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -95,8 +90,7 @@
             </div>
         </div>
     </header>
-    <script src="../includes/js/auth.js">
-    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
