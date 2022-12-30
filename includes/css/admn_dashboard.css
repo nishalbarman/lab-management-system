@@ -4,6 +4,11 @@
   position: relative;
 } */
 
+/* :root {
+  --bs-card-border-color: 30px;
+  --white: #ffffff;
+} */
+
 .card {
   background-color: rgba(0, 0, 0, 0.05);
   box-shadow: -0.1rem 1.7rem 6.6rem -3.2rem rgba(0, 0, 0, 0.5);

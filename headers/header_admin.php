@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
         rel="stylesheet">
-    <link href="./includes/css/headers.css" rel="stylesheet">
+    <link href="../includes/css/headers.css" rel="stylesheet">
     <style>
     .hide {
         display: none;
@@ -36,14 +36,14 @@
                     </svg> -->
                 </a>
 
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 link-dark">Dashboard</a></li>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ">
+                    <li><a href=" #" class="nav-link px-2 link-dark">Dashboard</a></li>
                     <li><a href="../templates/decl-temp/tmp_declare.php"
                             class="nav-link px-2 link-dark">Generate-Template</a></li>
                     <li><a href="#" class="nav-link px-2 link-dark">Services</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                            aria-expanded="false" style="color: red;">
                             Others
                         </a>
                         <ul class="dropdown-menu">
@@ -84,7 +84,7 @@
             </div>
         </div>
     </header>
-    <script src="includes/js/auth.js">
+    <script src="../includes/js/auth.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
