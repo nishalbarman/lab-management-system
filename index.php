@@ -30,11 +30,6 @@ include('header_log.php');
     <title>Features · Bootstrap v5.3</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/features/">
-
-
-
-
-
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -187,7 +182,7 @@ include('header_log.php');
                     sample or any other samples required to get.</p>
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                     <button type="button" class="btn btn-primary btn-lg px-4 gap-3"
-                        onclick="window.location='./reg.php'">Get started ...</button>
+                        onclick="window.location='./reg.php'">Let's Start ...</button>
                     <!-- <button type="button" class="btn btn-outline-secondary btn-lg px-4"
                         onclick="window.location='./auth.php'">Login</button> -->
                 </div>

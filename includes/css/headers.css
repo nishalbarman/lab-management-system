@@ -1,3 +1,8 @@
+* {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
 .form-control-dark {
   border-color: var(--bs-gray);
 }
@@ -20,6 +25,11 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+}
+
+.nav li {
+  font-size: 17px;
+  font-weight: bold;
 }
 
 @media (min-width: 768px) {
