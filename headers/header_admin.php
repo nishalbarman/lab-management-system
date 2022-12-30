@@ -1,3 +1,8 @@
+<?php
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +34,7 @@
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                    <image class="bi me-2" width="45" height="45" role="img" aria-label="Bootstrap"
+                    <image class="bi me-2" width="45" height="45" role="img" aria-label="HealthKind"
                         src="../assets/logo/hk.png" />
                     <!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
                         <use xlink:href="#bootstrap" />
@@ -37,10 +42,14 @@
                 </a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ">
-                    <li><a href=" #" class="nav-link px-2 link-dark">Dashboard</a></li>
+                    <li><a href="http://localhost/hk_new/csr-admin/dashboard.php"
+                            class="nav-link px-2 link-dark">Dashboard</a></li>
+                    <li><a href="http://localhost/hk_new/csr-admin/services.php"
+                            class="nav-link px-2 link-dark">Reports</a></li>
+
                     <li><a href="../templates/decl-temp/tmp_declare.php"
                             class="nav-link px-2 link-dark">Generate-Template</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">Services</a></li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false" style="color: red;">
@@ -69,16 +78,18 @@
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                        <img src="<?php echo '../uploads/profile_pic/' . $_SESSION['profile']; ?>" alt="mdo" width="32"
+                            height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <!-- <li><a class="dropdown-item" href="#">New project...</a></li> -->
                         <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Server Settings</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        <li><a class="dropdown-item" href="http://localhost/hk_new/logout.php">Sign
+                                out</a></li>
                     </ul>
                 </div>
             </div>

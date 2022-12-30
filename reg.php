@@ -1,7 +1,7 @@
 <?php
 // Initialize the season
 session_start();
-// include('header_log.php');
+
 
 if (isset($_SESSION['logged']) && $_SESSION('logged') !== null) { // If season not exist
     if ($_SESSION['role'] === 0) { // If technician
@@ -81,81 +81,84 @@ if (isset($_POST['submit'])) {
 <body>
 
 
-    <form action="" class="registration" method="post" enctype="multipart/form-data">
-        <h1>Register</h1>
+    <div class="main">
 
-        <label class="pure-material-textfield-outlined">
-            <input type="text" class="form-control" aria-label="Full name" aria-describedby="inputGroup-sizing-lg"
-                placeholder="Name" name="name">
-        </label>
+        <form action="" class="registration" method="post" enctype="multipart/form-data">
+            <h1>Register</h1>
 
-        <label class="pure-material-textfield-outlined">
-            <input type="text" class="form-control" aria-label="Email Id" aria-describedby="inputGroup-sizing-lg"
-                placeholder="example@email.com" name="email">
-
-        </label>
-
-
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">+91</span>
-            <input type="number" class="form-control" placeholder="Phone" aria-label="Phone Number"
-                aria-describedby="basic-addon1" name="phone">
-        </div>
-
-        <div class="mb-3">
-            <label for="formFile" class="form-label">Profile Picture</label>
-            <input name="image" class="form-control" type="file" id="formFile" accept="image/*">
-        </div>
-
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">Role
+            <label class="pure-material-textfield-outlined">
+                <input type="text" class="form-control" aria-label="Full name" aria-describedby="inputGroup-sizing-lg"
+                    placeholder="Name" name="name">
             </label>
-            <select name="role" class="form-select" id="inputGroupSelect01">
-                <option selected>Choose...</option>
-                <option value="2">User</option>
-                <option value="1">Admin</option>
-                <option value="3">Technician</option>
-            </select>
+
+            <label class="pure-material-textfield-outlined">
+                <input type="text" class="form-control" aria-label="Email Id" aria-describedby="inputGroup-sizing-lg"
+                    placeholder="example@email.com" name="email">
+
+            </label>
+
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">+91</span>
+                <input type="number" class="form-control" placeholder="Phone" aria-label="Phone Number"
+                    aria-describedby="basic-addon1" name="phone">
+            </div>
+
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Profile Picture</label>
+                <input name="image" class="form-control" type="file" id="formFile" accept="image/*">
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Role
+                </label>
+                <select name="role" class="form-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="2">User</option>
+                    <option value="1">Admin</option>
+                    <option value="3">Technician</option>
+                </select>
+            </div>
+
+            <label class="pure-material-textfield-outlined">
+                <input type="password" class="form-control" aria-label="Password"
+                    aria-describedby="inputGroup-sizing-lg" id="inputPassword" placeholder="Password" name="password">
+            </label>
+
+            <label class="pure-material-textfield-outlined">
+                <input type="password" class="form-control" aria-label="Password"
+                    aria-describedby="inputGroup-sizing-lg" id="inputPassword" placeholder="Confirm Password"
+                    name="cpassword">
+            </label>
+
+            <label class="pure-material-checkbox">
+                <input type="checkbox" required>
+                <span>I agree to the <a href="https://codepen.io/collection/nZKBZe/" target="_blank"
+                        title="Actually not a Terms of Service">Terms of Service</a></span>
+            </label>
+
+            <input id="button" name="submit" type="submit" style="width: 70%" class="btn btn-outline-success btn-lg"
+                value="SignUp">
+
+            <div class="done">
+                <h1>👌 Registering!</h1>
+                <a class="pure-material-button-text" href="javascript:window.location.reload(true)">Try Again</a>
+            </div>
+            <div class="progress">
+                <progress class="pure-material-progress-circular" />
+            </div>
+        </form>
+
+        <div class="left-footer">
+            Health Kind Lab<br />
+            <a href="#" target="_top">Twitter</a> &nbsp; | &nbsp;
+            <a href="#" target="_top">LinkedIn</a> &nbsp; | &nbsp;
+            <a href="#" target="_top">CodePen</a>
         </div>
-
-        <label class="pure-material-textfield-outlined">
-            <input type="password" class="form-control" aria-label="Password" aria-describedby="inputGroup-sizing-lg"
-                id="inputPassword" placeholder="Password" name="password">
-        </label>
-
-        <label class="pure-material-textfield-outlined">
-            <input type="password" class="form-control" aria-label="Password" aria-describedby="inputGroup-sizing-lg"
-                id="inputPassword" placeholder="Confirm Password" name="cpassword">
-        </label>
-
-        <label class="pure-material-checkbox">
-            <input type="checkbox" required>
-            <span>I agree to the <a href="https://codepen.io/collection/nZKBZe/" target="_blank"
-                    title="Actually not a Terms of Service">Terms of Service</a></span>
-        </label>
-
-        <input id="button" name="submit" type="submit" style="width: 70%" class="btn btn-outline-success btn-lg"
-            value="SignUp">
-
-        <div class="done">
-            <h1>👌 Registering!</h1>
-            <a class="pure-material-button-text" href="javascript:window.location.reload(true)">Try Again</a>
+        <div class="right-footer">
+            Check out<br />
+            <a href="./auth.php">LogIn Instead</a>
         </div>
-        <div class="progress">
-            <progress class="pure-material-progress-circular" />
-        </div>
-    </form>
-
-    <div class="left-footer">
-        Health Kind Lab<br />
-        <a href="#" target="_top">Twitter</a> &nbsp; | &nbsp;
-        <a href="#" target="_top">LinkedIn</a> &nbsp; | &nbsp;
-        <a href="#" target="_top">CodePen</a>
-    </div>
-    <div class="right-footer">
-        Check out<br />
-        <a href="./auth.php">LogIn Instead</a>
-    </div>
     </div>
 
     <script src="./includes/js/auth.js">

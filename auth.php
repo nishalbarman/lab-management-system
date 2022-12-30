@@ -1,14 +1,13 @@
 <?php
-// include('header_log.php');
-// Initialize the season
+
 session_start();
 
-if (isset($_SESSION['logged']) && $_SESSION('logged') !== null) { // If season not exist
+if (isset($_SESSION['loggedin'])) { // If season not exist
     if ($_SESSION['role'] === 0) { // If technician
         header("location: ./technician/index.php");
         exit;
     } else if ($_SESSION['role'] === 1) { // If admin
-        header("location: ./admin/index.php");
+        header("location: ./csr-admin/dashboard.php");
         exit;
     } else if ($_SESSION['role'] === 2) { // If normal user
         header("location: ./client/index.php");
@@ -41,16 +40,18 @@ if (isset($_POST['submit'])) {
             $_SESSION['email'] = $row['email'];
             $_SESSION['phone'] = $row['phone'];
             $_SESSION['role'] = $row['role'];
+            $_SESSION['profile'] = $row['image'];
+            $_SESSION['loggedin'] = true;
         }
 
         if ((int) $_SESSION['role'] === 0) { // If technician
-            header("location: ./technician/index.php");
+            header("location: ./technician/dashboard.php");
             exit;
         } else if ((int) $_SESSION['role'] === 1) { // If admin
-            header("location: ./csr-admin/index.php");
+            header("location: ./csr-admin/dashboard.php");
             exit;
         } else if ((int) $_SESSION['role'] === 2) { // If normal user
-            header("location: ./client/index.php");
+            header("location: ./client/dashboard.php");
             exit;
         }
 
@@ -80,62 +81,62 @@ if (isset($_POST['submit'])) {
 
 <body>
 
+    <div class="main">
+        <form class="registration" action="" method="post" enctype="multipart/form-data">
+            <h1>👋 Welcome!</h1>
 
-    <form class="registration" action="" method="post" enctype="multipart/form-data">
-        <h1>👋 Welcome!</h1>
+            <label class="pure-material-textfield-outlined">
+                <input type="text" class="form-control" aria-label="Email Id" aria-describedby="inputGroup-sizing-lg"
+                    placeholder="example@email.com" name="email">
 
-        <label class="pure-material-textfield-outlined">
-            <input type="text" class="form-control" aria-label="Email Id" aria-describedby="inputGroup-sizing-lg"
-                placeholder="example@email.com" name="email">
-
-        </label>
-
-        <label class="pure-material-textfield-outlined">
-            <input type="password" class="form-control" aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-lg" id="inputPassword" placeholder="Password" name="password">
-        </label>
-
-        <div class=" input-group mb-3">
-            <label class=" input-group-text" for="inputGroupSelect01">Role
             </label>
-            <select class="form-select" id="inputGroupSelect01" name="role">
-                <option selected>Choose...</option>
-                <option value="2">User</option>
-                <option value="1">Admin</option>
-                <option value="3">Technician</option>
-            </select>
-        </div>
+
+            <label class="pure-material-textfield-outlined">
+                <input type="password" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-lg" id="inputPassword" placeholder="Password" name="password">
+            </label>
+
+            <div class=" input-group mb-3">
+                <label class=" input-group-text" for="inputGroupSelect01">Role
+                </label>
+                <select class="form-select" id="inputGroupSelect01" name="role">
+                    <option selected>Choose...</option>
+                    <option value="2">User</option>
+                    <option value="1">Admin</option>
+                    <option value="3">Technician</option>
+                </select>
+            </div>
 
 
 
-        <!-- <label class="pure-material-checkbox">
+            <!-- <label class="pure-material-checkbox">
             <input type="checkbox" required>
             <span>I agree to the <a href="https://codepen.io/collection/nZKBZe/" target="_blank"
                     title="Actually not a Terms of Service">Terms of Service</a></span>
         </label> -->
 
-        <input id="button" type="submit" style="width: 70%" class="btn btn-outline-success btn-lg" name="submit"
-            value="Log In">
+            <input id="button" type="submit" style="width: 70%" class="btn btn-outline-success btn-lg" name="submit"
+                value="Log In">
 
-        <div class="done">
-            <h1>👌 Authenticating!</h1>
-            <a class="pure-material-button-text" href="javascript:window.location.reload(true)">Try Again</a>
-        </div>
-        <div class="progress">
-            <progress class="pure-material-progress-circular" />
-        </div>
-    </form>
+            <div class="done">
+                <h1>👌 Authenticating!</h1>
+                <a class="pure-material-button-text" href="javascript:window.location.reload(true)">Try Again</a>
+            </div>
+            <div class="progress">
+                <progress class="pure-material-progress-circular" />
+            </div>
+        </form>
 
-    <div class="left-footer">
-        Health Kind Lab<br />
-        <a href="#" target="_top">Twitter</a> &nbsp; | &nbsp;
-        <a href="#" target="_top">LinkedIn</a> &nbsp; | &nbsp;
-        <a href="#" target="_top">CodePen</a>
-    </div>
-    <div class="right-footer">
-        Check out<br />
-        <a href="./reg.php">SignUp Instead</a>
-    </div>
+        <div class="left-footer">
+            Health Kind Lab<br />
+            <a href="#" target="_top">Twitter</a> &nbsp; | &nbsp;
+            <a href="#" target="_top">LinkedIn</a> &nbsp; | &nbsp;
+            <a href="#" target="_top">CodePen</a>
+        </div>
+        <div class="right-footer">
+            Check out<br />
+            <a href="./reg.php">SignUp Instead</a>
+        </div>
     </div>
 
     <script src="./includes/js/auth.js">

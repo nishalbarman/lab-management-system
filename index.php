@@ -1,20 +1,19 @@
 <?php
-include('header_log.php');
-// Check the season status
-// include 'core/session.php';
 
-// If season exist
+if (isset($_SESSION['loggedin'])) {
 
-// if ($_SESSION['role'] === 0) { // If technician
-//     header("location: ./technician/index.php");
-//     exit;
-// } else if ($_SESSION['role'] === 1) { // If admin
-//     header("location: ./admin/index.php");
-//     exit;
-// } else if ($_SESSION['role'] === 2) { // If normal user
-//     header("location: ./client/index.php");
-//     exit;
-// }
+
+    if ($_SESSION['role'] === 0) { // If technician
+        header("location: ./technician/index.php");
+        exit;
+    } else if ($_SESSION['role'] === 1) { // If admin
+        header("location: ./csr-admin/dashboard.php");
+        exit;
+    } else if ($_SESSION['role'] === 2) { // If normal user
+        header("location: ./client/index.php");
+        exit;
+    }
+}
 
 ?>
 
@@ -29,8 +28,8 @@ include('header_log.php');
     <meta name="generator" content="Hugo 0.108.0">
     <title>Features · Bootstrap v5.3</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/features/">
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 
     <style>
     .bd-placeholder-img {
@@ -171,6 +170,7 @@ include('header_log.php');
         </symbol>
     </svg>
     <main>
+        <?php include('headers/header_log.php'); ?>
         <h1 class="visually-hidden">Features examples</h1>
 
         <div class="px-4 py-5 my-5 text-center" id="top">
