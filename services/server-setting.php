@@ -14,22 +14,22 @@ if ($_SESSION["role"] !== 1) {
     exit;
 }
 
-include '../headers/header_admin.php';
+// include '../headers/header_admin.php';
 include '../includes/config/connect.php';
 
-if (isset($_POST['maintenance'])) {
-    $value = $_POST['sel'];
-    $sql1 = "UPDATE `maintenance` SET `maintenance`= '" . $value . "' WHERE 1=1";
-    if ($conn->query($sql1)) {
-        echo "<script>
-alert('Success');
-</script>";
-    } else {
-        echo "<script>
-alert('Failed');
-</script>";
-    }
-}
+// if (isset($_POST['maintenance'])) {
+//     $value = $_POST['sel'];
+//     $sql1 = "UPDATE `maintenance` SET `maintenance`= '" . $value . "' WHERE 1=1";
+//     if ($conn->query($sql1)) {
+//         echo "<script>
+// alert('Success');
+// </script>";
+//     } else {
+//         echo "<script>
+// alert('Failed');
+// </script>";
+//     }
+// }
 
 $sqls = "select `maintenance` from `maintenance`";
 $resultss = $conn->query($sqls);
@@ -39,6 +39,95 @@ if ($resultss->num_rows > 0) {
         $m = $rows["maintenance"];
     }
 }
+
+
+
+if (isset($_POST['submit'])) {
+
+    $error = array();
+
+    if (isset($_POST['name'])) {
+        $name = $_POST['name'];
+        $sql = "UPDATE `auth` SET `name`=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+
+        if ($stmt->error) {
+            $error[] = "Error in updating of name";
+        } else {
+            $_SESSION['name'] = $name;
+        }
+    }
+
+    // if (isset($_POST['email'])) {
+    //     $email = $_POST['email'];
+    //     $sql1 = $sql . "`email`=?";
+    //     $bind_p = "s";
+    //     $stmt = $conn->prepare($sql1);
+    //     $stmt->bind_param($bind_p, $email);
+    //     $stmt->execute();
+    //     if ($stmt->get_warnings()) {
+    //         $error = "Error in updating of email";
+    //     }
+    // }
+
+    // if (isset($_POST['password'])) {
+    //     $nm_ps = true;
+    //     $password = $_POST['password'];
+    //     $sql = ",`email`=?";
+    //     $bind_p = "s";
+    // }
+
+    if (isset($_POST['phone'])) {
+        $phone = $_POST['phone'];
+        $sql = "UPDATE `auth` SET `phone`=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $phone);
+        $stmt->execute();
+        if ($stmt->error) {
+            $error[] = "Error in updating of name";
+        } else {
+            $_SESSION['phone'] = $phone;
+        }
+    }
+
+    // $role = $_POST['role'];
+    if (isset($_FILES['pic']["name"])) {
+
+        $pic = time() . "_" . $_FILES['pic']['name'];
+        $destination = "../uploads/profile_pic/";
+        $temp_name = $_FILES['pic']['tmp_name'];
+        $sql = "UPDATE `auth` SET `image`=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $pic);
+        $stmt->execute();
+        $old_pic = $_SESSION['profile'];
+
+        if ($stmt->error) {
+            $error[] = "Error in updating of photo";
+        } else {
+            if (move_uploaded_file($temp_name, $destination . $pic)) {
+                unlink($destination . $old_pic);
+                $_SESSION['profile'] = $pic;
+            } else {
+                $sql = "UPDATE `auth` SET `image`=?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("s", $_SESSION['profile']);
+                $stmt->execute();
+            }
+
+        }
+
+        if (!$error) {
+            echo "<script>alert('Settings Updated!');</script>";
+        } else {
+            echo "<script>alert('Settings Update Failed!');</script>";
+        }
+    }
+
+}
+
 $conn->close();
 ?>
 
@@ -58,7 +147,7 @@ $conn->close();
 </head>
 
 <body onload="checkMan()">
-
+    <?php include '../headers/header_admin.php'; ?>
     <div class="form-outer">
         <div class='signup-container'>
             <div class='left-container'>
@@ -188,76 +277,78 @@ c30 -29 20 -44 -29 -44 -49 0 -53 5 -29 38 18 26 37 28 58 6z" />
                 </div>
             </div>
             <div class='right-container'>
-                <header>
-                    <h1>Yay, Boii ! Change some setting, it don't really hearts!</h1>
-                    <div class='set'>
-                        <div class='pets-name'>
-                            <label for='pets-name'>Name</label>
-                            <input id='pets-name' placeholder="Your name" type='text'
-                                value="<?php echo $_SESSION['name']; ?>">
-                        </div>
-                        <div class='pets-photo'>
-                            <button id='pets-upload' onclick="document.getElementById('image').click(); ">
-                                <i class='fas fa-camera-retro'></i>
-                            </button>
-                            <input id="image" type="file" name="photo"
-                                onchange="document.getElementById('pic_label').innerHTML = 'File Accessed';" hidden />
-                            <label id="pic_label" for='pets-upload'>Upload a photo</label>
-                        </div>
-                    </div>
-                    <div class='set'>
-                        <div class='pets-breed'>
-                            <label for='pets-breed'>Email</label>
-                            <input id='pets-breed' placeholder="email@me.com" type='email'
-                                value="<?php echo $_SESSION['email']; ?>" disabled readonly>
-                        </div>
-                        <div class='pets-birthday'>
-                            <label for='pets-birthday'>Phone</label>
-                            <input id='pets-birthday' placeholder='+910000000000' type='number'
-                                value="<?php echo $_SESSION['phone']; ?>">
-                        </div>
-                    </div>
-                    <div class='set'>
-                        <div class='pets-gender'>
-                            <label for='pet-gender-female'>Gender</label>
-                            <div class='radio-container'>
-                                <input checked='' id='pet-gender-female' name='pet-gender' type='radio' value='female'>
-                                <label for='pet-gender-female'>Female</label>
-                                <input id='pet-gender-male' name='pet-gender' type='radio' value='male'>
-                                <label for='pet-gender-male'>Male</label>
+                <form action="" method="post" enctype="multipart/form-data">
+                    <header>
+                        <h1>Yay, Boii ! Change some setting, it don't really hearts!</h1>
+                        <div class='set'>
+                            <div class='pets-name'>
+                                <label for='pets-name'>Name</label>
+                                <input id='pets-name' placeholder="Your name" type='text'
+                                    value="<?php echo $_SESSION['name']; ?>" name="name">
+                            </div>
+                            <div class='pets-photo'>
+                                <!-- <button id='pets-upload' onclick="document.getElementById('image').click(); ">
+                                    <i class='fas fa-camera-retro'></i>
+                                </button> -->
+                                <label id="pic_label" for='image'>Upload a photo</label>z
+                                <input id="image" type="file" name="pic"
+                                    onchange="document.getElementById('pic_label').innerHTML = 'File Accessed';" />
                             </div>
                         </div>
-                        <div class='pets-spayed-neutered'>
-                            <label for='pet-spayed'>Maintenance</label>
-                            <div class='radio-container'>
-                                <input checked='' id='pet-spayed' name='spayed-neutered' type='radio' value='true'>
-                                <label for='pet-spayed'>True</label>
-                                <input id='pet-neutered' name='spayed-neutered' type='radio' value='false'>
-                                <label for='pet-neutered'>False</label>
+                        <div class='set'>
+                            <div class='pets-breed'>
+                                <label for='pets-breed'>Email</label>
+                                <input id='pets-breed' placeholder="email@me.com" type='email'
+                                    value="<?php echo $_SESSION['email']; ?>" disabled readonly>
+                            </div>
+                            <div class='pets-birthday'>
+                                <label for='pets-birthday'>Phone</label>
+                                <input id='pets-birthday' placeholder='+910000000000' type='number'
+                                    value="<?php echo $_SESSION['phone']; ?>" name="phone">
                             </div>
                         </div>
-                    </div>
-                    <div class='pets-weight'>
-                        <label style="margin-top: 10px;">Status :
-                            <?php if ($m === true) {
-                            echo "In Maintenance";
-                        } else {
-                            echo "Not In Maintenance";
-                        }
-                        ;
-                        ?></label>
-                    </div>
-                </header>
-                <footer>
-                    <div class='set'>
-                        <!-- <button id='back'>Back</button> -->
-                        <button id='submit' class="server-btn">Update</button>
-                    </div>
-                </footer>
+                        <div class='set'>
+                            <div class='pets-gender'>
+                                <label for='pet-gender-female'>Gender</label>
+                                <div class='radio-container'>
+                                    <input checked='' id='pet-gender-female' name='gender' type='radio' value='female'>
+                                    <label for='pet-gender-female'>Female</label>
+                                    <input id='pet-gender-male' name='gender' type='radio' value='male'>
+                                    <label for='pet-gender-male'>Male</label>
+                                </div>
+                            </div>
+                            <div class='pets-spayed-neutered'>
+                                <label for='pet-spayed'>Maintenance</label>
+                                <div class='radio-container'>
+                                    <input checked='' id='pet-spayed' name='maintenance' type='radio' value='true'>
+                                    <label for='pet-spayed'>True</label>
+                                    <input id='pet-neutered' name='maintenance' type='radio' value='false'>
+                                    <label for='pet-neutered'>False</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='pets-weight'>
+                            <label style="margin-top: 10px;">Status :
+                                <?php if ($m == true) {
+                                echo "In Maintenance";
+                            } else {
+                                echo "Not In Maintenance";
+                            }
+                            ;
+                            ?></label>
+                        </div>
+                    </header>
+                    <footer>
+                        <div class='set'>
+                            <!-- <button id='back'>Back</button> -->
+                            <input type="submit" name="submit" id='submit' class="server-btn" value="Update">
+                        </div>
+                    </footer>
+                </form>
             </div>
         </div>
     </div>
-    <script src="js/server_setting.js"></script>
+    <script src=" js/server_setting.js"></script>
 
 </body>
 

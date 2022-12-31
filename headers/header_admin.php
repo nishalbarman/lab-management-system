@@ -38,7 +38,7 @@
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ">
                     <li><a href="http://localhost/hk_new/csr-admin/dashboard.php"
                             class="nav-link px-2 link-dark">Dashboard</a></li>
-                    <li><a href="http://localhost/hk_new/csr-admin/services.php"
+                    <li><a href="http://localhost/hk_new/csr-admin/templ-list.php"
                             class="nav-link px-2 link-dark">Templates</a></li>
 
                     <li><a href="../templates/decl-temp/tmp_declare.php"
@@ -72,8 +72,8 @@
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        <img src="<?php echo '../uploads/profile_pic/' . $_SESSION['profile']; ?>" alt="mdo" width="32"
-                            height="32" class="rounded-circle">
+                        <img id="profile-pic" src="<?php echo '../uploads/profile_pic/' . $_SESSION['profile']; ?>"
+                            alt="mdo" width="32" height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small">
                         <!-- <li><a class="dropdown-item" href="#">New project...</a></li> -->
