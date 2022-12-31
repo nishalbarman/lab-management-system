@@ -29,19 +29,25 @@
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
                     <image class="bi me-2" width="45" height="45" role="img" aria-label="HealthKind"
-                        src="../assets/logo/hk.png" />
+                        src="http://localhost/hk_new/assets/logo/hk.png" />
                     <!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
                         <use xlink:href="#bootstrap" />
                     </svg> -->
                 </a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ">
-                    <li><a href="http://localhost/hk_new/csr-admin/dashboard.php"
-                            class="nav-link px-2 link-dark">Dashboard</a></li>
-                    <li><a href="http://localhost/hk_new/csr-admin/templ-list.php"
-                            class="nav-link px-2 link-dark">Templates</a></li>
+                    <li><a href="<?php if ($_SESSION['role'] === 1) {
+                    echo 'http://localhost/hk_new/csr-admin/dashboard.php';
+                } else if ($_SESSION['role'] === 0) {
+                    echo 'http://localhost/hk_new/technician/dashboard.php';
+                } ?>" class="nav-link px-2 link-dark">Dashboard</a></li>
+                    <li><a href="<?php if ($_SESSION['role'] === 1) {
+                    echo 'http://localhost/hk_new/csr-admin/templ-list.php';
+                } else if ($_SESSION['role'] === 0) {
+                    echo 'http://localhost/hk_new/technician/templ-list.php';
+                } ?>" class=" nav-link px-2 link-dark">Templates</a></li>
 
-                    <li><a href="../templates/decl-temp/tmp_declare.php"
+                    <li><a href="http://localhost/hk_new/templates/decl-temp/tmp_declare.php"
                             class="nav-link px-2 link-dark">Generate-New-Template</a></li>
 
                     <li class="nav-item dropdown">

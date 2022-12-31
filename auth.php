@@ -77,6 +77,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
         rel="stylesheet">
     <link rel="stylesheet" href="./includes/css/auth.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -103,7 +104,7 @@ if (isset($_POST['submit'])) {
                     <option selected>Choose...</option>
                     <option value="2">User</option>
                     <option value="1">Admin</option>
-                    <option value="3">Technician</option>
+                    <option value="0">Technician</option>
                 </select>
             </div>
 

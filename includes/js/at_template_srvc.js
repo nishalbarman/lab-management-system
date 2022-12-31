@@ -1,4 +1,5 @@
 const search = document.querySelector("#search-input");
+let email = window.localStorage.getItem("email");
 
 let prevValue;
 let value;
@@ -37,8 +38,11 @@ function getMenu() {
         const price = menu.querySelector("[card-price]");
         const cardbg = menu.querySelector("[data-card-bg]");
         const button = menu.querySelector("[card-btn-text]");
-        const bottom = menu.querySelector("[card-bottom-white]");
-
+        const cardReg = menu.querySelector("[card-count]");
+        cardReg.setAttribute(
+          "onclick",
+          "cardCount(" + user.id + ", '" + email + "')"
+        );
         let color =
           "linear-gradient(to bottom, " +
           user.color_f +
@@ -54,18 +58,17 @@ function getMenu() {
         button.innerHTML =
           "<a style='text-decoration: none; color:" +
           user.color_f +
-          " ;' href='../templates/" +
+          " ;' href='../templates/srvc-fill/" +
           user.url +
-          "'>" +
+          ".php'>" +
           user.btn_name +
           "</a>";
-        bottom.setAttribute(
-          "onclick",
-          "window.location = '../templates/" + user.url + ".php'"
-        );
+        // bottom.setAttribute(
+        //   "onclick",
+        //   "window.location = '../templates/" + user.url + ".php'"
+        // );
 
         // button.textContent = user.btn_name;
-        // button.setAttribute("onclick", "redirectTemplate(" + +")");
         menuCards.appendChild(menu);
         return {
           title: user.cardname,

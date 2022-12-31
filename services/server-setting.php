@@ -9,7 +9,7 @@ if (!$_SESSION) {
     exit;
 }
 
-if ($_SESSION["role"] !== 1) {
+if ($_SESSION["role"] !== 1 && $_SESSION["role"] !== 2) {
     echo "<script>alert('Action not allowed');</script>";
     exit;
 }

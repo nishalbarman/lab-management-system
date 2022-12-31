@@ -9,9 +9,13 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Nishal Barman">
-    <title>HealthKind LAB | Admin Portal</title>
-
+    <title>HealthKind LAB | Technician Portal</title>
+    <!-- <link href="../includes/css/admn_dashboard.css" rel="stylesheet">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <!-- <link href="../includes/css/headers.css" rel="stylesheet"> -->
     <link href="../includes/css/card_styles.css" rel="stylesheet">
 
     <style>
@@ -225,10 +229,6 @@ session_start();
             </div>
         </div>
     </div>
-
-
-    <!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> -->
-
 
     <script src="../includes/js/everyone_dashboard.js"></script>
     <script src="../includes/js/count-card-click.js"></script>

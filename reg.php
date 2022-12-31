@@ -5,10 +5,10 @@ session_start();
 
 if (isset($_SESSION['logged']) && $_SESSION('logged') !== null) { // If season not exist
     if ($_SESSION['role'] === 0) { // If technician
-        header("location: ./technician/index.php");
+        header("location: ./technician/dashboard.php");
         exit;
     } else if ($_SESSION['role'] === 1) { // If admin
-        header("location: ./admin/index.php");
+        header("location: ./csr-admin/dashboard.php");
         exit;
     } else if ($_SESSION['role'] === 2) { // If normal user
         header("location: ./client/index.php");
@@ -73,8 +73,7 @@ if (isset($_POST['submit'])) {
     <title>Login To Your Account</title>
     <meta name="description" content="Login Page for Health Kind Reports">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./includes/css/auth.css" rel="stylesheet">
 </head>
 
@@ -116,7 +115,7 @@ if (isset($_POST['submit'])) {
                     <option selected>Choose...</option>
                     <option value="2">User</option>
                     <option value="1">Admin</option>
-                    <option value="3">Technician</option>
+                    <option value="0">Technician</option>
                 </select>
             </div>
 
