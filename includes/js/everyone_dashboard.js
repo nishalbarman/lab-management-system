@@ -1,5 +1,6 @@
 const search = document.querySelector("#search-input");
 let email = window.localStorage.getItem("email");
+const BASE_URL = "<?php echo $BASE_URL; ?>";
 
 let prevValue;
 let value;
@@ -27,7 +28,7 @@ getMenu();
 function getMenu() {
   const menuTemplate = document.querySelector("[data-menu-template]"); // The template we want to copy
   const menuCards = document.querySelector("[menu-cards]"); // The section in which we want to integrate
-  fetch("http://localhost/hk_new/core/api/get-partial-cards.php")
+  fetch(BASE_URL + "/core/api/get-partial-cards.php")
     .then((res) => res.json())
     .then((data) => {
       console.log(data);

@@ -5,11 +5,11 @@ session_start();
 
 // Check if the user is logged in, if not then redirect him to login page
 if (!$_SESSION) {
-    header('location: http://localhost/hk_new/auth.php');
+    header('location: ../auth.php');
     exit;
 }
 
-if ($_SESSION["role"] !== 1 && $_SESSION["role"] !== 2) {
+if ($_SESSION["role"] !== 1 && $_SESSION["role"] !== 0) {
     echo "<script>alert('Action not allowed');</script>";
     exit;
 }

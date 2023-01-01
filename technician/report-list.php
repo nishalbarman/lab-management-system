@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("../core/base.php");
 $is_page_refreshed = (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] == 'max-age=0');
 
 if ($is_page_refreshed) {
@@ -119,7 +120,7 @@ if ($is_page_refreshed) {
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
-                    <caption class="text-center">HealthKind LAB</caption>
+                    <caption class="text-center">&copy; HealthKind LAB</caption>
                     <thead>
                         <tr>
                             <th style="text-align: center;" scope="col">#</th>
@@ -131,85 +132,85 @@ if ($is_page_refreshed) {
                             <th style="text-align: center;" scope="col">ACTION</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php include('../includes/config/connect.php');
-                        $sql = "select * from reports;";
-                        // $sql = "SELECT * FROM ( SELECT * FROM reports ORDER BY id DESC LIMIT 10 )Var1 ORDER BY id ASC;";
-                        $result = $conn->query($sql);
-                        $data = $result->fetch_all(MYSQLI_ASSOC);
-                        $data = array_reverse($data);
-                        foreach ($data as $rp_dtl): ?>
-                        <tr id="<?php echo $rp_dtl['id']; ?>">
+                    <tbody></tbody>
+                    <?php include('../includes/config/connect.php');
+                    $sql = "select * from reports;";
+                    // $sql = "SELECT * FROM ( SELECT * FROM reports ORDER BY id DESC LIMIT 10 )Var1 ORDER BY id ASC;";
+                    $result = $conn->query($sql);
+                    $data = $result->fetch_all(MYSQLI_ASSOC);
+                    $data = array_reverse($data);
+                    foreach ($data as $rp_dtl): ?>
+                    <tr id="<?php echo $rp_dtl['id']; ?>">
 
-                            <td style=" text-align:center;">
-                                <?php echo $rp_dtl['id']; ?>
-                            </td>
-                            <td style="text-align:center;">
-                                <?php echo ucwords(strtolower(str_replace("_", " ", $rp_dtl['patient_name']))); ?>
-                            </td>
-                            <td style="text-align:center;">
-                                <?php echo $rp_dtl['patient_age']; ?>
-                            </td>
-                            <td style="text-align:center;">
-                                <?php echo $rp_dtl['created_by']; ?>
-                            </td>
+                        <td style=" text-align:center;">
+                            <?php echo $rp_dtl['id']; ?>
+                        </td>
+                        <td style="text-align:center;">
+                            <?php echo ucwords(strtolower(str_replace("_", " ", $rp_dtl['patient_name']))); ?>
+                        </td>
+                        <td style="text-align:center;">
+                            <?php echo $rp_dtl['patient_age']; ?>
+                        </td>
+                        <td style="text-align:center;">
+                            <?php echo $rp_dtl['created_by']; ?>
+                        </td>
 
-                            <td style="text-align:center;">
-                                <?php // echo floor($rp_dtl['size'] / 1000) . ' KB'; ?>
-                                <?php echo $rp_dtl['downloads'] . ' Times'; ?>
-                            </td>
+                        <td style="text-align:center;">
+                            <?php // echo floor($rp_dtl['size'] / 1000) . ' KB'; ?>
+                            <?php echo $rp_dtl['downloads'] . ' Times'; ?>
+                        </td>
 
-                            <td style="text-align:center;">
-                                <?php if ($rp_dtl['creation_date'] === null) {
-                                    echo "01/01/1900";
-                                } else {
-                                    echo $rp_dtl['creation_date'];
-                                }
-                                ?>
-                            </td>
+                        <td style="text-align:center;">
+                            <?php if ($rp_dtl['creation_date'] === null) {
+                                echo "01/01/1900";
+                            } else {
+                                echo $rp_dtl['creation_date'];
+                            }
+                            ?>
+                        </td>
 
-                            <td style="text-align:center;">
-                                <?php echo $rp_dtl['creation_date']; ?>
-                                <!-- Example single danger button -->
-                                <div class="btn-group">
-                                    <button type="button" class="btn  btn-sm dropdown-toggle" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <span class="material-symbols-outlined">
-                                            drive_file_rename_outline
-                                        </span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li style="font-family: 'Comic Sans MS'; font-weight: bolder;"><a
-                                                class="dropdown-item"
-                                                href="reports.php?serial=<?php echo $rp_dtl['id'] ?>"><img
-                                                    style="width: 27px; height: 27px; margin-right: 5px"
-                                                    src="../assets/table_dropdowns/download.png" />
-                                                Download</a></li>
-                                        <li><a class="dropdown-item"
-                                                href="delete.php?serial=<?php echo $rp_dtl['id'] ?>&file=<?php echo $rp_dtl['file_name']; ?>"><img
-                                                    style="width: 25px; height: 25px; margin-right: 5px"
-                                                    src="../assets/table_dropdowns/remove.png" />
-                                                Delete</a>
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                                href="changeFile.php?file=<?php echo $rp_dtl['file_name']; ?>"><img
-                                                    style="width: 24px; height: 24px; margin-right: 5px"
-                                                    src="../assets/table_dropdowns/update.png" />
-                                                Replace with Local</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                                href="<?php echo 'Report.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                        <td style="text-align:center;">
+                            <?php echo $rp_dtl['creation_date']; ?>
+                            <!-- Example single danger button -->
+                            <div class="btn-group">
+                                <button type="button" class="btn  btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <span class="material-symbols-outlined">
+                                        drive_file_rename_outline
+                                    </span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li style="font-family: 'Comic Sans MS'; font-weight: bolder;"><a
+                                            class="dropdown-item"
+                                            href="reports.php?serial=<?php echo $rp_dtl['id'] ?>"><img
+                                                style="width: 27px; height: 27px; margin-right: 5px"
+                                                src="../assets/table_dropdowns/download.png" />
+                                            Download</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="delete.php?serial=<?php echo $rp_dtl['id'] ?>&file=<?php echo $rp_dtl['file_name']; ?>"><img
+                                                style="width: 25px; height: 25px; margin-right: 5px"
+                                                src="../assets/table_dropdowns/remove.png" />
+                                            Delete</a>
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            href="changeFile.php?file=<?php echo $rp_dtl['file_name']; ?>"><img
+                                                style="width: 24px; height: 24px; margin-right: 5px"
+                                                src="../assets/table_dropdowns/update.png" />
+                                            Replace with Local</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            href="<?php echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
+                                    </li>
+                                </ul>
+                            </div>
 
-                            </td>
+                        </td>
 
 
-                        </tr>
-                        <?php endforeach; ?>
+                    </tr>
+                    <?php endforeach; ?>
                     </tbody>
                     <!-- <tfoot>
                         <tr>

@@ -1,3 +1,4 @@
+<?php include("../core/base.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +30,7 @@
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
                     <image class="bi me-2" width="45" height="45" role="img" aria-label="HealthKind"
-                        src="http://localhost/hk_new/assets/logo/hk.png" />
+                        src="<?php echo $BASE_URL; ?>/assets/logo/hk.png" />
                     <!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
                         <use xlink:href="#bootstrap" />
                     </svg> -->
@@ -37,24 +38,24 @@
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ">
                     <li><a href="<?php if ($_SESSION['role'] === 1) {
-                    echo 'http://localhost/hk_new/csr-admin/dashboard.php';
+                    echo $BASE_URL . '/csr-admin/dashboard.php';
                 } else if ($_SESSION['role'] === 0) {
-                    echo 'http://localhost/hk_new/technician/dashboard.php';
+                    echo $BASE_URL . '/technician/dashboard.php';
                 } ?>" class="nav-link px-2 link-dark">Dashboard</a></li>
                     <li><a href="<?php if ($_SESSION['role'] === 1) {
-                    echo 'http://localhost/hk_new/csr-admin/templ-list.php';
+                    echo $BASE_URL . '/csr-admin/templ-list.php';
                 } else if ($_SESSION['role'] === 0) {
-                    echo 'http://localhost/hk_new/technician/templ-list.php';
+                    echo $BASE_URL . '/technician/templ-list.php';
                 } ?>" class=" nav-link px-2 link-dark">Templates</a></li>
 
                     <?php if ($_SESSION['role'] === 1) { ?>
-                    <li><a href="http://localhost/hk_new/templates/decl-temp/tmp_declare.php"
+                    <li><a href="<?php echo $BASE_URL; ?>/templates/decl-temp/tmp_declare.php"
                             class="nav-link px-2 link-dark">Generate-New-Template</a></li>
 
                     <?php } ?>
 
                     <?php if ($_SESSION['role'] === 0) { ?>
-                    <li><a href="http://localhost/hk_new/technician/report-list.php"
+                    <li><a href="<?php echo $BASE_URL; ?>/technician/report-list.php"
                             class="nav-link px-2 link-dark">Report List</a></li>
 
                     <?php } ?>
@@ -66,7 +67,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <?php if ($_SESSION['role'] === 1) { ?>
-                            <li><a class="dropdown-item" href="http://localhost/hk_new/csr-admin/report-list.php"
+                            <li><a class="dropdown-item" href="<?php echo $BASE_URL; ?>/csr-admin/report-list.php"
                                     class="nav-link px-2 link-dark">Report List</a></li>
 
                             <?php } ?>
@@ -97,13 +98,12 @@
                     </a>
                     <ul class="dropdown-menu text-small">
                         <!-- <li><a class="dropdown-item" href="#">New project...</a></li> -->
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="../services/server-setting.php">Server
-                                Settings</a></li>
+                        <li><a class="dropdown-item" href="../services/profile-setting.php">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Server Settings</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="http://localhost/hk_new/logout.php">Sign
+                        <li><a class="dropdown-item" href="<?php echo $BASE_URL; ?>/logout.php">Sign
                                 out</a></li>
                     </ul>
                 </div>

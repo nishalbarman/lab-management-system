@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("../core/base.php");
 ?>
 <!doctype html>
 <html lang="en">
@@ -248,7 +249,7 @@ session_start();
                                             <hr class="dropdown-divider">
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="<?php echo 'Report.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
+                                                href="<?php echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
                                         </li>
                                     </ul>
                                 </div>

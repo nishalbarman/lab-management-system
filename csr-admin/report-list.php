@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("../core/base.php");
 $is_page_refreshed = (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] == 'max-age=0');
 
 if ($is_page_refreshed) {
@@ -119,7 +120,7 @@ if ($is_page_refreshed) {
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
-                    <caption class="text-center">HealthKind LAB</caption>
+                    <caption class="text-center">&copy; HealthKind LAB</caption>
                     <thead>
                         <tr>
                             <th style="text-align: center;" scope="col">#</th>
@@ -199,7 +200,7 @@ if ($is_page_refreshed) {
                                             <hr class="dropdown-divider">
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="<?php echo 'Report.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
+                                                href="<?php echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
                                         </li>
                                     </ul>
                                 </div>

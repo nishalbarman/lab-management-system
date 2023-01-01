@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include("../core/base.php");
 if (!$_SESSION) { // If season not exist
     header('location: http://localhost/hk_new/auth.php');
     exit;
@@ -102,18 +102,12 @@ if (!$_SESSION) { // If season not exist
                             </g>
                         </svg>
 
-                        <h2 class="card-front__heading" card-title>
-                            Bloode Urine
-                        </h2>
-                        <p class="card-front__text-price" card-price>
-                            Rs. 30 /-
-                        </p>
+                        <h2 class="card-front__heading" card-title></h2>
+                        <p class="card-front__text-price" card-price></p>
                     </div>
 
                     <div class="card-front__bt" card-bottom-white>
-                        <p class="card-front__text-view card-front__text-view--ski" card-btn-text>
-                            Use This
-                        </p>
+                        <p class="card-front__text-view card-front__text-view--ski" card-btn-text></p>
                     </div>
                 </div>
             </div>

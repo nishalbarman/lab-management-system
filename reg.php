@@ -1,7 +1,7 @@
 <?php
 // Initialize the season
 session_start();
-
+include("core/base.php");
 
 if (isset($_SESSION['logged']) && $_SESSION('logged') !== null) { // If season not exist
     if ($_SESSION['role'] === 0) { // If technician
@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
 
             <label class="pure-material-checkbox">
                 <input type="checkbox" required>
-                <span>I agree to the <a href="https://codepen.io/collection/nZKBZe/" target="_blank"
+                <span>I agree to the <a href="<?php $BASE_URL; ?>" target="_blank"
                         title="Actually not a Terms of Service">Terms of Service</a></span>
             </label>
 

@@ -1,16 +1,17 @@
 <?php
 
 session_start();
+include("core/base.php");
 
 if (isset($_SESSION['loggedin'])) { // If season not exist
     if ($_SESSION['role'] === 0) { // If technician
-        header("location: ./technician/index.php");
+        header("location: ./technician/dashboard.php");
         exit;
     } else if ($_SESSION['role'] === 1) { // If admin
         header("location: ./csr-admin/dashboard.php");
         exit;
     } else if ($_SESSION['role'] === 2) { // If normal user
-        header("location: ./client/index.php");
+        header("location: ./client/dashboard.php");
         exit;
     }
 }
