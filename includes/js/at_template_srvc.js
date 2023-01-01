@@ -41,7 +41,13 @@ function getMenu() {
         const cardReg = menu.querySelector("[card-count]");
         cardReg.setAttribute(
           "onclick",
-          "cardCount(" + user.id + ", '" + email + "')"
+          "cardCount(" +
+            user.id +
+            ", '" +
+            email +
+            "', '../templates/srvc-fill/" +
+            user.url +
+            ".php')"
         );
         let color =
           "linear-gradient(to bottom, " +

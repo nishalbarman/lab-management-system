@@ -9,66 +9,30 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Nishal Barman">
+    <?php if ($_SESSION['role'] === 1) { ?>
+    <title>HealthKind LAB | Admin Portal</title>
+    <?php } else if ($_SESSION['role'] === 0) { ?>
     <title>HealthKind LAB | Technician Portal</title>
-    <!-- <link href="../includes/css/admn_dashboard.css" rel="stylesheet">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"> -->
+    <?php } else { ?>
+    <title>HealthKind LAB | Client Portal</title>
+    <?php } ?>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-    <!-- <link href="../includes/css/headers.css" rel="stylesheet"> -->
     <link href="../includes/css/card_styles.css" rel="stylesheet">
-
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <style>
-    /* .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-    }
-
-    @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-            font-size: 3.5rem;
-        }
-    }
-
-    .b-example-divider {
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-    }
-
-    .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-    }
-
-    .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-    }
-*/
     .row {
         padding: 0px 50px 0px 50px;
     }
-
-    /* .main {
-        padding-left: 20px;
-        padding-right: 20px;
-    } 
 
     .card:hover {
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         transition: 0.3s;
         height: 15.2rem;
         width: 13.1rem;
-        // cursor: pointer; 
-
-    } */
+        cursor: pointer;
+    }
 
     ::selection {
         background-color: black;
@@ -200,35 +164,117 @@ session_start();
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
+                    <caption class="text-center">&copy; HealthKind LAB</caption>
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Technician</th>
-                            <th scope="col">Action</th>
-                            <th scope="col">Creation</th>
+                            <th style="text-align: center;" scope="col">#</th>
+                            <th style="text-align: center;" scope="col">NAME</th>
+                            <th style="text-align: center;" scope="col">AGE</th>
+                            <th style="text-align: center;" scope="col">TECHNICIAN</th>
+                            <th style="text-align: center;" scope="col">DOWNLOADS</th>
+                            <th style="text-align: center;" scope="col">CREATED</th>
+                            <th style="text-align: center;" scope="col">ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php include('../includes/config/connect.php');
+                        // $sql = "select * from reports limit 10;";
+                        $sql = "SELECT * FROM ( SELECT * FROM reports ORDER BY id DESC LIMIT 10 )Var1 ORDER BY id ASC;";
+                        $result = $conn->query($sql);
+                        $data = $result->fetch_all(MYSQLI_ASSOC);
+                        $data = array_reverse($data);
+                        foreach ($data as $rp_dtl): ?>
+                        <?php if (!isset($_SESSION['last_id'])) {
+                            $_SESSION['last_id'] = $rp_dtl['id'];
+                        } ?>
                         <tr>
-                            <?php
-                            // $revf = array_reverse($files);
-                            // foreach ($revf as $file): ?>
-                            <td>1,001</td>
-                            <td>random</td>
-                            <td>data</td>
-                            <td>placeholder</td>
-                            <td>All Bll</td>
-                            <td>text</td>
-                            <?php // endforeach; ?>
-                        </tr>
 
+                            <td style="text-align:center;">
+                                <?php echo $rp_dtl['id'];
+                                    $_SESSION['lastserial'] = $rp_dtl['id']; ?>
+                            </td>
+                            <td style="text-align:center;">
+                                <?php echo ucwords(strtolower(str_replace("_", " ", $rp_dtl['patient_name']))); ?>
+                            </td>
+                            <td style="text-align:center;">
+                                <?php echo $rp_dtl['patient_age']; ?>
+                            </td>
+                            <td style="text-align:center;">
+                                <?php echo $rp_dtl['created_by']; ?>
+                            </td>
+
+                            <td style="text-align:center;">
+                                <?php // echo floor($rp_dtl['size'] / 1000) . ' KB'; ?>
+                                <?php echo $rp_dtl['downloads'] . ' Times'; ?>
+                            </td>
+
+                            <td style="text-align:center;">
+                                <?php if ($rp_dtl['creation_date'] === null) {
+                                    echo "01/01/1900";
+                                } else {
+                                    echo $rp_dtl['creation_date'];
+                                }
+                                ?>
+                            </td>
+
+                            <td style="text-align:center;">
+                                <?php echo $rp_dtl['creation_date']; ?>
+                                <!-- Example single danger button -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn  btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <span class="material-symbols-outlined">
+                                            drive_file_rename_outline
+                                        </span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item"
+                                                href="reports.php?serial=<?php echo $rp_dtl['id'] ?>"><img
+                                                    style="width: 27px; height: 27px; margin-right: 5px"
+                                                    src="../assets/table_dropdowns/download.png" />
+                                                Download</a></li>
+                                        <li><a class="dropdown-item"
+                                                href="delete.php?serial=<?php echo $rp_dtl['id'] ?>&file=<?php echo $rp_dtl['file_name']; ?>"><img
+                                                    style="width: 25px; height: 25px; margin-right: 5px"
+                                                    src="../assets/table_dropdowns/remove.png" />
+                                                Delete</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="changeFile.php?file=<?php echo $rp_dtl['file_name']; ?>"><img
+                                                    style="width: 24px; height: 24px; margin-right: 5px"
+                                                    src="../assets/table_dropdowns/update.png" />
+                                                Replace with Local</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="<?php echo 'Report.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </td>
+
+
+                        </tr>
+                        <?php endforeach; ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7" class="text-center"><a style="text-decoration: none; color: red;"
+                                    href="report-list.php?<?php echo 'id=' . $_SESSION['lastserial'] . '&lid=' . $_SESSION['last_id']; ?>">
+                                    View
+                                    More</a></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
     </div>
+
+
+    <!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> -->
+
 
     <script src="../includes/js/everyone_dashboard.js"></script>
     <script src="../includes/js/count-card-click.js"></script>

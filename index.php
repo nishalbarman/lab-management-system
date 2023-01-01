@@ -181,8 +181,11 @@ if (isset($_SESSION['loggedin'])) {
                     blood reports, urine reports, liver function test reports etc. etc. by collecting theire blood
                     sample or any other samples required to get.</p>
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                    <button type="button" class="btn btn-primary btn-lg px-4 gap-3"
-                        onclick="window.location='./reg.php'">Let's Start ...</button>
+
+                    <!-- <button type="button" class="btn btn-outline-primary">Primary</button> -->
+
+                    <button type="button" class="btn btn-outline-danger btn-lg px-4 gap-3"
+                        onclick="window.location='./reg.php'">Book a Technician</button>
                     <!-- <button type="button" class="btn btn-outline-secondary btn-lg px-4"
                         onclick="window.location='./auth.php'">Login</button> -->
                 </div>

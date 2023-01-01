@@ -21,8 +21,8 @@ if (empty($url)) {
 }
 
 if (empty($p_name)) {
-    $p_name = "NULL";
-    $p_age = "NULL Years";
+    $p_name = "Not Declared";
+    $p_age = "N/A";
 }
 
 $filename = time() . '_' . $p_name . '.pdf';

@@ -31,8 +31,7 @@ if (!$_SESSION) { // If season not exist
         transition: 0.3s;
         height: 15.2rem;
         width: 13.1rem;
-        /* cursor: pointer; */
-
+        cursor: pointer;
     }
 
     ::selection {
