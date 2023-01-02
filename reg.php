@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssis", $name, $email, $phone, $password, $role, $pic);
 
-    $name = $_POST['name'];
+    $name = ucwords(strtolower($_POST['name']));
     $email = $_POST['email'];
     $password = $_POST['password'];
     $phone = $_POST['phone'];

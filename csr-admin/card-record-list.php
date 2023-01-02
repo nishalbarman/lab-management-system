@@ -1,0 +1,290 @@
+<?php
+session_start();
+include("../core/base.php");
+$is_page_refreshed = (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] == 'max-age=0');
+
+if ($is_page_refreshed) {
+    $_GET['id'] = '';
+    $_GET['lid'] = '';
+}
+?>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Nishal Barman">
+    <?php if ($_SESSION['role'] === 1) { ?>
+    <title>HealthKind LAB | Admin Portal</title>
+    <?php } else if ($_SESSION['role'] === 0) { ?>
+    <title>HealthKind LAB | Technician Portal</title>
+    <?php } else { ?>
+    <title>HealthKind LAB | Client Portal</title>
+    <?php } ?>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link href="../includes/css/card_styles.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .row {
+        padding: 0px 50px 0px 50px;
+    }
+
+    .card:hover {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        transition: 0.3s;
+        height: 15.2rem;
+        width: 13.1rem;
+        cursor: pointer;
+    }
+
+    ::selection {
+        background-color: black;
+        color: whitesmoke;
+    }
+    </style>
+
+    <script>
+    function init() {
+
+        setUser();
+        scrollId();
+
+        function setUser() {
+            let email = '<?php echo $_SESSION['email']; ?>';
+            window.localStorage.setItem("email", email);
+        }
+
+        function scrollId() {
+            let id = '<?php if (!isset($_GET['id']) || $_GET['id'] === '') {
+                echo '';
+            } else {
+                echo $_GET['id'];
+            } ?> ';
+            let lastId = '<?php if (!isset($_GET['lid']) || $_GET['lid'] === '') {
+            echo '';
+        } else {
+            echo $_GET['lid'];
+        } ?> ';
+
+            if (lastId != '') {
+                for (let count = id; count <= lastId; count++) {
+                    console.log("count:" + count);
+                    try {
+                        // document.getElementById(count).style.backgroundColor = 'lightyellow';
+                        document.getElementById(count).innerHTML = '';
+                    } catch (Exception) {
+                        count++
+                    }
+                }
+
+            }
+            // const scrollMe = document.getElementById('click_me');
+            // scrollMe.click();
+        }
+    }
+    </script>
+</head>
+
+<body onload="init()">
+
+    <?php include '../headers/header_admin.php'; ?>
+
+    <a id="click_me" href="#<?php if (!isset($_GET['id'])) {
+    echo '';
+} else {
+    echo $_GET['id'];
+} ?>" style="display: none"></a>
+    <div class="container-fluid">
+        <div class="row">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Card SQL Records</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <!-- <div class="btn-group me-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                        <span data-feather="calendar" class="align-text-bottom"></span>
+                        This week
+                    </button> -->
+
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        <span class="material-symbols-outlined" style="vertical-align: middle;">
+                            add_circle
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <caption class="text-center">&copy; HealthKind LAB</caption>
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;" scope="col">#</th>
+                            <th style="text-align: center;" scope="col">NAME</th>
+                            <th style="text-align: center;" scope="col">PRICE</th>
+                            <th style="text-align: center;" scope="col">TOP COLOR</th>
+                            <th style="text-align: center;" scope="col">BOTTOM COLOR</th>
+                            <th style="text-align: center;" scope="col">BUTTON NAME</th>
+                            <th style="text-align: center;" scope="col">NEW CARD</th>
+                            <th style="text-align: center;" scope="col">KEYWORDS</th>
+                            <th style="text-align: center;" scope="col">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php include('../includes/config/connect.php');
+                        $sql = "select * from cards;";
+                        // $sql = "SELECT * FROM ( SELECT * FROM reports ORDER BY id DESC LIMIT 10 )Var1 ORDER BY id ASC;";
+                        $result = $conn->query($sql);
+                        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+                        foreach ($data as $rp_dtl): ?>
+                        <tr id="<?php echo $rp_dtl['id']; ?>">
+
+                            <td style="text-align:center;">
+                                <?php echo $rp_dtl['id']; ?>
+                            </td>
+                            <td style="text-align:center;">
+                                <?php echo $rp_dtl['cardname']; ?>
+                            </td>
+                            <td style="text-align:center;">
+                                <?php echo $rp_dtl['price']; ?>
+                            </td>
+                            <td style="text-align:center; width: 12%;">
+                                <input type="color" value="<?php echo $rp_dtl['color_f']; ?>" readonly disabled />
+                            </td>
+
+                            <td style="text-align:center;width: 15%;">
+                                <?php // echo floor($rp_dtl['size'] / 1000) . ' KB'; ?>
+                                <input type="color" value="<?php echo $rp_dtl['color_s']; ?>" readonly disabled />
+                            </td>
+
+                            <td style="text-align:center; width: 15%;">
+                                <?php echo $rp_dtl['btn_name']; ?>
+                            </td>
+
+                            <td style="text-align:center; width: 10%;">
+                                <?php if ($rp_dtl['new'] === 0) {
+                                    echo "False";
+                                } else {
+                                    echo "True";
+                                }
+                                ?>
+                            </td>
+                            <td style="text-align:left;">
+                                <?php echo $rp_dtl['keywords']; ?>
+                            </td>
+
+                            <td style="text-align:center;">
+                                <!-- Example single danger button -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn  btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <span class="material-symbols-outlined">
+                                            drive_file_rename_outline
+                                        </span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <!-- <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                                                                                                                                                                                                            data-bs-target="#deleteConfirm">Delete</a>
+                                                                                                                                                                                                                    </li> -->
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                                data-bs-target="#deleteConfirm"
+                                                onclick="queryRun('<?php echo $rp_dtl['id'] ?>','true')"><img
+                                                    style="width: 25px; height: 25px; margin-right: 5px"
+                                                    src="../assets/table_dropdowns/remove.png" />
+                                                Delete</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="changeFile.php?file=<?php //echo $rp_dtl['file_name']; ?>"><img
+                                                    style="width: 24px; height: 24px; margin-right: 5px"
+                                                    src="../assets/table_dropdowns/update.png" />
+                                                Replace with Local</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="<?php // echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="deleteConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Are U Sure?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label>
+                            Continue to delete the record from sql database.
+                        </label>
+                        <input id="modal-id" type="hidden" />
+                        <input id="modal-reset" type="hidden" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="finalCommand()">Yes, Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function queryRun(id, reset) {
+
+        document.getElementById('modal-id').value = id;
+        document.getElementById('modal-reset').value = reset;
+
+    }
+
+    function finalCommand() {
+        let id = document.getElementById('modal-id').value;
+        let reset = document.getElementById('modal-reset').value;
+
+        let query = "DELETE FROM `cards` WHERE id=" + id;
+        const formData = new FormData();
+        formData.append("query", query);
+        formData.append("reset", reset);
+
+        let options = {
+            method: "POST",
+            body: formData,
+            // headers: {
+            //     "Content-type": "multipart/form-data"
+            // }
+        };
+
+        fetch('../core/api/query-run.php', options).then(res => res.json()).then(data => {
+
+        });
+    }
+    </script>
+
+    <!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> -->
+
+</body>
+
+</html>

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link href="../includes/css/headers.css" rel="stylesheet">
+    <link href="../includes/css/insert_card.css" rel="stylesheet">
     <style>
     .hide {
         display: none;
@@ -71,7 +72,18 @@
                                     class="nav-link px-2 link-dark">Report List</a></li>
 
                             <?php } ?>
-                            <li><a class="dropdown-item" href="#">TXN Report Retrieve</a></li>
+                            <?php if ($_SESSION['role'] === 1) { ?>
+                            <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">Insert Card</a></li>
+
+                            <?php } ?>
+
+                            <?php if ($_SESSION['role'] === 1) { ?>
+                            <li><a class="dropdown-item" href="<?php echo $BASE_URL; ?>/csr-admin/card-record-list.php"
+                                    class="nav-link px-2 link-dark">SQL Card Records</a></li>
+                            <?php } ?>
+
+                            <li><a class="dropdown-item" href="#">Report Retrieve (TXN)</a></li>
                             <li><a class="dropdown-item" href="#">Custom Upload</a></li>
                             <li><a class="dropdown-item" href="#">QR Creation</a></li>
                             <li><a class="dropdown-item" href="#">Download</a></li>
@@ -111,6 +123,82 @@
         </div>
     </header>
 
+
+    <!-- Modals start here -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color: transparent; border: none">
+                <!-- <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> -->
+                <div class="modal-body" style="background-color:transparent;">
+                    <div class="form-style-3">
+                        <form id="cardForm">
+                            <fieldset>
+                                <legend>Card details</legend>
+                                <label for="field1"><span>Name <span class="required">*</span></span><input type="text"
+                                        class="input-field" name="card_title" value="" input-fields /></label>
+                                <label for="field2"><span>Price <span class="required">*</span></span><input type="text"
+                                        class="input-field" name="card_price" value="" input-fields /></label>
+                                <label for="field3"><span>Top Color <span class="required">*</span></span><input
+                                        type="color" class="input-field" name="card_top_color" value=""
+                                        input-fields /></label>
+                                <label for="field3"><span>Bottom Color <span class="required">*</span></span><input
+                                        type="color" class="input-field" name="card_bottom_color" value=""
+                                        input-fields /></label>
+                                <label for="field3"><span>Button Name <span class="required">*</span></span><input
+                                        type="text" class="input-field" name="card_btn" value="" input-fields /></label>
+                                <label for="field3"><span>URL <span class="required">*</span></span><input type="text"
+                                        class="input-field" name="card_url" value="" input-fields /></label>
+                                <label for="field4"><span>New Label<span class="required">*</span></span><select
+                                        name="new_label" class="select-field">
+                                        <option value="1">Show</option>
+                                        <option value="0">Don't Show</option>
+                                    </select></label>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Optimization</legend>
+                                <label for="field6"><span>Keywords <span class="required">*</span></span><textarea
+                                        name="card_keywords" class="textarea-field" input-fields></textarea></label>
+
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer" style="display:flex; justify-content: center;">
+                    <button type="button" class="card-insert-btn" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="card-insert-btn" onclick="insertCard()">Submit</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function insertCard() {
+        const inputFields = document.querySelectorAll('[input-fields]');
+        let error = 0;
+        inputFields.forEach(element => {
+            if (element.value === '') {
+                error = 1;
+            }
+        });
+        if (error === 1) {
+            alert("All input field are required.");
+        } else {
+            let options = {
+
+                method: "post",
+                body: new FormData(document.getElementById("cardForm"))
+
+            }
+            fetch('../core/api/insert-card.php', options).then(res => res.json()).then(data => {})
+        }
+    }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>

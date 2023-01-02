@@ -60,24 +60,29 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    // if (isset($_POST['email'])) {
-    //     $email = $_POST['email'];
-    //     $sql1 = $sql . "`email`=?";
-    //     $bind_p = "s";
-    //     $stmt = $conn->prepare($sql1);
-    //     $stmt->bind_param($bind_p, $email);
-    //     $stmt->execute();
-    //     if ($stmt->get_warnings()) {
-    //         $error = "Error in updating of email";
-    //     }
-    // }
+    if (isset($_POST['password'])) {
+        $password = $_POST['password'];
+        $sql = "UPDATE `auth` SET `password`=? WHERE `email`=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $password, $_SESSION['email']);
+        $stmt->execute();
 
-    // if (isset($_POST['password'])) {
-    //     $nm_ps = true;
-    //     $password = $_POST['password'];
-    //     $sql = ",`email`=?";
-    //     $bind_p = "s";
-    // }
+        if ($stmt->error) {
+            $error[] = "Error in updating of password";
+        }
+    }
+
+    if (isset($_POST['password'])) {
+        $email = $_POST['email'];
+        $sql1 = $sql . "`email`=?";
+        $bind_p = "s";
+        $stmt = $conn->prepare($sql1);
+        $stmt->bind_param($bind_p, $email);
+        $stmt->execute();
+        if ($stmt->get_warnings()) {
+            $error = "Error in updating of email";
+        }
+    }
 
     if (isset($_POST['phone'])) {
         $phone = $_POST['phone'];
