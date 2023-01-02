@@ -1,7 +1,7 @@
 const search = document.querySelector("#search-input");
 let email = window.localStorage.getItem("email");
-// const BASE_URL = "http://localhost/hk_new";
-const BASE_URL = "http://13.127.248.80";
+const BASE_URL = "http://localhost/hk_new";
+// const BASE_URL = "http://13.127.248.80";
 
 let prevValue;
 let value;
@@ -29,7 +29,7 @@ getMenu();
 function getMenu() {
   const menuTemplate = document.querySelector("[data-menu-template]"); // The template we want to copy
   const menuCards = document.querySelector("[menu-cards]"); // The section in which we want to integrate
-  fetch(BASE_URL + "/hk_new/core/api/get-cards.php")
+  fetch(BASE_URL + "/core/api/get-cards.php")
     .then((res) => res.json())
     .then((data) => {
       console.log(data);

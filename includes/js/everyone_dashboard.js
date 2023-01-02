@@ -1,7 +1,7 @@
 const search = document.querySelector("#search-input");
 let email = window.localStorage.getItem("email");
-// const BASE_URL = "http://localhost/hk_new";
-const BASE_URL = "http://13.127.248.80";
+const BASE_URL = "http://localhost/hk_new";
+// const BASE_URL = "http://13.127.248.80";
 
 let prevValue;
 let value;

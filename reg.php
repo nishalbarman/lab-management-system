@@ -31,8 +31,7 @@ if (isset($_POST['submit'])) {
     $role = $_POST['role'];
     $pic = time() . "_" . $_FILES['image']['name'];
 
-    $destination = "uploads/profile_pic/" . $pic;
-    ;
+    $destination = "./uploads/profile_pic/" . $pic;
 
     $check = getimagesize($_FILES['image']['tmp_name']);
 
@@ -49,13 +48,13 @@ if (isset($_POST['submit'])) {
         } else {
 
             echo "<script>
-                alert('Registration Failed, Please try again.');
+                alert('Registration Failed, Profile Upload Failed');
             </script>";
             // Call an modal
         }
     } else {
         echo "<script>
-                alert('Registration Failed, Please try again.');
+                alert('Please select a valid image file.');
             </script>";
         // Call an modal
     }

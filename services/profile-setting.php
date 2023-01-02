@@ -48,9 +48,9 @@ if (isset($_POST['submit'])) {
 
     if (isset($_POST['name'])) {
         $name = $_POST['name'];
-        $sql = "UPDATE `auth` SET `name`=?";
+        $sql = "UPDATE `auth` SET `name`=? WHERE `email`=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $name);
+        $stmt->bind_param("ss", $name, $_SESSION['email']);
         $stmt->execute();
 
         if ($stmt->error) {
@@ -81,9 +81,9 @@ if (isset($_POST['submit'])) {
 
     if (isset($_POST['phone'])) {
         $phone = $_POST['phone'];
-        $sql = "UPDATE `auth` SET `phone`=?";
+        $sql = "UPDATE `auth` SET `phone`=? WHERE `email`=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $phone);
+        $stmt->bind_param("ss", $phone, $_SESSION['email']);
         $stmt->execute();
         if ($stmt->error) {
             $error[] = "Error in updating of name";
@@ -93,31 +93,38 @@ if (isset($_POST['submit'])) {
     }
 
     // $role = $_POST['role'];
-    if (isset($_FILES['pic']["name"])) {
-
-        $pic = time() . "_" . $_FILES['pic']['name'];
+    if (($_POST['image-got'] == 1)) {
+        if ($_SESSION['role'] === 1) {
+            $pic = "superior_" . time() . "_" . $_FILES['pic']['name'];
+        } else if ($_SESSION['role'] === 0) {
+            $pic = "technician_" . time() . "_" . $_FILES['pic']['name'];
+        } else if ($_SESSION['role'] === 2) {
+            $pic = "client_" . time() . "_" . $_FILES['pic']['name'];
+        }
         $destination = "../uploads/profile_pic/";
         $temp_name = $_FILES['pic']['tmp_name'];
-        $sql = "UPDATE `auth` SET `image`=?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $pic);
-        $stmt->execute();
         $old_pic = $_SESSION['profile'];
 
-        if ($stmt->error) {
-            $error[] = "Error in updating of photo";
-        } else {
-            if (move_uploaded_file($temp_name, $destination . $pic)) {
-                unlink($destination . $old_pic);
-                $_SESSION['profile'] = $pic;
-            } else {
-                $sql = "UPDATE `auth` SET `image`=?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("s", $_SESSION['profile']);
-                $stmt->execute();
-            }
+        if (move_uploaded_file($temp_name, $destination . $pic)) {
 
-        }
+            $sql = "UPDATE `auth` SET `image`=? WHERE `email`=?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $pic, $_SESSION['email']);
+            $stmt->execute();
+            if ($stmt->error) {
+                $error[] = "Error in updating of photo";
+            } else {
+                $_SESSION['profile'] = $pic;
+                unlink($destination . $old_pic);
+            }
+        } // else {
+        // $error[] = "Error moving photo";
+        // echo "<script>alert('Error in pic upload.');</script>";
+        // $sql = "UPDATE `auth` SET `image`=?";
+        // $stmt = $conn->prepare($sql);
+        // $stmt->bind_param("s", $_SESSION['profile']);
+        // $stmt->execute();
+        // }
 
         if (!$error) {
             echo "<script>alert('Settings Updated!');</script>";
@@ -138,10 +145,20 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/server_setting.css">
-
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <style>
     #search-input {
         display: none;
+    }
+
+    .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
     }
     </style>
 </head>
@@ -287,12 +304,15 @@ c30 -29 20 -44 -29 -44 -49 0 -53 5 -29 38 18 26 37 28 58 6z" />
                                     value="<?php echo $_SESSION['name']; ?>" name="name">
                             </div>
                             <div class='pets-photo'>
-                                <!-- <button id='pets-upload' onclick="document.getElementById('image').click(); ">
-                                    <i class='fas fa-camera-retro'></i>
-                                </button> -->
-                                <label id="pic_label" for='image'>Upload a photo</label>z
-                                <input id="image" type="file" name="pic"
-                                    onchange="document.getElementById('pic_label').innerHTML = 'File Accessed';" />
+
+                                <span style="font-size: 40px" class="material-symbols-outlined">
+                                    cloud_upload
+                                </span>
+
+                                <label id="pic_label" for='image'>&nbsp;Update Profile</label>
+                                <input id="image" class="inputfile" type="file" name="pic"
+                                    onchange="document.getElementById('pic_label').innerHTML = '&nbsp;File Accessed';document.getElementById('image-got').value = '1';" />
+                                <input id="image-got" type="hidden" value="0" name="image-got" />
                             </div>
                         </div>
                         <div class='set'>
@@ -303,8 +323,8 @@ c30 -29 20 -44 -29 -44 -49 0 -53 5 -29 38 18 26 37 28 58 6z" />
                             </div>
                             <div class='pets-birthday'>
                                 <label for='pets-birthday'>Phone</label>
-                                <input id='pets-birthday' placeholder='+910000000000' type='number'
-                                    value="<?php echo $_SESSION['phone']; ?>" name="phone">
+                                <input id='pets-birthday' name="phone" placeholder='+910000000000' type='number'
+                                    value="<?php echo $_SESSION['phone']; ?>">
                             </div>
                         </div>
                         <div class='set'>
@@ -325,6 +345,17 @@ c30 -29 20 -44 -29 -44 -49 0 -53 5 -29 38 18 26 37 28 58 6z" />
                                     <input id='pet-neutered' name='maintenance' type='radio' value='false'>
                                     <label for='pet-neutered'>False</label>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class='set'>
+                            <div class='pets-breed'>
+                                <label for='pets-breed'>Old Password</label>
+                                <input id='pets-breed' placeholder="Pass" type='password' value="" name="password">
+                            </div>
+                            <div class='pets-birthday'>
+                                <label for='pets-birthday'>New Password</label>
+                                <input id='pets-birthday' placeholder="Pass" type='text' value="" name="password">
                             </div>
                         </div>
                         <div class='pets-weight'>
