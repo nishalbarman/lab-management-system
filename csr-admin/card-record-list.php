@@ -155,10 +155,16 @@ if ($is_page_refreshed) {
                                 <?php echo $rp_dtl['id']; ?>
                             </td>
                             <td style="text-align:center;">
-                                <?php echo $rp_dtl['cardname']; ?>
+                                <input type="text"
+                                    onchange="cardUpdate(this, 'cardname', '<?php echo $rp_dtl['id']; ?>')"
+                                    style="background-color: transparent; border: none; /*outline: none;*/ text-align: center; width:170px;"
+                                    value="<?php echo $rp_dtl['cardname']; ?>" />
                             </td>
                             <td style="text-align:center;">
-                                <?php echo $rp_dtl['price']; ?>
+                                <input type="text" onchange="cardUpdate(this, 'price', '<?php echo $rp_dtl['id']; ?>')"
+                                    style="background-color: transparent; border: none; /*outline: none;*/ text-align: center; width:100px;"
+                                    value="<?php echo $rp_dtl['price']; ?>" />
+
                             </td>
                             <td style="text-align:center; width: 12%;">
                                 <input type="color" value="<?php echo $rp_dtl['color_f']; ?>" readonly disabled />
@@ -170,7 +176,11 @@ if ($is_page_refreshed) {
                             </td>
 
                             <td style="text-align:center; width: 15%;">
-                                <?php echo $rp_dtl['btn_name']; ?>
+                                <input type="text"
+                                    onchange="cardUpdate(this, 'btn_name', '<?php echo $rp_dtl['id']; ?>')"
+                                    style="background-color: transparent; border: none; /*outline: none;*/ text-align: center;  width:100px;"
+                                    value="<?php echo $rp_dtl['btn_name']; ?>" />
+
                             </td>
 
                             <td style="text-align:center; width: 10%;">
@@ -182,6 +192,10 @@ if ($is_page_refreshed) {
                                 ?>
                             </td>
                             <td style="text-align:left;">
+                                <!-- <input type="text"
+                                                                                                                                                                                                                            onchange="cardUpdate(this, 'keywords', '<?php echo $rp_dtl['id']; ?>')"
+                                                                                                                                                                                                                            style="background-color: transparent; border: none; outline: none; text-align: left;"
+                                                                                                                                                                                                                            value="" /> -->
                                 <?php echo $rp_dtl['keywords']; ?>
                             </td>
 
@@ -195,9 +209,6 @@ if ($is_page_refreshed) {
                                         </span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <!-- <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                                                                                                                                                                                            data-bs-target="#deleteConfirm">Delete</a>
-                                                                                                                                                                                                                    </li> -->
                                         <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
                                                 data-bs-target="#deleteConfirm"
                                                 onclick="queryRun('<?php echo $rp_dtl['id'] ?>','true')"><img
@@ -205,17 +216,17 @@ if ($is_page_refreshed) {
                                                     src="../assets/table_dropdowns/remove.png" />
                                                 Delete</a>
                                         </li>
-                                        <li><a class="dropdown-item"
-                                                href="changeFile.php?file=<?php //echo $rp_dtl['file_name']; ?>"><img
-                                                    style="width: 24px; height: 24px; margin-right: 5px"
-                                                    src="../assets/table_dropdowns/update.png" />
-                                                Replace with Local</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                                href="<?php // echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
-                                        </li>
+                                        <!-- <li><a class="dropdown-item"
+                                                        href="changeFile.php?file=<?php //echo $rp_dtl['file_name']; ?>"><img
+                                                            style="width: 24px; height: 24px; margin-right: 5px"
+                                                            src="../assets/table_dropdowns/update.png" />
+                                                        Replace with Local</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                        href="<?php // echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
+                                                </li> -->
                                     </ul>
                                 </div>
 
@@ -253,11 +264,35 @@ if ($is_page_refreshed) {
     </div>
 
     <script>
-    function queryRun(id, reset) {
+    function cardUpdate(target, column, id) {
+        let value = target.value;
+        let reset = 'false';
+        console.log(value);
+        let sql = "UPDATE `cards` SET `" + column + "`='" + value + "' WHERE id=" + id;
+        console.log(sql);
+        const formData = new FormData();
+        formData.append("query", sql);
+        formData.append("reset", reset);
 
+        let options = {
+            method: "POST",
+            body: formData,
+            // headers: {
+            //     "Content-type": "multipart/form-data"
+            // }
+        };
+
+        fetch('../core/api/query-run.php', options).then(res => res.json()).then(data => {
+            console.log(data);
+            if (data.success == "true") {
+                alert("Column Updated Successfully.");
+            }
+        });
+    }
+
+    function queryRun(id, reset) {
         document.getElementById('modal-id').value = id;
         document.getElementById('modal-reset').value = reset;
-
     }
 
     function finalCommand() {
@@ -278,7 +313,7 @@ if ($is_page_refreshed) {
         };
 
         fetch('../core/api/query-run.php', options).then(res => res.json()).then(data => {
-
+            console.log(data);
         });
     }
     </script>
