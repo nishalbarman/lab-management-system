@@ -187,3 +187,13 @@
   background: linear-gradient(to bottom right, #15d4ee, #7dbddb);
   border: none;
 }
+
+@media only screen and (max-width: 716px) {
+  .left-container {
+    display: none;
+  }
+
+  .set {
+    display: block;
+  }
+}

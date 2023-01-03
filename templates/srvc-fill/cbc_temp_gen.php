@@ -1,6 +1,33 @@
 <?php
-include '../../headers/header_admin.php';
-include '../../includes/config/connect.php';
+
+session_start();
+// include('../../headers/header_admin.php');
+include("../../core/base.php");
+include('../../includes/config/connect.php');
+
+$sample = '';
+$name = '';
+$_age = '';
+$age = '';
+$gender = '';
+$reffered = '';
+$date = '';
+$ige = '';
+$tlc = '';
+$neu = '';
+$lym = '';
+$mono = '';
+$eos = '';
+$bas = '';
+$hb = '';
+$plc = '';
+$rbc = '';
+$pcv = '';
+$mcv = '';
+$mch = '';
+$mchc = '';
+$rdw = '';
+$transaction = '';
 
 $selectMaxID = 'SELECT id FROM reports ORDER BY id DESC LIMIT 1';
 $maxIdResult = mysqli_query($conn, $selectMaxID); //run query
@@ -30,7 +57,7 @@ if (isset($_POST['create'])) {
     $gender = $_POST['patient_gender'];
     $reffered = $_POST['dr_name'];
     $date = $_POST['report_date'];
-    $ige = $_POST['ige_val'];
+    // $ige = $_POST['ige_val'];
 
     $tlc = $_POST['tlc'];
     $neu = $_POST['neu'];
@@ -49,7 +76,7 @@ if (isset($_POST['create'])) {
 
     $transaction = $_POST['transaction_id'];
 
-    $return_url1 = "cbc.php?serial=" . $serial . "&patient_sample=" . $sample . "&report_date=" . $date . "&dr_name=" . $reffered . "&patient_name=" . $name;
+    $return_url1 = "../srv-repo/cbc.php?serial=" . $serial . "&patient_sample=" . $sample . "&report_date=" . $date . "&dr_name=" . $reffered . "&patient_name=" . $name;
     $return_url2 = "&patient_age=" . $age . "&patient_gender=" . $gender . "&tlc=" . $tlc . "&neu=" . $neu . "&lym=" . $lym;
     $return_url3 = "&mono=" . $mono . "&eos=" . $eos . "&bas=" . $bas . "&hb=" . $hb . "&plc=" . $plc . "&rbc=" . $rbc . "&pcv=" . $pcv;
     $return_url4 = "&mcv=" . $mcv . "&mch=" . $mch . "&mchc=" . $mchc . "&rdw=" . $rdw . "&create=Submit";
@@ -59,17 +86,13 @@ if (isset($_POST['create'])) {
     $udf2 = base64_encode($return_url2);
     $udf3 = base64_encode($return_url3);
     $udf4 = base64_encode($return_url4);
-    $udf5 = "CBC Report";
-
-    // echo $udf1."<br>".$udf2."<br>".$udf3;
-    // echo "<br>http://healthkind.is-great.net/create/".$return_url1.$return_url2.$return_url3;
-
+    $udf5 = "Complete Blood Count Template";
 }
 
 if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === "no_url") {
     $action = "";
 } else {
-    $action = "http://healthkind.is-great.net/create/verify/index.php";
+    $action = $BASE_URL . "/checkout/index.php";
 }
 
 
@@ -77,25 +100,28 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
 <html>
 
 <head>
-    <title>Blood frp value intitialize</title>
+    <title>Complete Blood Count - Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-        rel="stylesheet">
-    <script>
-    var hash = '<?php echo $udf1 ?>';
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/template-style.css">
 
-    function submitPayuForm() {
-        if (hash == 'no_url') {
+    <script>
+    let hash = '<?php echo $udf1 ?>';
+
+    function submitReportForm() {
+        if (hash != 'no_url') {
+            document.querySelector("[submit-old]").style.display = "none";
+            document.querySelector("[submit-new]").style.display = "block";
+        } else {
             return;
         }
-        document.querySelector("[submit-old]").style.display = "none";
-        document.querySelector("[submit-new]").style.display = "block";
     }
     </script>
 </head>
 
-<body onload="submitPayuForm()">
-    <div class="content">
+<body onload="submitReportForm()">
+    <?php include '../../headers/header_admin.php'; ?>
+    <div class="lets-do">
         <center>
             <br>
             <h class="header">CBC Report<label>
@@ -246,16 +272,9 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
             </div>
         </div>
     </div>
-    <script src="js/report.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
+
+    <script src="../js/report.js"></script>
+
 </body>
 
 </html>

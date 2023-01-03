@@ -57,10 +57,6 @@ include("../core/base.php");
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Top Used Templates</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <!-- <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                        </div> -->
                         <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             <span class="material-symbols-outlined" style="vertical-align: middle;">
@@ -190,26 +186,26 @@ include("../core/base.php");
                             } ?>
                             <tr>
 
-                                <td style="text-align:center;">
+                                <td style="text-align:center; vertical-align: middle;">
                                     <?php echo $rp_dtl['id'];
                                         $_SESSION['lastserial'] = $rp_dtl['id']; ?>
                                 </td>
-                                <td style="text-align:center;">
+                                <td style="text-align:center; vertical-align: middle;">
                                     <?php echo ucwords(strtolower(str_replace("_", " ", $rp_dtl['patient_name']))); ?>
                                 </td>
-                                <td style="text-align:center;">
+                                <td style="text-align:center; vertical-align: middle;">
                                     <?php echo $rp_dtl['patient_age']; ?>
                                 </td>
-                                <td style="text-align:center;">
+                                <td style="text-align:center; vertical-align: middle;">
                                     <?php echo $rp_dtl['created_by']; ?>
                                 </td>
 
-                                <td style="text-align:center;">
+                                <td style="text-align:center; vertical-align: middle;">
                                     <?php // echo floor($rp_dtl['size'] / 1000) . ' KB'; ?>
                                     <?php echo $rp_dtl['downloads'] . ' Times'; ?>
                                 </td>
 
-                                <td style="text-align:center;">
+                                <td style="text-align:center; vertical-align: middle;">
                                     <?php if ($rp_dtl['creation_date'] === null) {
                                         echo "01/01/1900";
                                     } else {
@@ -218,7 +214,7 @@ include("../core/base.php");
                                     ?>
                                 </td>
 
-                                <td style="text-align:center;">
+                                <td style="text-align:center; vertical-align: middle;">
                                     <?php echo $rp_dtl['creation_date']; ?>
                                     <!-- Example single danger button -->
                                     <div class="btn-group">

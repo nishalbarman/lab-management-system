@@ -106,7 +106,7 @@ if ($is_page_refreshed) {
         <div class="row">
             <div
                 class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Card SQL Records</h1>
+                <h1 class="h2">Users SQL Records</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <!-- <div class="btn-group me-2">
                         <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -118,7 +118,7 @@ if ($is_page_refreshed) {
                     </button> -->
 
                     <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
+                        data-bs-target="#regModal">
                         <span class="material-symbols-outlined" style="vertical-align: middle;">
                             add_circle
                         </span>
@@ -132,18 +132,17 @@ if ($is_page_refreshed) {
                         <tr>
                             <th style="text-align: center;" scope="col">#</th>
                             <th style="text-align: center;" scope="col">NAME</th>
-                            <th style="text-align: center;" scope="col">PRICE</th>
-                            <th style="text-align: center;" scope="col">TOP COLOR</th>
-                            <th style="text-align: center;" scope="col">BOTTOM COLOR</th>
-                            <th style="text-align: center;" scope="col">BUTTON NAME</th>
-                            <th style="text-align: center;" scope="col">NEW CARD</th>
-                            <th style="text-align: center;" scope="col">KEYWORDS</th>
+                            <th style="text-align: center;" scope="col">EMAIL</th>
+                            <th style="text-align: center;" scope="col">PHONE</th>
+                            <!-- <th style="text-align: center;" scope="col">PASSWORD</th> -->
+                            <th style="text-align: center;" scope="col">ROLE</th>
+                            <th style="text-align: center;" scope="col">IMAGE</th>
                             <th style="text-align: center;" scope="col">ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php include('../includes/config/connect.php');
-                        $sql = "select * from cards;";
+                        $sql = "SELECT * FROM `auth`;";
                         // $sql = "SELECT * FROM ( SELECT * FROM reports ORDER BY id DESC LIMIT 10 )Var1 ORDER BY id ASC;";
                         $result = $conn->query($sql);
                         $data = $result->fetch_all(MYSQLI_ASSOC);
@@ -155,52 +154,39 @@ if ($is_page_refreshed) {
                                 <?php echo $rp_dtl['id']; ?>
                             </td>
                             <td style="text-align:center; vertical-align: middle;">
-                                <input type="text"
-                                    onchange="cardUpdate(this, 'cardname', '<?php echo $rp_dtl['id']; ?>')"
-                                    style="background-color: transparent; border: none; /*outline: none;*/ text-align: center; width:170px;"
-                                    value="<?php echo $rp_dtl['cardname']; ?>" />
+                                <input type="text" onchange="cardUpdate(this, 'name', '<?php echo $rp_dtl['id']; ?>')"
+                                    style="background-color: transparent; border: none; outline: none; text-align: center; width:170px;"
+                                    value="<?php echo $rp_dtl['name']; ?>" />
                             </td>
-                            <td style="text-align:center; vertical-align: middle;">
-                                <input type="text" onchange="cardUpdate(this, 'price', '<?php echo $rp_dtl['id']; ?>')"
-                                    style="background-color: transparent; border: none; /*outline: none;*/ text-align: center; width:100px;"
-                                    value="<?php echo $rp_dtl['price']; ?>" />
-
+                            <td style="text-align:center; width: 16%; vertical-align: middle;">
+                                <!-- <input type="text" onchange="cardUpdate(this, 'email', '<?php echo $rp_dtl['id']; ?>')"
+                                                                                                                                                                                        style="background-color: transparent; border: none; outline: none; text-align: center; width:100px;"
+                                                                                                                                                                                        value="<?php echo $rp_dtl['email']; ?>" /> -->
+                                <?php echo $rp_dtl['email']; ?>
                             </td>
                             <td style="text-align:center; width: 12%; vertical-align: middle;">
-                                <input type="color"
-                                    onchange="cardUpdate(this, 'color_f', '<?php echo $rp_dtl['id']; ?>')"
-                                    value="<?php echo $rp_dtl['color_f']; ?>" />
+                                <input type="number"
+                                    onchange="cardUpdate(this, 'phone', '<?php echo $rp_dtl['id']; ?>')"
+                                    style="background-color: transparent; border: none; outline: none; text-align: center;"
+                                    value="<?php echo $rp_dtl['phone']; ?>" />
                             </td>
 
-                            <td style="text-align:center;width: 15%; vertical-align: middle;">
-                                <?php // echo floor($rp_dtl['size'] / 1000) . ' KB'; ?>
-                                <input type="color"
-                                    onchange="cardUpdate(this, 'color_s', '<?php echo $rp_dtl['id']; ?>')"
-                                    value="<?php echo $rp_dtl['color_s']; ?>" />
+                            <!-- <td style="text-align:left;width: 15%;">
+                                                                                        <input type="password"
+                                                                                            onchange="cardUpdate(this, 'password', '<?php echo $rp_dtl['id']; ?>')"
+                                                                                            style="background-color: transparent; border: none; outline: none; text-align: center; width:100px;"
+                                                                                            value="<?php echo $rp_dtl['password']; ?>" readonly disabled />
+                                                                                    </td> -->
+
+                            <td style="text-align:center; vertical-align: middle; ">
+                                <input type="text" onchange="cardUpdate(this, 'role', '<?php echo $rp_dtl['id']; ?>')"
+                                    style="background-color: transparent; border: none; outline: none; text-align: center;  width:100px;"
+                                    value="<?php echo $rp_dtl['role']; ?>" />
                             </td>
 
-                            <td style="text-align:center; width: 15%; vertical-align: middle;">
-                                <input type="text"
-                                    onchange="cardUpdate(this, 'btn_name', '<?php echo $rp_dtl['id']; ?>')"
-                                    style="background-color: transparent; border: none; /*outline: none;*/ text-align: center;  width:100px;"
-                                    value="<?php echo $rp_dtl['btn_name']; ?>" />
-
-                            </td>
-
-                            <td style="text-align:center; width: 10%; vertical-align: middle;">
-                                <?php if ($rp_dtl['new'] == 0) {
-                                        echo "False";
-                                    } else {
-                                        echo "True";
-                                    }
-                                    ?>
-                            </td>
-                            <td style="text-align:left; vertical-align: middle;">
-                                <!-- <input type="text"
-                                                                                                                                                                                                                                                                                                                                                                                                                            onchange="cardUpdate(this, 'keywords', '<?php echo $rp_dtl['id']; ?>')"
-                                                                                                                                                                                                                                                                                                                                                                                                                            style="background-color: transparent; border: none; outline: none; text-align: left;"
-                                                                                                                                                                                                                                                                                                                                                                                                                            value="" /> -->
-                                <?php echo $rp_dtl['keywords']; ?>
+                            <td style="text-align:center;width: 18%; vertical-align: middle;">
+                                <img src="../uploads/profile_pic/<?php echo $rp_dtl['image']; ?>"
+                                    style="background-color: transparent; border: none; outline: none; width: 50px; height: 50px;" />
                             </td>
 
                             <td style="text-align:center; vertical-align: middle;">
@@ -215,22 +201,22 @@ if ($is_page_refreshed) {
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
                                                 data-bs-target="#deleteConfirm"
-                                                onclick="queryRun('<?php echo $rp_dtl['id'] ?>','true', 'cards')"><img
+                                                onclick="queryRun('<?php echo $rp_dtl['id'] ?>','true', 'auth')"><img
                                                     style="width: 25px; height: 25px; margin-right: 5px"
                                                     src="../assets/table_dropdowns/remove.png" />
                                                 Delete</a>
                                         </li>
                                         <!-- <li><a class="dropdown-item"
-                                                        href="changeFile.php?file=<?php //echo $rp_dtl['file_name']; ?>"><img
-                                                            style="width: 24px; height: 24px; margin-right: 5px"
-                                                            src="../assets/table_dropdowns/update.png" />
-                                                        Replace with Local</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item"
-                                                        href="<?php // echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
-                                                </li> -->
+                                                            href="changeFile.php?file=<?php //echo $rp_dtl['file_name']; ?>"><img
+                                                                style="width: 24px; height: 24px; margin-right: 5px"
+                                                                src="../assets/table_dropdowns/update.png" />
+                                                            Replace with Local</a></li>
+                                                    <li> -->
+                                        <!-- <hr class="dropdown-divider"> -->
+
+                                        <!-- <li><a class="dropdown-item"
+                                                            href="<?php // echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
+                                                    </li> -->
                                     </ul>
                                 </div>
 
@@ -245,6 +231,7 @@ if ($is_page_refreshed) {
         <!-- Delete Confirm Modal -->
         <?php include '../modals/confirm-dlt-modal.php'; ?>
 
+
     </div>
 
     <script>
@@ -252,7 +239,7 @@ if ($is_page_refreshed) {
         let value = target.value;
         let reset = 'false';
         console.log(value);
-        let sql = "UPDATE `cards` SET `" + column + "`='" + value + "' WHERE id=" + id;
+        let sql = "UPDATE `auth` SET `" + column + "`='" + value + "' WHERE id=" + id;
         console.log(sql);
         const formData = new FormData();
         formData.append("query", sql);
@@ -268,7 +255,7 @@ if ($is_page_refreshed) {
 
         fetch('../core/api/query-run.php', options).then(res => res.json()).then(data => {
             console.log(data);
-            if (data.success === "true") {
+            if (data.success == "true") {
                 alert("Column Updated Successfully.");
             }
         });

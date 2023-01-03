@@ -6,8 +6,10 @@ $user = $_GET['user'];
 
 $sql = "INSERT INTO `views` (`card_id`, `user_id`) VALUES ($file_id, '$user')";
 
-$res = $conn->query($sql);
-
-// print_r(json_encode($data));
+if ($conn->query($sql)) {
+    print_r(json_encode(array("success" => true)));
+} else {
+    print_r(json_encode(array("success" => false)));
+}
 
 ?>

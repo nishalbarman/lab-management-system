@@ -15,6 +15,7 @@ if ($_SESSION["role"] !== 1 && $_SESSION["role"] !== 0) {
 }
 
 // include '../headers/header_admin.php';
+include '../core/base.php';
 include '../includes/config/connect.php';
 
 // if (isset($_POST['maintenance'])) {
@@ -60,29 +61,41 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    if (isset($_POST['password'])) {
-        $password = $_POST['password'];
-        $sql = "UPDATE `auth` SET `password`=? WHERE `email`=?";
+    if (isset($_POST['oldpassword']) && isset($_POST['newpassword'])) {
+        $newpassword = $_POST['newpassword'];
+        $oldpassword = $_POST['oldpassword'];
+
+        $sql = "SELECT * FROM `auth` WHERE `email`=? AND `password`=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $password, $_SESSION['email']);
+        $stmt->bind_param("ss", $_SESSION['email'], $oldpassword);
         $stmt->execute();
+        $result = $stmt->get_result();
+        $count = $result->num_rows;
+        if ($count > 0) {
+            $sql = "UPDATE `auth` SET `password`=? WHERE `email`=?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $newpassword, $_SESSION['email']);
+            $stmt->execute();
 
-        if ($stmt->error) {
-            $error[] = "Error in updating of password";
+            if ($stmt->error) {
+                $error[] = "Error in updating of password";
+            }
+        } else {
+            $error[] = "Old Password Was Invalid.";
         }
     }
 
-    if (isset($_POST['password'])) {
-        $email = $_POST['email'];
-        $sql1 = $sql . "`email`=?";
-        $bind_p = "s";
-        $stmt = $conn->prepare($sql1);
-        $stmt->bind_param($bind_p, $email);
-        $stmt->execute();
-        if ($stmt->get_warnings()) {
-            $error = "Error in updating of email";
-        }
-    }
+    // if (isset($_POST['email'])) {
+    //     $email = $_POST['email'];
+    //     $sql1 = $sql . "`email`=?";
+    //     $bind_p = "s";
+    //     $stmt = $conn->prepare($sql1);
+    //     $stmt->bind_param($bind_p, $email);
+    //     $stmt->execute();
+    //     if ($stmt->get_warnings()) {
+    //         $error = "Error in updating of email";
+    //     }
+    // }
 
     if (isset($_POST['phone'])) {
         $phone = $_POST['phone'];
@@ -97,7 +110,6 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    // $role = $_POST['role'];
     if (($_POST['image-got'] == 1)) {
         if ($_SESSION['role'] === 1) {
             $pic = "superior_" . time() . "_" . $_FILES['pic']['name'];
@@ -122,14 +134,7 @@ if (isset($_POST['submit'])) {
                 $_SESSION['profile'] = $pic;
                 unlink($destination . $old_pic);
             }
-        } // else {
-        // $error[] = "Error moving photo";
-        // echo "<script>alert('Error in pic upload.');</script>";
-        // $sql = "UPDATE `auth` SET `image`=?";
-        // $stmt = $conn->prepare($sql);
-        // $stmt->bind_param("s", $_SESSION['profile']);
-        // $stmt->execute();
-        // }
+        }
 
         if (!$error) {
             echo "<script>alert('Settings Updated!');</script>";
@@ -152,6 +157,7 @@ $conn->close();
     <link rel="stylesheet" href="styles/server_setting.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <?php include '../headers/header_admin.php'; ?>
     <style>
     #search-input {
         display: none;
@@ -169,7 +175,7 @@ $conn->close();
 </head>
 
 <body onload="checkMan()">
-    <?php include '../headers/header_admin.php'; ?>
+
     <div class="form-outer">
         <div class='signup-container'>
             <div class='left-container'>
@@ -356,11 +362,11 @@ c30 -29 20 -44 -29 -44 -49 0 -53 5 -29 38 18 26 37 28 58 6z" />
                         <div class='set'>
                             <div class='pets-breed'>
                                 <label for='pets-breed'>Old Password</label>
-                                <input id='pets-breed' placeholder="Pass" type='password' value="" name="password">
+                                <input id='pets-breed' placeholder="Pass" type='password' value="" name="oldpassword">
                             </div>
                             <div class='pets-birthday'>
                                 <label for='pets-birthday'>New Password</label>
-                                <input id='pets-birthday' placeholder="Pass" type='text' value="" name="password">
+                                <input id='pets-birthday' placeholder="Pass" type='text' value="" name="newpassword">
                             </div>
                         </div>
                         <div class='pets-weight'>

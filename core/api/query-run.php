@@ -19,12 +19,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             $error[] = "Error in executing command.";
         }
 
-        if ($reset == 'true') {
+        if ($reset === 'true') {
             $selectquery = "SELECT id FROM cards ORDER BY id DESC LIMIT 1";
             $result = $conn->query($selectquery);
             $row = $result->fetch_assoc();
             $maxid = $row['id'];
-            $sql = "ALTER TABLE `cards` AUTO_INCREAMENT=$maxid";
+            $maxid = (int) $maxid;
+            $sql = "ALTER TABLE `cards` AUTO_INCREMENT=$maxid";
             $stmt->prepare($sql);
             $stmt->execute();
         }

@@ -2,7 +2,7 @@
 session_start();
 include("../core/base.php");
 if (!$_SESSION) { // If season not exist
-    header('location: http://localhost/hk_new/auth.php');
+    header('location: ../auth.php');
     exit;
 }
 
@@ -31,9 +31,6 @@ if (!$_SESSION) { // If season not exist
             padding: 15px;
         }
     }
-
-
-
 
     ::selection {
         background-color: black;
