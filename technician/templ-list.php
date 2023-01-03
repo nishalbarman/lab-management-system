@@ -21,17 +21,19 @@ if (!$_SESSION) { // If season not exist
     <link href="../includes/css/card_styles.css" rel="stylesheet">
     <title>Admin Panel | HealthKind</title>
     <style>
-    .main {
+    /* .main {
         padding-left: 20px;
         padding-right: 20px;
+    } */
+
+    .lets-do {
+        padding: 0px 20px 0px 20px;
     }
 
-    .card:hover {
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        transition: 0.3s;
-        height: 15.2rem;
-        width: 13.1rem;
-        cursor: pointer;
+    @media only screen and (max-width: 800px) {
+        .lets-do {
+            padding: 15px;
+        }
     }
 
     ::selection {

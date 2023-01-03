@@ -24,7 +24,7 @@ include("../core/base.php");
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <style>
     .lets-do {
-        padding: 0px 50px 0px 50px;
+        padding: 0px 20px 0px 20px;
     }
 
     @media only screen and (max-width: 800px) {
@@ -33,13 +33,6 @@ include("../core/base.php");
         }
     }
 
-    .card:hover {
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        transition: 0.3s;
-        height: 15.2rem;
-        width: 13.1rem;
-        cursor: pointer;
-    }
 
     ::selection {
         background-color: black;

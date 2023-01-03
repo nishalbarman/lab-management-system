@@ -33,14 +33,6 @@ include("../core/base.php");
         }
     }
 
-    .card:hover {
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        transition: 0.3s;
-        height: 15.2rem;
-        width: 13.1rem;
-        cursor: pointer;
-    }
-
     ::selection {
         background-color: black;
         color: whitesmoke;
@@ -61,7 +53,6 @@ include("../core/base.php");
     <div class="lets-do">
         <div class="container-fluid">
             <div class="row">
-
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Top Used Templates</h1>

@@ -32,19 +32,8 @@ if (!$_SESSION) { // If season not exist
         }
     }
 
-    /* .main {
-        padding-left: 20px;
-        padding-right: 20px;
-    } */
 
-    .card:hover {
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        transition: 0.3s;
-        height: 15.2rem;
-        width: 13.1rem;
-        /* cursor: pointer; */
 
-    }
 
     ::selection {
         background-color: black;
