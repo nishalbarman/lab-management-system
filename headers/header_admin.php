@@ -73,8 +73,8 @@
 
                             <?php } ?>
                             <!-- <?php if ($_SESSION['role'] === 1) { ?>
-                                        <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">Insert Card</a></li>
+                                                    <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal">Insert Card</a></li>
 
                             <?php } ?> -->
 
@@ -86,6 +86,11 @@
                             <?php if ($_SESSION['role'] === 1) { ?>
                             <li><a class="dropdown-item" href="<?php echo $BASE_URL; ?>/csr-admin/users-record-list.php"
                                     class="nav-link px-2 link-dark">User List (DB)</a></li>
+                            <?php } ?>
+
+                            <?php if ($_SESSION['role'] === 1) { ?>
+                            <li><a class="dropdown-item" href="<?php echo $BASE_URL; ?>/csr-admin/views-record-list.php"
+                                    class="nav-link px-2 link-dark">Views List (DB)</a></li>
                             <?php } ?>
 
                             <li><a class="dropdown-item" href="#">Report Retrieve (TXN)</a></li>

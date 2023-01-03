@@ -131,16 +131,16 @@ include("../core/base.php");
                                 </svg>
 
                                 <h2 class="card-front__heading" card-title>
-                                    Bloode Urine
+
                                 </h2>
                                 <p class="card-front__text-price" card-price>
-                                    Rs. 30 /-
+
                                 </p>
                             </div>
 
                             <div class="card-front__bt" card-bottom-white>
                                 <p class="card-front__text-view card-front__text-view--ski" card-btn-text>
-                                    Use This
+
                                 </p>
                             </div>
                         </div>
@@ -186,8 +186,8 @@ include("../core/base.php");
                             $data = array_reverse($data);
                             foreach ($data as $rp_dtl): ?>
                             <?php if (!isset($_SESSION['last_id'])) {
-                                $_SESSION['last_id'] = $rp_dtl['id'];
-                            } ?>
+                                    $_SESSION['last_id'] = $rp_dtl['id'];
+                                } ?>
                             <tr>
 
                                 <td style="text-align:center;">
@@ -211,11 +211,11 @@ include("../core/base.php");
 
                                 <td style="text-align:center;">
                                     <?php if ($rp_dtl['creation_date'] === null) {
-                                        echo "01/01/1900";
-                                    } else {
-                                        echo $rp_dtl['creation_date'];
-                                    }
-                                    ?>
+                                            echo "01/01/1900";
+                                        } else {
+                                            echo $rp_dtl['creation_date'];
+                                        }
+                                        ?>
                                 </td>
 
                                 <td style="text-align:center;">

@@ -10,5 +10,5 @@ function cardCount(id, username, url) {
     .then((data) => {
       console.log(data);
     });
-  // window.location = url;
+  window.location = url;
 }

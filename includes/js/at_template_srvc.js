@@ -67,14 +67,36 @@ function getMenu() {
         title.textContent = user.cardname;
         price.textContent = "Rs. " + user.price + " /-";
         button.style.color = user.color_f;
-        button.innerHTML =
-          "<a style='text-decoration: none; color:" +
-          user.color_f +
-          " ;' href='../templates/srvc-fill/" +
-          user.url +
-          ".php'>" +
-          user.btn_name +
-          "</a>";
+        button.textContent = user.btn_name;
+        button.setAttribute(
+          "onclick",
+          "cardCount(" +
+            user.id +
+            ", '" +
+            email +
+            "', '../templates/srvc-fill/" +
+            user.url +
+            ".php')"
+        );
+        // let string = "text-decoration: none; color: " + user.color_f + ";";
+        // button.setAttribute("style", string);
+        //
+        // button.href = "../templates/srvc-fill/" + user.url + ".php";
+
+        // button.innerHTML =
+        //   "<a style='text-decoration: none; color:" +
+        //   user.color_f +
+        //   " ;' href='#' onclick='cardCount(" +
+        //   user.id +
+        //   "," +
+        //   email +
+        //   ", '../templates/srvc-fill/" +
+        //   user.url +
+        //   ".php')' >" +
+        //   user.btn_name +
+        //   "</a>";
+
+        // ../templates/srvc-fill/" +user.url +".php
         // bottom.setAttribute(
         //   "onclick",
         //   "window.location = '../templates/" + user.url + ".php'"
