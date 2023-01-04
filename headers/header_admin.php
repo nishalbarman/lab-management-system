@@ -14,6 +14,19 @@
         display: none;
     }
     </style>
+    <style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+    </style>
     <title></title>
 </head>
 
@@ -73,8 +86,8 @@
 
                             <?php } ?>
                             <!-- <?php if ($_SESSION['role'] === 1) { ?>
-                                                    <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal">Insert Card</a></li>
+                                                                                                        <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
+                                                                                                                data-bs-target="#exampleModal">Insert iCard</a></li>
 
                             <?php } ?> -->
 
@@ -91,6 +104,12 @@
                             <?php if ($_SESSION['role'] === 1) { ?>
                             <li><a class="dropdown-item" href="<?php echo $BASE_URL; ?>/csr-admin/views-record-list.php"
                                     class="nav-link px-2 link-dark">Views List (DB)</a></li>
+                            <?php } ?>
+
+                            <?php if ($_SESSION['role'] === 1) { ?>
+                            <li><a class="dropdown-item" href="" class="nav-link px-2 link-dark" data-bs-toggle="modal"
+                                    data-bs-target="#upload-report-manually">Manual Report
+                                    Upload</a></li>
                             <?php } ?>
 
                             <li><a class="dropdown-item" href="#">Report Retrieve (TXN)</a></li>
@@ -142,6 +161,9 @@
 
     <!-- Add User Modal -->
     <?php include('../modals/reg-modal.php'); ?>
+
+    <!-- Manual Upload Modal -->
+    <?php include('../modals/custom-upload-modal.php'); ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

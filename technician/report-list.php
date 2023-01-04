@@ -168,9 +168,9 @@ if ($is_page_refreshed) {
                                 <?php echo $rp_dtl['downloads'] . ' Times'; ?>
                             </td>
 
-                            <td style="text-align:center; vertical-align: middle;">
+                            <td style="text-align:left; vertical-align: middle;">
                                 <?php if ($rp_dtl['creation_date'] === null) {
-                                        echo "01/01/1900";
+                                        echo "00/00/0000 00:00:00 N/A";
                                     } else {
                                         echo $rp_dtl['creation_date'];
                                     }

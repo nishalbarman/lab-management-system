@@ -31,6 +31,10 @@ include("../core/base.php");
         .lets-do {
             padding: 15px;
         }
+
+        .mobile-view {
+            display: none;
+        }
     }
 
     ::selection {
@@ -56,6 +60,7 @@ include("../core/base.php");
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Top Used Templates</h1>
+                    <?php if ($_SESSION['role'] === 1) { ?>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
@@ -64,6 +69,8 @@ include("../core/base.php");
                             </span>
                         </button>
                     </div>
+                    <?php } ?>
+
                 </div>
                 <!-- Template Starts Here -->
                 <section class="card-area" menu-cards>
@@ -148,7 +155,20 @@ include("../core/base.php");
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Patient Reports</h1>
+
                     <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Share</button> -->
+                            <button id="print-btn" type="button" class="btn btn-sm btn-outline-secondary">Export
+                                PDF</button>
+                        </div>
+                        <!-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                        <span data-feather="calendar" class="align-text-bottom"></span>
+                        This week
+                    </button> -->
+                    </div>
+
+                    <!-- <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group me-2">
                             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
                             <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
@@ -157,20 +177,20 @@ include("../core/base.php");
                             <span data-feather="calendar" class="align-text-bottom"></span>
                             This week
                         </button>
-                    </div>
+                    </div> -->
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm">
+                <div class="table-responsive" table>
+                    <table id="tbl-repo" class="table table-striped table-sm">
                         <caption class="text-center">&copy; HealthKind LAB</caption>
                         <thead>
                             <tr>
                                 <th style="text-align: center;" scope="col">#</th>
                                 <th style="text-align: center;" scope="col">NAME</th>
                                 <th style="text-align: center;" scope="col">AGE</th>
-                                <th style="text-align: center;" scope="col">TECHNICIAN</th>
-                                <th style="text-align: center;" scope="col">DOWNLOADS</th>
-                                <th style="text-align: center;" scope="col">CREATED</th>
-                                <th style="text-align: center;" scope="col">ACTION</th>
+                                <th class="mobile-view" style="text-align: center;" scope="col">TECHNICIAN</th>
+                                <th class="mobile-view" style="text-align: center;" scope="col">DOWNLOADS</th>
+                                <th class="mobile-view" style="text-align: center;" scope="col">CREATED</th>
+                                <th style="text-align: center;" scope="col" class="hide-part">ACTION</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -196,26 +216,26 @@ include("../core/base.php");
                                 <td style="text-align:center; vertical-align: middle;">
                                     <?php echo $rp_dtl['patient_age']; ?>
                                 </td>
-                                <td style="text-align:center; vertical-align: middle;">
+                                <td class="mobile-view" style="text-align:center; vertical-align: middle;">
                                     <?php echo $rp_dtl['created_by']; ?>
                                 </td>
 
-                                <td style="text-align:center; vertical-align: middle;">
+                                <td class="mobile-view" style="text-align:center; vertical-align: middle;">
                                     <?php // echo floor($rp_dtl['size'] / 1000) . ' KB'; ?>
                                     <?php echo $rp_dtl['downloads'] . ' Times'; ?>
                                 </td>
 
-                                <td style="text-align:center; vertical-align: middle;">
+                                <td class="mobile-view" style="text-align:left; vertical-align: middle;">
                                     <?php if ($rp_dtl['creation_date'] === null) {
-                                            echo "01/01/1900";
+                                            echo "00/00/0000 00:00:00 N/A";
                                         } else {
                                             echo $rp_dtl['creation_date'];
                                         }
                                         ?>
                                 </td>
 
-                                <td style="text-align:center; vertical-align: middle;">
-                                    <?php echo $rp_dtl['creation_date']; ?>
+                                <td style="text-align:center; vertical-align: middle;" class="hide-part">
+
                                     <!-- Example single danger button -->
                                     <div class="btn-group">
                                         <button type="button" class="btn  btn-sm dropdown-toggle"
@@ -257,7 +277,7 @@ include("../core/base.php");
                             <?php endforeach; ?>
                         </tbody>
                         <tfoot>
-                            <tr>
+                            <tr class="hide-part">
                                 <td colspan="7" class="text-center"><a style="text-decoration: none; color: red;"
                                         href="report-list.php?<?php echo 'id=' . $_SESSION['lastserial'] . '&lid=' . $_SESSION['last_id']; ?>">
                                         View
@@ -275,6 +295,7 @@ include("../core/base.php");
 
     <script src="../includes/js/everyone_dashboard.js"></script>
     <script src="../includes/js/count-card-click.js"></script>
+    <script src="../includes/js/print_function.js"></script>
 </body>
 
 </html>
