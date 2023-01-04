@@ -41,8 +41,6 @@ if ($resultss->num_rows > 0) {
     }
 }
 
-
-
 if (isset($_POST['submit'])) {
 
     $error = array();
@@ -61,7 +59,7 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    if (isset($_POST['oldpassword']) && isset($_POST['newpassword'])) {
+    if (isset($_POST['oldpassword']) && isset($_POST['newpassword']) && $_POST['oldpassword'] !== "" && $_POST['newpassword'] !== "") {
         $newpassword = $_POST['newpassword'];
         $oldpassword = $_POST['oldpassword'];
 
@@ -372,12 +370,12 @@ c30 -29 20 -44 -29 -44 -49 0 -53 5 -29 38 18 26 37 28 58 6z" />
                         <div class='pets-weight'>
                             <label style="margin-top: 10px;">Status :
                                 <?php if ($m == true) {
-                                echo "In Maintenance";
-                            } else {
-                                echo "Not In Maintenance";
-                            }
-                            ;
-                            ?></label>
+                                    echo "In Maintenance";
+                                } else {
+                                    echo "Not In Maintenance";
+                                }
+                                ;
+                                ?></label>
                         </div>
                     </header>
                     <footer>

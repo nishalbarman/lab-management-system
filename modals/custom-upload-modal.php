@@ -66,13 +66,9 @@
                             </div>
 
                             <div class="mb-3">
-                                <input type="text" class="form-control disabled" placeholder="Phone"
-                                    aria-label="Phone Number" aria-describedby="basic-addon1" name="technician" value="<?php $role = $_SESSION['role'];
-                                    if ($role === 1) {
-                                        echo "Admin";
-                                    } else if ($role === 0) {
-                                        echo "Technician";
-                                    } ?>" readonly disabled manual-upload-fields>
+                                <input type="text" class="form-control disabled" placeholder=""
+                                    aria-label="Phone Number" aria-describedby="basic-addon1" name="technician"
+                                    value="<?php echo $_SESSION['name']; ?>" readonly disabled manual-upload-fields>
                             </div>
 
                             <!-- <label class="pure-material-textfield-outlined">

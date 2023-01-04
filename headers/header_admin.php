@@ -86,8 +86,8 @@
 
                             <?php } ?>
                             <!-- <?php if ($_SESSION['role'] === 1) { ?>
-                                                                                                                <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
-                                                                                                                        data-bs-target="#exampleModal">Insert iCard</a></li>
+                                                                                                                            <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
+                                                                                                                                    data-bs-target="#exampleModal">Insert iCard</a></li>
 
                             <?php } ?> -->
 
@@ -106,7 +106,7 @@
                                     class="nav-link px-2 link-dark">Views List (DB)</a></li>
                             <?php } ?>
 
-                            <?php if ($_SESSION['role'] === 1) { ?>
+                            <?php if ($_SESSION['role'] === 1 || $_SESSION['role'] === 0) { ?>
                             <li><a class="dropdown-item" href="" class="nav-link px-2 link-dark" data-bs-toggle="modal"
                                     data-bs-target="#upload-report-manually">Manual Report
                                     Upload</a></li>
