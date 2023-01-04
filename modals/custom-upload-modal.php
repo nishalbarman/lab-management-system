@@ -12,8 +12,9 @@
                 <div style="padding: 15px 20px 0px 20px">
                     <div class="main">
 
-                        <form id="manual-report-upload" action="../csr-admin/server-side/reg-server.php"
-                            class="registration" method="post" enctype="multipart/form-data" id="manual-upload-form">
+                        <form id="manual-report-upload"
+                            action="<?php $BASE_URL . "/core/api/manual-upload-report.php"; ?>" class="registration"
+                            method="post" id="manual-upload-form">
 
                             <div class="mb-3">
                                 <label class="pure-material-textfield-outlined">
@@ -121,16 +122,17 @@ manualUploadBtn.addEventListener("click", () => {
     if (errorManual === 1) {
         alert("All input field are required.");
     } else {
-
-        let content = "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2);
-
+        // document.getElementById("manual-report-upload").submit();
         let options = {
+            // header: {
+            //     "Content-Type": "application/x-www-form-urlencoded"
+            // }
             method: "post",
             body: new FormData(document.getElementById("manual-report-upload"))
         }
 
         // alert('success');
-        fetch('../core/api/manual-upload-report.php', options).then(res => res.json()).then(data => {
+        fetch(BASE_URL + '/core/api/manual-upload-report.php', options).then(res => res.json()).then(data => {
             console.log(data);
             if (data.success === true) {
                 alert('Report Uploaded Successfuly, Kindly Refresh.');

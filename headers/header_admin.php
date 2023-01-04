@@ -86,8 +86,8 @@
 
                             <?php } ?>
                             <!-- <?php if ($_SESSION['role'] === 1) { ?>
-                                                                                                        <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
-                                                                                                                data-bs-target="#exampleModal">Insert iCard</a></li>
+                                                                                                                <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
+                                                                                                                        data-bs-target="#exampleModal">Insert iCard</a></li>
 
                             <?php } ?> -->
 
@@ -168,6 +168,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+    </script>
+    <script>
+    let BASE_URL;
+    if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+        BASE_URL = "http://localhost/hk_new";
+    } else {
+        BASE_URL = "http://13.127.248.80";
+    }
     </script>
 </body>
 

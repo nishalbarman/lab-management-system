@@ -1,11 +1,5 @@
 const search = document.querySelector("#search-input");
 let email = window.localStorage.getItem("email");
-let BASE_URL;
-if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-  BASE_URL = "http://localhost/hk_new";
-} else {
-  BASE_URL = "http://13.127.248.80";
-}
 
 let prevValue;
 let value;
