@@ -1,5 +1,16 @@
 <?php
 session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    $_SESSION = array();
+    session_destroy();
+    header("location: ../logout.php");
+} else {
+    if ($_SESSION['role'] !== 0 && $_SESSION['role'] !== 1) {
+        $_SESSION = array();
+        session_destroy();
+        header("location: ../logout.php");
+    }
+}
 include("../core/base.php");
 if (!$_SESSION) { // If season not exist
     header('location: ../auth.php');
@@ -50,14 +61,14 @@ if (!$_SESSION) { // If season not exist
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Templates</h1>
                         <!-- <?php if ($_SESSION['role'] === 1) { ?>
-                            <div class="btn-toolbar mb-2 mb-md-0">
-                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
-                                    <span class="material-symbols-outlined" style="vertical-align: middle;">
-                                        add_circle
-                                    </span>
-                                </button>
-                            </div>
+                                            <div class="btn-toolbar mb-2 mb-md-0">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">
+                                                    <span class="material-symbols-outlined" style="vertical-align: middle;">
+                                                        add_circle
+                                                    </span>
+                                                </button>
+                                            </div>
                         <?php } ?> -->
                     </div>
 

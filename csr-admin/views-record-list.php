@@ -1,5 +1,16 @@
 <?php
 session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    $_SESSION = array();
+    session_destroy();
+    header("location: ../logout.php");
+} else {
+    if ($_SESSION['role'] !== 1) {
+        $_SESSION = array();
+        session_destroy();
+        header("location: ../logout.php");
+    }
+}
 include("../core/base.php");
 $is_page_refreshed = (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] == 'max-age=0');
 

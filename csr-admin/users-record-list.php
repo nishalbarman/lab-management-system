@@ -1,5 +1,16 @@
 <?php
 session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    $_SESSION = array();
+    session_destroy();
+    header("location: ../logout.php");
+} else {
+    if ($_SESSION['role'] !== 1) {
+        $_SESSION = array();
+        session_destroy();
+        header("location: ../logout.php");
+    }
+}
 include("../core/base.php");
 $is_page_refreshed = (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] == 'max-age=0');
 
@@ -160,8 +171,8 @@ if ($is_page_refreshed) {
                             </td>
                             <td style="text-align:center; width: 16%; vertical-align: middle;">
                                 <!-- <input type="text" onchange="cardUpdate(this, 'email', '<?php echo $rp_dtl['id']; ?>')"
-                                                                                                                                                                                        style="background-color: transparent; border: none; outline: none; text-align: center; width:100px;"
-                                                                                                                                                                                        value="<?php echo $rp_dtl['email']; ?>" /> -->
+                                                                                                                                                                                                style="background-color: transparent; border: none; outline: none; text-align: center; width:100px;"
+                                                                                                                                                                                                value="<?php echo $rp_dtl['email']; ?>" /> -->
                                 <?php echo $rp_dtl['email']; ?>
                             </td>
                             <td style="text-align:center; width: 12%; vertical-align: middle;">
@@ -172,11 +183,11 @@ if ($is_page_refreshed) {
                             </td>
 
                             <!-- <td style="text-align:left;width: 15%;">
-                                                                                        <input type="password"
-                                                                                            onchange="cardUpdate(this, 'password', '<?php echo $rp_dtl['id']; ?>')"
-                                                                                            style="background-color: transparent; border: none; outline: none; text-align: center; width:100px;"
-                                                                                            value="<?php echo $rp_dtl['password']; ?>" readonly disabled />
-                                                                                    </td> -->
+                                                                                                <input type="password"
+                                                                                                    onchange="cardUpdate(this, 'password', '<?php echo $rp_dtl['id']; ?>')"
+                                                                                                    style="background-color: transparent; border: none; outline: none; text-align: center; width:100px;"
+                                                                                                    value="<?php echo $rp_dtl['password']; ?>" readonly disabled />
+                                                                                            </td> -->
 
                             <td style="text-align:center; vertical-align: middle; ">
                                 <input type="text" onchange="cardUpdate(this, 'role', '<?php echo $rp_dtl['id']; ?>')"
@@ -207,16 +218,16 @@ if ($is_page_refreshed) {
                                                 Delete</a>
                                         </li>
                                         <!-- <li><a class="dropdown-item"
-                                                            href="changeFile.php?file=<?php //echo $rp_dtl['file_name']; ?>"><img
-                                                                style="width: 24px; height: 24px; margin-right: 5px"
-                                                                src="../assets/table_dropdowns/update.png" />
-                                                            Replace with Local</a></li>
-                                                    <li> -->
+                                                                    href="changeFile.php?file=<?php //echo $rp_dtl['file_name']; ?>"><img
+                                                                        style="width: 24px; height: 24px; margin-right: 5px"
+                                                                        src="../assets/table_dropdowns/update.png" />
+                                                                    Replace with Local</a></li>
+                                                            <li> -->
                                         <!-- <hr class="dropdown-divider"> -->
 
                                         <!-- <li><a class="dropdown-item"
-                                                            href="<?php // echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
-                                                    </li> -->
+                                                                    href="<?php // echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
+                                                            </li> -->
                                     </ul>
                                 </div>
 

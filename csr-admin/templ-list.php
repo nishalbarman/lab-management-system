@@ -1,5 +1,16 @@
 <?php
 session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    $_SESSION = array();
+    session_destroy();
+    header("location: ../logout.php");
+} else {
+    if ($_SESSION['role'] !== 1) {
+        $_SESSION = array();
+        session_destroy();
+        header("location: ../logout.php");
+    }
+}
 include("../core/base.php");
 if (!$_SESSION) { // If season not exist
     header('location: ../auth.php');
@@ -52,9 +63,9 @@ if (!$_SESSION) { // If season not exist
                         <?php if ($_SESSION['role'] === 1) { ?>
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <!-- <div class="btn-group me-2">
-                                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                                                </div> -->
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                                                        </div> -->
 
                             <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">

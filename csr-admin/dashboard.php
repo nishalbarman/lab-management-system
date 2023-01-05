@@ -1,5 +1,17 @@
 <?php
 session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    $_SESSION = array();
+    session_destroy();
+    header("location: ../logout.php");
+} else {
+    if ($_SESSION['role'] !== 1) {
+        $_SESSION = array();
+        session_destroy();
+        header("location: ../logout.php");
+    }
+}
+
 include("../core/base.php");
 ?>
 <!doctype html>
@@ -187,7 +199,9 @@ include("../core/base.php");
                                 <th style="text-align: center;" scope="col">#</th>
                                 <th style="text-align: center;" scope="col">NAME</th>
                                 <th style="text-align: center;" scope="col">AGE</th>
+                                <?php if ($_SESSION['role'] === 1) { ?>
                                 <th class="mobile-view" style="text-align: center;" scope="col">TECHNICIAN</th>
+                                <?php } ?>
                                 <th class="mobile-view" style="text-align: center;" scope="col">DOWNLOADS</th>
                                 <th class="mobile-view" style="text-align: center;" scope="col">CREATED</th>
                                 <th style="text-align: center;" scope="col" class="hide-part">ACTION</th>
@@ -216,9 +230,12 @@ include("../core/base.php");
                                 <td style="text-align:center; vertical-align: middle;">
                                     <?php echo $rp_dtl['patient_age']; ?>
                                 </td>
+
+                                <?php if ($_SESSION['role'] === 1) { ?>
                                 <td class="mobile-view" style="text-align:center; vertical-align: middle;">
                                     <?php echo $rp_dtl['created_by']; ?>
                                 </td>
+                                <?php } ?>
 
                                 <td class="mobile-view" style="text-align:center; vertical-align: middle;">
                                     <?php // echo floor($rp_dtl['size'] / 1000) . ' KB'; ?>

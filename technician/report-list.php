@@ -1,5 +1,16 @@
 <?php
 session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    $_SESSION = array();
+    session_destroy();
+    header("location: ../logout.php");
+} else {
+    if ($_SESSION['role'] !== 0 && $_SESSION['role'] !== 1) {
+        $_SESSION = array();
+        session_destroy();
+        header("location: ../logout.php");
+    }
+}
 include("../core/base.php");
 $is_page_refreshed = (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] == 'max-age=0');
 
@@ -134,7 +145,9 @@ if ($is_page_refreshed) {
                             <th style="text-align: center;" scope="col">#</th>
                             <th style="text-align: center;" scope="col">NAME</th>
                             <th style="text-align: center;" scope="col">AGE</th>
+                            <?php if ($_SESSION['role'] === 1) { ?>
                             <th style="text-align: center;" scope="col">TECHNICIAN</th>
+                            <?php } ?>
                             <th style="text-align: center;" scope="col">DOWNLOADS</th>
                             <th style="text-align: center;" scope="col">CREATED</th>
                             <th class="hide-part" style="text-align: center;" scope="col">ACTION</th>
@@ -159,16 +172,20 @@ if ($is_page_refreshed) {
                             <td style="text-align:center; vertical-align: middle;">
                                 <?php echo $rp_dtl['patient_age']; ?>
                             </td>
+
+                            <?php if ($_SESSION['role'] === 1) { ?>
                             <td style="text-align:center; vertical-align: middle;">
                                 <?php echo $rp_dtl['created_by']; ?>
                             </td>
+                            <?php } ?>
+
 
                             <td style="text-align:center; vertical-align: middle;">
                                 <?php // echo floor($rp_dtl['size'] / 1000) . ' KB'; ?>
                                 <?php echo $rp_dtl['downloads'] . ' Times'; ?>
                             </td>
 
-                            <td style="text-align:left; vertical-align: middle;">
+                            <td style="text-align:center; vertical-align: middle;">
                                 <?php if ($rp_dtl['creation_date'] === null) {
                                         echo "00/00/0000 00:00:00 N/A";
                                     } else {
@@ -178,7 +195,7 @@ if ($is_page_refreshed) {
                             </td>
 
                             <td class="hide-part" style="text-align:center; vertical-align: middle;">
-                                <?php echo $rp_dtl['creation_date']; ?>
+
                                 <!-- Example single danger button -->
                                 <div class="btn-group">
                                     <button type="button" class="btn  btn-sm dropdown-toggle" data-bs-toggle="dropdown"

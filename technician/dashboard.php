@@ -1,5 +1,16 @@
 <?php
 session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    $_SESSION = array();
+    session_destroy();
+    header("location: ../logout.php");
+} else {
+    if ($_SESSION['role'] !== 0 && $_SESSION['role'] !== 1) {
+        $_SESSION = array();
+        session_destroy();
+        header("location: ../logout.php");
+    }
+}
 include("../core/base.php");
 ?>
 <!doctype html>
@@ -11,11 +22,11 @@ include("../core/base.php");
     <meta name="description" content="">
     <meta name="author" content="Nishal Barman">
     <?php if ($_SESSION['role'] === 1) { ?>
-        <title>HealthKind LAB | Admin Portal</title>
+    <title>HealthKind LAB | Admin Portal</title>
     <?php } else if ($_SESSION['role'] === 0) { ?>
-            <title>HealthKind LAB | Technician Portal</title>
+    <title>HealthKind LAB | Technician Portal</title>
     <?php } else { ?>
-            <title>HealthKind LAB | Client Portal</title>
+    <title>HealthKind LAB | Client Portal</title>
     <?php } ?>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
@@ -23,28 +34,28 @@ include("../core/base.php");
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <style>
+    .lets-do {
+        padding: 0px 20px 0px 20px;
+    }
+
+    @media only screen and (max-width: 800px) {
         .lets-do {
-            padding: 0px 20px 0px 20px;
+            padding: 15px;
         }
-
-        @media only screen and (max-width: 800px) {
-            .lets-do {
-                padding: 15px;
-            }
-        }
+    }
 
 
-        ::selection {
-            background-color: black;
-            color: whitesmoke;
-        }
+    ::selection {
+        background-color: black;
+        color: whitesmoke;
+    }
     </style>
 
     <script>
-        function setUser() {
-            let email = '<?php echo $_SESSION['email']; ?>';
-            window.localStorage.setItem("email", email);
-        }
+    function setUser() {
+        let email = '<?php echo $_SESSION['email']; ?>';
+        window.localStorage.setItem("email", email);
+    }
     </script>
 </head>
 
@@ -171,7 +182,9 @@ include("../core/base.php");
                                 <th style="text-align: center;" scope="col">#</th>
                                 <th style="text-align: center;" scope="col">NAME</th>
                                 <th style="text-align: center;" scope="col">AGE</th>
+                                <?php if ($_SESSION['role'] === 1) { ?>
                                 <th style="text-align: center;" scope="col">TECHNICIAN</th>
+                                <?php } ?>
                                 <th style="text-align: center;" scope="col">DOWNLOADS</th>
                                 <th style="text-align: center;" scope="col">CREATED</th>
                                 <th style="text-align: center;" scope="col">ACTION</th>
@@ -185,79 +198,81 @@ include("../core/base.php");
                             $data = $result->fetch_all(MYSQLI_ASSOC);
                             $data = array_reverse($data);
                             foreach ($data as $rp_dtl): ?>
-                                <?php if (!isset($_SESSION['last_id'])) {
+                            <?php if (!isset($_SESSION['last_id'])) {
                                     $_SESSION['last_id'] = $rp_dtl['id'];
                                 } ?>
-                                <tr>
+                            <tr>
 
-                                    <td style="text-align:center;">
-                                        <?php echo $rp_dtl['id'];
+                                <td style="text-align:center;">
+                                    <?php echo $rp_dtl['id'];
                                         $_SESSION['lastserial'] = $rp_dtl['id']; ?>
-                                    </td>
-                                    <td style="text-align:center;">
-                                        <?php echo ucwords(strtolower(str_replace("_", " ", $rp_dtl['patient_name']))); ?>
-                                    </td>
-                                    <td style="text-align:center;">
-                                        <?php echo $rp_dtl['patient_age']; ?>
-                                    </td>
-                                    <td style="text-align:center;">
-                                        <?php echo $rp_dtl['created_by']; ?>
-                                    </td>
+                                </td>
+                                <td style="text-align:center;">
+                                    <?php echo ucwords(strtolower(str_replace("_", " ", $rp_dtl['patient_name']))); ?>
+                                </td>
+                                <td style="text-align:center;">
+                                    <?php echo $rp_dtl['patient_age']; ?>
+                                </td>
+                                <?php if ($_SESSION['role'] === 1) { ?>
+                                <td style="text-align:center;">
+                                    <?php echo $rp_dtl['created_by']; ?>
+                                </td>
+                                <?php } ?>
 
-                                    <td style="text-align:center;">
-                                        <?php // echo floor($rp_dtl['size'] / 1000) . ' KB'; ?>
-                                        <?php echo $rp_dtl['downloads'] . ' Times'; ?>
-                                    </td>
+                                <td style="text-align:center;">
+                                    <?php // echo floor($rp_dtl['size'] / 1000) . ' KB'; ?>
+                                    <?php echo $rp_dtl['downloads'] . ' Times'; ?>
+                                </td>
 
-                                    <td style="text-align:left;">
-                                        <?php if ($rp_dtl['creation_date'] === null) {
+                                <td style="text-align:left;">
+                                    <?php if ($rp_dtl['creation_date'] === null) {
                                             echo "00/00/0000 00:00:00 N/A";
                                         } else {
                                             echo $rp_dtl['creation_date'];
                                         }
                                         ?>
-                                    </td>
+                                </td>
 
-                                    <td style="text-align:center;">
-                                        <?php echo $rp_dtl['creation_date']; ?>
-                                        <!-- Example single danger button -->
-                                        <div class="btn-group">
-                                            <button type="button" class="btn  btn-sm dropdown-toggle"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span class="material-symbols-outlined">
-                                                    drive_file_rename_outline
-                                                </span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item"
-                                                        href="reports.php?serial=<?php echo $rp_dtl['id'] ?>"><img
-                                                            style="width: 27px; height: 27px; margin-right: 5px"
-                                                            src="../assets/table_dropdowns/download.png" />
-                                                        Download</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="delete.php?serial=<?php echo $rp_dtl['id'] ?>&file=<?php echo $rp_dtl['file_name']; ?>"><img
-                                                            style="width: 25px; height: 25px; margin-right: 5px"
-                                                            src="../assets/table_dropdowns/remove.png" />
-                                                        Delete</a>
-                                                </li>
-                                                <li><a class="dropdown-item"
-                                                        href="changeFile.php?file=<?php echo $rp_dtl['file_name']; ?>"><img
-                                                            style="width: 24px; height: 24px; margin-right: 5px"
-                                                            src="../assets/table_dropdowns/update.png" />
-                                                        Replace with Local</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item"
-                                                        href="<?php echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                <td style="text-align:center;">
 
-                                    </td>
+                                    <!-- Example single danger button -->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn  btn-sm dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="material-symbols-outlined">
+                                                drive_file_rename_outline
+                                            </span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item"
+                                                    href="reports.php?serial=<?php echo $rp_dtl['id'] ?>"><img
+                                                        style="width: 27px; height: 27px; margin-right: 5px"
+                                                        src="../assets/table_dropdowns/download.png" />
+                                                    Download</a></li>
+                                            <li><a class="dropdown-item"
+                                                    href="delete.php?serial=<?php echo $rp_dtl['id'] ?>&file=<?php echo $rp_dtl['file_name']; ?>"><img
+                                                        style="width: 25px; height: 25px; margin-right: 5px"
+                                                        src="../assets/table_dropdowns/remove.png" />
+                                                    Delete</a>
+                                            </li>
+                                            <li><a class="dropdown-item"
+                                                    href="changeFile.php?file=<?php echo $rp_dtl['file_name']; ?>"><img
+                                                        style="width: 24px; height: 24px; margin-right: 5px"
+                                                        src="../assets/table_dropdowns/update.png" />
+                                                    Replace with Local</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item"
+                                                    href="<?php echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </td>
 
 
-                                </tr>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                         <tfoot>
