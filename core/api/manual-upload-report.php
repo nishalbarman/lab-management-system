@@ -16,8 +16,9 @@ include '../../includes/config/connect.php';
 
 $serial_no = $_POST['serial_no'];
 $serial_no = (int) $serial_no;
-$patient_name = $_POST['patient_name'];
-$patient_name = str_replace(' ', '_', $patient_name);
+$patient_name = ucwords(strtolower($_POST['patient_name']));
+
+// $patient_name = str_replace(' ', '_', $patient_name);
 $number_age = $_POST['age'];
 $age_back = $_POST['age_back'];
 
@@ -27,6 +28,7 @@ $pdf_file = $_FILES['report_pdf']['tmp_name'];
 $created_by = $_SESSION['name'];
 
 $filename = time() . '_' . $patient_name . '.pdf';
+$filename = str_replace(' ', '_', $filename);
 $rowCheck = '';
 $count = -1;
 if (isset($serial_no)) {
@@ -83,7 +85,8 @@ if ($count > 0) {
 
         date_default_timezone_set("Asia/Calcutta");
         $date = date('d/m/Y h:i:s a', time());
-        $size = 0;
+        $size = filesize('../../uploads/reports/' . $filename);
+
         $sql = "INSERT INTO reports (patient_name, patient_age, file_name, size, downloads, created_by, creation_date) VALUES ('$patient_name', '$final_age', '$filename', $size, 0, '$created_by', '$date')";
 
         if ($conn->query($sql)) {

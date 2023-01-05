@@ -97,7 +97,7 @@
 
             <div class="modal-footer" style="display:flex; justify-content: center; padding: 20px;">
                 <button id="manual-upload-btn" type="submit" style="width: 70%" class="btn btn-outline-success btn-lg"
-                    data-bs-dismiss="modal" manual-upload-button>Submit</button>
+                    manual-upload-button>Submit</button>
             </div>
 
         </div>
