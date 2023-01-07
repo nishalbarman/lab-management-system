@@ -128,6 +128,11 @@ if ($is_page_refreshed) {
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group me-2">
                         <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Share</button> -->
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                            data-bs-target="#upload-report-manually"><span class="material-symbols-outlined"
+                                style="vertical-align: middle;">
+                                add_circle
+                            </span></button>
                         <button id="print-btn" type="button" class="btn btn-sm btn-outline-secondary">Export
                             PDF</button>
                     </div>

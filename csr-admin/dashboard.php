@@ -170,8 +170,13 @@ include("../core/base.php");
 
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group me-2">
-                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Share</button> -->
-                            <button id="print-btn" type="button" class="btn btn-sm btn-outline-secondary">Export
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                data-bs-target="#upload-report-manually"><span class="material-symbols-outlined"
+                                    style="vertical-align: middle;">
+                                    add_circle
+                                </span></button>
+                            <button id="print-btn" type="button" class="btn btn-sm btn-outline-secondary"
+                                style="vertical-align:center;">Export
                                 PDF</button>
                         </div>
                         <!-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
@@ -281,8 +286,9 @@ include("../core/base.php");
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
-                                            <li><a class="dropdown-item"
-                                                    href="<?php echo 'preview.php?file=' . base64_encode($rp_dtl['file_name']); ?>">Preview</a>
+                                            <li><a class="dropdown-item" href=""
+                                                    onclick="initIframe('<?php echo $rp_dtl['file_name']; ?>')"
+                                                    data-bs-toggle="modal" data-bs-target="#pdf-preview">Preview</a>
                                             </li>
                                         </ul>
                                     </div>

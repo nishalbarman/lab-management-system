@@ -27,6 +27,14 @@
         -moz-appearance: textfield;
     }
     </style>
+    <script>
+    let BASE_URL;
+    if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+        BASE_URL = "http://localhost/hk_new";
+    } else {
+        BASE_URL = "http://13.127.248.80";
+    }
+    </script>
     <title></title>
 </head>
 
@@ -86,8 +94,8 @@
 
                             <?php } ?>
                             <!-- <?php if ($_SESSION['role'] === 1) { ?>
-                                                                                                                            <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
-                                                                                                                                    data-bs-target="#exampleModal">Insert iCard</a></li>
+                                                                                                                                                    <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
+                                                                                                                                                            data-bs-target="#exampleModal">Insert iCard</a></li>
 
                             <?php } ?> -->
 
@@ -108,12 +116,11 @@
 
                             <?php if ($_SESSION['role'] === 1 || $_SESSION['role'] === 0) { ?>
                             <li><a class="dropdown-item" href="" class="nav-link px-2 link-dark" data-bs-toggle="modal"
-                                    data-bs-target="#upload-report-manually">Manual Report
-                                    Upload</a></li>
+                                    data-bs-target="#upload-report-manually">Custom Upload</a></li>
                             <?php } ?>
 
                             <li><a class="dropdown-item" href="#">Report Retrieve (TXN)</a></li>
-                            <li><a class="dropdown-item" href="#">Custom Upload</a></li>
+                            <!-- <li><a class="dropdown-item" href="#"></a></li> -->
                             <li><a class="dropdown-item" href="#">QR Creation</a></li>
                             <li><a class="dropdown-item" href="#">Download</a></li>
                             <li>
@@ -165,18 +172,14 @@
     <!-- Manual Upload Modal -->
     <?php include('../modals/custom-upload-modal.php'); ?>
 
+    <!-- PDF Preview Modal -->
+    <?php include('../modals/pdf-preview-modal.php'); ?>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
-    <script>
-    let BASE_URL;
-    if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-        BASE_URL = "http://localhost/hk_new";
-    } else {
-        BASE_URL = "http://13.127.248.80";
-    }
-    </script>
+
 </body>
 
 </html>
