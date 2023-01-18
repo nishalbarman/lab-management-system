@@ -15,14 +15,12 @@
     }
     </style>
     <style>
-    /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
 
-    /* Firefox */
     input[type=number] {
         -moz-appearance: textfield;
     }
@@ -94,8 +92,8 @@
 
                             <?php } ?>
                             <!-- <?php if ($_SESSION['role'] === 1) { ?>
-                                                                                                                                                    <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
-                                                                                                                                                            data-bs-target="#exampleModal">Insert iCard</a></li>
+                                                                                                                                                                                                                                        <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
+                                                                                                                                                                                                                                                data-bs-target="#exampleModal">Insert iCard</a></li>
 
                             <?php } ?> -->
 
@@ -163,17 +161,19 @@
     <!-- Modals start here -->
 
     <!-- Card insert modal -->
-    <?php include('../modals/card-insert-modal.php'); ?>
-
+    <?php include($_SERVER["DOCUMENT_ROOT"] . '/hk_new/modals/card-insert-modal.php'); ?>
 
     <!-- Add User Modal -->
-    <?php include('../modals/reg-modal.php'); ?>
+    <?php include($_SERVER["DOCUMENT_ROOT"] . '/hk_new/modals/reg-modal.php'); ?>
 
     <!-- Manual Upload Modal -->
-    <?php include('../modals/custom-upload-modal.php'); ?>
+    <?php include($_SERVER["DOCUMENT_ROOT"] . '/hk_new/modals/custom-upload-modal.php'); ?>
 
     <!-- PDF Preview Modal -->
-    <?php include('../modals/pdf-preview-modal.php'); ?>
+    <?php include($_SERVER["DOCUMENT_ROOT"] . '/hk_new/modals/pdf-preview-modal.php'); ?>
+
+    <!-- New Or Update Template Modal -->
+    <?php include($_SERVER["DOCUMENT_ROOT"] . '/hk_new/modals/report-template-modal.php'); ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

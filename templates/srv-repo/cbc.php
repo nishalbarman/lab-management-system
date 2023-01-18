@@ -1,6 +1,6 @@
 
-<?php 
-$qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-great.net/reports.php?serial=".$_GET['serial']."&chs=100x100&chld=L|0";
+<?php
+$qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-great.net/reports.php?serial=" . $_GET['serial'] . "&chs=100x100&chld=L|0";
 
 
 ?>
@@ -10,18 +10,18 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
 <script type="text/javascript" src="chrome-extension://ppolnjoalhehbnfapnkleommeicncmej/webpack_content.js"></script>
 
 <head>
-	<script type="text/javascript" src="chrome-extension://ppolnjoalhehbnfapnkleommeicncmej/webpack_common.js"></script>
-	<script type="text/javascript"
-		src="chrome-extension://ppolnjoalhehbnfapnkleommeicncmej/webpack_content.js"></script>
-	<script type="text/javascript" src="chrome-extension://ppolnjoalhehbnfapnkleommeicncmej/webpack_common.js"></script>
-	<script type="text/javascript"
-		src="chrome-extension://ppolnjoalhehbnfapnkleommeicncmej/webpack_content.js"></script>
+    <script type="text/javascript" src="chrome-extension://ppolnjoalhehbnfapnkleommeicncmej/webpack_common.js"></script>
+    <script type="text/javascript"
+        src="chrome-extension://ppolnjoalhehbnfapnkleommeicncmej/webpack_content.js"></script>
+    <script type="text/javascript" src="chrome-extension://ppolnjoalhehbnfapnkleommeicncmej/webpack_common.js"></script>
+    <script type="text/javascript"
+        src="chrome-extension://ppolnjoalhehbnfapnkleommeicncmej/webpack_content.js"></script>
 
 
-		
+        
 
-	<style>
-		@font-face {
+    <style>
+        @font-face {
             font-family: 'Bahnschrift';
             src: url('fonts/Bahnschrift.woff2') format('woff2'),
                 url('fonts/Bahnschrift.woff') format('woff');
@@ -30,7 +30,7 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
             font-display: swap;
         }
 
-		* {
+        * {
             font-family: 'Bahnschrift';
             font-weight: SemiBold;
             font-style: normal;
@@ -38,10 +38,10 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
         }
 
 
-		html {
-			position: relative;
-			min-height: 100%;
-		}
+        html {
+            position: relative;
+            min-height: 100%;
+        }
 
         /* body:before{
             content: 'HEALTHKIND  LAB';
@@ -62,39 +62,39 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
             transform: rotate(-45deg);
 } */
 
-		html,
-		body {
+        html,
+        body {
             
-			margin: 0;
-			margin-left: 6px;
-			margin-right: 6px;
-			margin-top: 17px;
-			padding: 0;
-			padding-left: 2px;
-		}
+            margin: 0;
+            margin-left: 6px;
+            margin-right: 6px;
+            margin-top: 17px;
+            padding: 0;
+            padding-left: 2px;
+        }
 
-		.pageContentWrapper {
-			margin-bottom: 100px;
-			/* Height of footer*/
-		}
+        .pageContentWrapper {
+            margin-bottom: 100px;
+            /* Height of footer*/
+        }
 
-		.footer {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
+        .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
             padding-bottom: 12px;
-			background: white;
-		}
+            background: white;
+        }
 
         .qr-btn {
                 radius: 3px;
-			    background-color: #04AA6D;
+                background-color: #04AA6D;
                 /* #8c52ff; */
-			    padding:8px;
-			    color: white;
-			    cursor:pointer;
-		}
+                padding:8px;
+                color: white;
+                cursor:pointer;
+        }
 
         .PatientTable {
                 font-family: Bahnschrift;
@@ -118,18 +118,18 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
             width: 89%;
         }
     
-	</style>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 
 <body onload="generateQRCode()">
 <script type="text/javascript">
-			/* JS comes here */
+            /* JS comes here */
             
             function generateQRCode() {
                 var qr;
-			(function() {
+            (function() {
                     qr = new QRious({
                     element: document.getElementById('qr-code'),
                     size: 100,
@@ -148,55 +148,55 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
                 });
 
             }
-		</script>
-	<center>
-		<div class="pageContentWrapper">
-			
+        </script>
+    <center>
+        <div class="pageContentWrapper">
+            
             <?php include 'upper.php'; ?>
 
-			<div style="background-color:#000000; height:0.5px; width:100%;"></div><br>
+            <div style="background-color:#000000; height:0.5px; width:100%;"></div><br>
             <center>
-			<table class="PatientTable" style="border-collapse:collapse; border:none">
-	<tbody>
-		<tr>
-			<td style="width: 50%; height:19px" valign="top">
-			<p><span style="font-size:13pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black; font-family:Bahnschrift;">Name of the patient : <strong><?php echo $_GET['patient_name']; ?></strong></span></span></span></span></span></span></span></p>
-			</td>
-			<td style="height:19px" valign="top">
-                <p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black; font-family:Bahnschrift;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Billing Date<span style="white-space:pre">		</span>:&nbsp; &nbsp;&nbsp;<strong><?php echo str_replace('-','/',date("d-m-Y", strtotime($_GET['report_date']))); ?></strong></span></span></span></span></span></span></span></p>
-			</td>
-		</tr>
-		<tr>
-			<td style="height:18px" valign="top">
-			<p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black; font-family:Bahnschrift;">Age : <strong><?php echo $_GET['patient_age']; ?></strong>, Gender : <strong><?php echo $_GET['patient_gender']; ?></strong></span></span></span></span></span></span></span></p>
-			</td>
-			<td style="height:18px" valign="top">
-			<p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black"><span style="font-family:Bahnschrift;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sample (Lab No.)<span style="white-space:pre">	</span>:&nbsp;&nbsp;&nbsp; <strong><?php echo $_GET['patient_sample']; ?></strong></span></span></span></span></span></span></span></span></p>
-			</td>
-		</tr>
-		<tr>
-			<td style="height:19px" valign="top">
-			<p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black; font-family:Bahnschrift;">Referred by Dr. : <strong><?php echo $_GET['dr_name']; ?></strong></span></span></span></span></span></span></span></p>
-			</td>
-			<td style="height:19px" valign="top">
-			<p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black"><span style="font-family:Bahnschrift;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date of collection<span style="white-space:pre">	</span>:&nbsp;&nbsp;&nbsp; <strong><?php echo str_replace('-','/',date("d-m-Y", strtotime($_GET['report_date']))); ?></strong></span></span></span></span></span></span></span></span></p>
-			</td>
-		</tr>
-		<tr>
-			<td style="height:19px" valign="top">
-			<p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black; font-family:Bahnschrift;">Sample Type : <strong>Whole Blood</strong></span></span></span></span></span></span></span></p>
-			</td>
-			<td style="height:19px" valign="top">
-			<p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black"><span style="font-family:Bahnschrift;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date of report<span style="white-space:pre">		</span>:&nbsp;&nbsp;&nbsp; <strong><?php echo str_replace('-','/',date("d-m-Y", strtotime($_GET['report_date']))); ?></strong></span></span></span></span></span></span></span></span></p>
-			</td>
-		</tr>
-	</tbody>
+            <table class="PatientTable" style="border-collapse:collapse; border:none">
+    <tbody>
+        <tr>
+            <td style="width: 50%; height:19px" valign="top">
+            <p><span style="font-size:13pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black; font-family:Bahnschrift;">Name of the patient : <strong><?php echo $_GET['patient_name']; ?></strong></span></span></span></span></span></span></span></p>
+            </td>
+            <td style="height:19px" valign="top">
+                <p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black; font-family:Bahnschrift;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Billing Date<span style="white-space:pre">		</span>:&nbsp; &nbsp;&nbsp;<strong><?php echo str_replace('-', '/', date("d-m-Y", strtotime($_GET['report_date']))); ?></strong></span></span></span></span></span></span></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="height:18px" valign="top">
+            <p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black; font-family:Bahnschrift;">Age : <strong><?php echo $_GET['patient_age']; ?></strong>, Gender : <strong><?php echo $_GET['patient_gender']; ?></strong></span></span></span></span></span></span></span></p>
+            </td>
+            <td style="height:18px" valign="top">
+            <p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black"><span style="font-family:Bahnschrift;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sample (Lab No.)<span style="white-space:pre">	</span>:&nbsp;&nbsp;&nbsp; <strong><?php echo $_GET['patient_sample']; ?></strong></span></span></span></span></span></span></span></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="height:19px" valign="top">
+            <p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black; font-family:Bahnschrift;">Referred by Dr. : <strong><?php echo $_GET['dr_name']; ?></strong></span></span></span></span></span></span></span></p>
+            </td>
+            <td style="height:19px" valign="top">
+            <p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black"><span style="font-family:Bahnschrift;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date of collection<span style="white-space:pre">	</span>:&nbsp;&nbsp;&nbsp; <strong><?php echo str_replace('-', '/', date("d-m-Y", strtotime($_GET['report_date']))); ?></strong></span></span></span></span></span></span></span></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="height:19px" valign="top">
+            <p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black; font-family:Bahnschrift;">Sample Type : <strong>Whole Blood</strong></span></span></span></span></span></span></span></p>
+            </td>
+            <td style="height:19px" valign="top">
+            <p><span style="font-size:11pt"><span style="line-height:normal"><span style="tab-stops:73.5pt"><span style="font-family:Calibri,sans-serif"><span lang="EN-US" style="font-size:13.5pt"><span style="font-family:&quot;Bahnschrift&quot;,sans-serif"><span style="color:black"><span style="font-family:Bahnschrift;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date of report<span style="white-space:pre">	</span>:&nbsp;&nbsp;&nbsp; <strong><?php echo str_replace('-', '/', date("d-m-Y", strtotime($_GET['report_date']))); ?></strong></span></span></span></span></span></span></span></span></p>
+            </td>
+        </tr>
+    </tbody>
 </table>
             <p><b><u><span lang="EN-US" style="font-size:14.0pt"><span style="line-height:107%"><span style="font-family:&quot;Bahnschrift SemiBold&quot;,sans-serif"><span style="letter-spacing: 1.2px; color:black">COMPLETE BLOOD COUNT REPORT (CBC)</span></span></span></span></u></b></p>
             </center>
-			<div style="background-color:#000000; height:0.5px; width:100%;"></div>
+            <div style="background-color:#000000; height:0.5px; width:100%;"></div>
 <!---------------------------------------------------------------------------------------------------------------------------------------------->
-			<table align="center" cellspacing="0" class="ReportTable"
+            <table align="center" cellspacing="0" class="ReportTable"
     style="border-collapse:collapse; border:none;" width="85%">
     <tbody>
         <tr style="margin-bottom: 5px; height: 35px;">
@@ -225,7 +225,7 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
                                     :</span></p>
             </td>
             <td style="height:32px; vertical-align:top; width:152px">
-                <p style="text-align:center"><span style="font-size:13pt"><?php echo $_GET['tlc'];?>
+                <p style="text-align:center"><span style="font-size:13pt"><?php echo $_GET['tlc']; ?>
                             </span></p>
 
                 <!--<p style="text-align:center">&nbsp;</p>-->
@@ -322,7 +322,7 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
             </td>
             <td style="height:30px; vertical-align:top; width:152px">
                 <p style="text-align:center"><span style="font-size:13pt">
-                                <?php echo $_GET['hb'];?>
+                                <?php echo $_GET['hb']; ?>
                             </span></p>
             </td>
             <td style="height:30px; vertical-align:top; width:199px">
@@ -341,7 +341,7 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
             </td>
             <td style="height:30px; vertical-align:top; width:152px">
                 <p style="text-align:center"><span style="font-size:13pt">
-                                <?php echo $_GET['plc'];?>
+                                <?php echo $_GET['plc']; ?>
                             </span></p>
             </td>
             <td style="height:30px; vertical-align:top; width:199px">
@@ -360,7 +360,7 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
             </td>
             <td style="height:30px; vertical-align:top; width:152px">
                 <p style="text-align:center"><span style="font-size:13pt">
-                                <?php echo $_GET['rbc'];?>
+                                <?php echo $_GET['rbc']; ?>
                             </span></p>
             </td>
             <td style="height:30px; vertical-align:top; width:199px">
@@ -379,7 +379,7 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
             </td>
             <td style="height:30px; vertical-align:top; width:152px">
                 <p style="text-align:center"><span style="font-size:13pt">
-                                <?php echo $_GET['pcv'];?>
+                                <?php echo $_GET['pcv']; ?>
                             </span></p>
             </td>
             <td style="height:30px; vertical-align:top; width:199px">
@@ -398,7 +398,7 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
             </td>
             <td style="height:30px; vertical-align:top; width:152px">
                 <p style="text-align:center"><span style="font-size:13pt">
-                                <?php echo $_GET['mcv'];?>
+                                <?php echo $_GET['mcv']; ?>
                             </span></p>
 
                 
@@ -419,7 +419,7 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
             </td>
             <td style="height:30px; vertical-align:top; width:152px">
                 <p style="text-align:center"><span style="font-size:13pt">
-                                <?php echo $_GET['mch'];?>
+                                <?php echo $_GET['mch']; ?>
                             </span></p>
             </td>
             <td style="height:30px; vertical-align:top; width:199px">
@@ -438,7 +438,7 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
             </td>
             <td style="height:30px; vertical-align:top; width:152px">
                 <p style="text-align:center"><span style="font-size:13pt">
-                                <?php echo $_GET['mchc'];?>
+                                <?php echo $_GET['mchc']; ?>
                             </span></p>
             </td>
             <td style="height:30px; vertical-align:top; width:199px">
@@ -457,7 +457,7 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
             </td>
             <td style="height:30px; vertical-align:top; width:152px">
                 <p style="text-align:center"><span style="font-size:13pt">
-                                <?php echo $_GET['rdw'];?>
+                                <?php echo $_GET['rdw']; ?>
                             </span></p>
             </td>
             <td style="height:30px; vertical-align:top; width:199px">
@@ -472,13 +472,13 @@ $qr_url = "https://chart.googleapis.com/chart?cht=qr&chl=http://healthkind.is-gr
 </table>
 
 <!---------------------------       --      End of report     --    ------------------------------->
-			
-			<p style="text-align: center;"><span style="font-family: Bahnschrift; font-size: 12pt;">**End of Report**</span></p>
-		</div>
-	</center>
+            
+            <p style="text-align: center;"><span style="font-family: Bahnschrift; font-size: 12pt;">**End of Report**</span></p>
+        </div>
+    </center>
 
 
-	<?php include "footer.html"; ?>
+    <?php include "footer.html"; ?>
 </body>
 
 </html>

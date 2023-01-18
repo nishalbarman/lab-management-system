@@ -1,6 +1,6 @@
 <?php
-include '../includes/config/connect.php';
-include '../includes/config/base_url.php';
+include '../../includes/config/connect.php';
+include '../base.php';
 
 $form_fname = $_POST["firstname"];
 $form_age = $_POST['patient_age'];
@@ -13,8 +13,8 @@ $part2 = $_POST['udf2'];
 $part3 = $_POST['udf3'];
 $part4 = $_POST['udf4'];
 
-$sql = "select * from payments where transaction_id = '$transac'";
-$res = mysqli_query($link, $sql);
+$sql = "select * from transactions where transaction_id = '$transac'";
+$res = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($res);
 if ($count > 0) {
     while ($row = mysqli_fetch_assoc($res)) {
@@ -46,7 +46,7 @@ if (empty($db_name) && empty($db_status) && empty($db_serial) && empty($db_creat
     // Update the report from here
 
     $sql = "select * from files where id = '$db_serial'";
-    $res = mysqli_query($link, $sql);
+    $res = mysqli_query($conn, $sql);
     $count = mysqli_num_rows($res);
     if ($count > 0) {
         $db_age = 0;

@@ -76,7 +76,7 @@ if (isset($_POST['create'])) {
 
     $transaction = $_POST['transaction_id'];
 
-    $return_url1 = "../srv-repo/cbc.php?serial=" . $serial . "&patient_sample=" . $sample . "&report_date=" . $date . "&dr_name=" . $reffered . "&patient_name=" . $name;
+    $return_url1 = "cbc.php?serial=" . $serial . "&patient_sample=" . $sample . "&report_date=" . $date . "&dr_name=" . $reffered . "&patient_name=" . $name;
     $return_url2 = "&patient_age=" . $age . "&patient_gender=" . $gender . "&tlc=" . $tlc . "&neu=" . $neu . "&lym=" . $lym;
     $return_url3 = "&mono=" . $mono . "&eos=" . $eos . "&bas=" . $bas . "&hb=" . $hb . "&plc=" . $plc . "&rbc=" . $rbc . "&pcv=" . $pcv;
     $return_url4 = "&mcv=" . $mcv . "&mch=" . $mch . "&mchc=" . $mchc . "&rdw=" . $rdw . "&create=Submit";
@@ -104,6 +104,8 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/template-style.css">
+    <link href="../../includes/css/headers.css" rel="stylesheet">
+    <link href="../../includes/css/insert_card.css" rel="stylesheet">
 
     <script>
     let hash = '<?php echo $udf1 ?>';
@@ -242,38 +244,17 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
                 <br>
                 <br>
                 <input type="submit" name="create" class="button" submit-old />
-                <button type="button" class="button" data-toggle="modal" data-target="#exampleModalCenter"
-                    style="display:none" submit-new>Submit</button>
-
             </form>
+            <?php if ($udf1 !== "no_url") { ?>
+            <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#reportNewUpdate"
+                submit-new>Submit</button>
+            <?php } ?>
         </div>
     </div>
     </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Choose an option?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Continue to a new report or update an existing report.</p>
-                </div>
-                <div class="modal-footer">
-                    <button id="updateBtn" type="button" class="btn btn-primary">Update Existing</button>
-                    <button id="newBtn" type="button" class="btn btn-primary">New Report</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <script src="../js/report.js"></script>
 
 </body>
 
