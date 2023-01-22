@@ -2,18 +2,7 @@
 include("../core/base.php");
 include '../includes/config/connect.php';
 
-if (isset($_GET["i"])) {
-    $i = $_GET['i'];
-}
-
 $action = $BASE_URL . "/core/engine/main-engine.php";
-
-// if (isset($_POST)) {
-//     foreach ($_POST as $post) {
-//         echo $post . "<br>";
-//     }
-//     exit;
-// }
 
 $status = $_POST["status"];
 $firstname = $_POST["firstname"];
@@ -115,9 +104,9 @@ if ($hash === $posted_hash) {
                     <p></p>
                     <label class="order-tq">Your transaction was failed.!</label>
                     <!--<p></p>
-                                                                                                                                                            <label class="order-tra">Your transaction id is:&nbsp;
-                                                                                                                                                                <?php echo $txnid; ?>
-                                                                                                                                                            </label>-->
+                                                                                                                                                                                        <label class="order-tra">Your transaction id is:&nbsp;
+                                                                                                                                                                                            <?php echo $txnid; ?>
+                                                                                                                                                                                        </label>-->
                     <br>
                     <br>
                     <label class="order-tq">Redirecting in <span id="seconds">7</span></label><br>

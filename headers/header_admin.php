@@ -30,7 +30,7 @@
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
         BASE_URL = "http://localhost/hk_new";
     } else {
-        BASE_URL = "http://13.127.248.80";
+        BASE_URL = "http://65.0.101.158";
     }
     </script>
     <title></title>
@@ -91,9 +91,10 @@
                                     class="nav-link px-2 link-dark">Report List</a></li>
 
                             <?php } ?>
+
                             <!-- <?php if ($_SESSION['role'] === 1) { ?>
-                                                                                                                                                                                                                                        <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
-                                                                                                                                                                                                                                                data-bs-target="#exampleModal">Insert iCard</a></li>
+                                                                                                                    <li><a class="dropdown-item" href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal"
+                                                                                                                            data-bs-target="#exampleModal">Insert iCard</a></li>
 
                             <?php } ?> -->
 
@@ -139,8 +140,9 @@
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        <img id="profile-pic" src="<?php echo '../uploads/profile_pic/' . $_SESSION['profile']; ?>"
-                            alt="mdo" width="32" height="32" class="rounded-circle">
+                        <img id="profile-pic"
+                            src="<?php echo $BASE_URL . '/uploads/profile_pic/' . $_SESSION['profile']; ?>" alt="mdo"
+                            width="32" height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small">
                         <!-- <li><a class="dropdown-item" href="#">New project...</a></li> -->
@@ -161,19 +163,19 @@
     <!-- Modals start here -->
 
     <!-- Card insert modal -->
-    <?php include($_SERVER["DOCUMENT_ROOT"] . '/hk_new/modals/card-insert-modal.php'); ?>
+    <?php include($_SERVER["DOCUMENT_ROOT"] . '/modals/card-insert-modal.php'); ?>
 
     <!-- Add User Modal -->
-    <?php include($_SERVER["DOCUMENT_ROOT"] . '/hk_new/modals/reg-modal.php'); ?>
+    <?php include($_SERVER["DOCUMENT_ROOT"] . '/modals/reg-modal.php'); ?>
 
     <!-- Manual Upload Modal -->
-    <?php include($_SERVER["DOCUMENT_ROOT"] . '/hk_new/modals/custom-upload-modal.php'); ?>
+    <?php include($_SERVER["DOCUMENT_ROOT"] . '/modals/custom-upload-modal.php'); ?>
 
     <!-- PDF Preview Modal -->
-    <?php include($_SERVER["DOCUMENT_ROOT"] . '/hk_new/modals/pdf-preview-modal.php'); ?>
+    <?php include($_SERVER["DOCUMENT_ROOT"] . '/modals/pdf-preview-modal.php'); ?>
 
     <!-- New Or Update Template Modal -->
-    <?php include($_SERVER["DOCUMENT_ROOT"] . '/hk_new/modals/report-template-modal.php'); ?>
+    <?php include($_SERVER["DOCUMENT_ROOT"] . '/modals/report-template-modal.php'); ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

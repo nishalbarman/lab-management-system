@@ -1,9 +1,11 @@
-<?php include '../header.php';
-include '../config.php';
-include 'sessioncheck.php';
+<?php
 
-$selectMaxID = 'SELECT id FROM files ORDER BY id DESC LIMIT 1';
-$maxIdResult = mysqli_query($link, $selectMaxID); //run query
+session_start();
+include("../../core/base.php");
+include('../../includes/config/connect.php');
+
+$selectMaxID = 'SELECT id FROM reports ORDER BY id DESC LIMIT 1';
+$maxIdResult = mysqli_query($conn, $selectMaxID); //run query
 
 if (mysqli_num_rows($maxIdResult) > 0) {
     while ($maxid = mysqli_fetch_assoc($maxIdResult)) {
@@ -64,15 +66,12 @@ if (isset($_POST['create'])) {
     $udf3 = base64_encode($return_url3);
     $udf4 = base64_encode($return_url4);
 
-    // echo $udf1."<br>".$udf2."<br>".$udf3;
-    // echo "<br>http://healthkind.is-great.net/create/".$return_url1.$return_url2.$return_url3;
-
 }
 
 if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === "no_url") {
     $action = "";
 } else {
-    $action = "http://healthkind.is-great.net/create/verify/index.php";
+    $action = $BASE_URL . "/checkout/index.php";
 }
 
 
@@ -82,112 +81,15 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
 <head>
     <title>Blood frp value intitialize</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-    .header {
-        text-align: center;
-        color: #5b6574;
-        font-size: 30px;
-        font-weight: bold;
-    }
-
-    .form form input[type="submit"],
-    .button {
-        width: 100%;
-        padding: 15px;
-        margin-top: 20px;
-        background-color: #04AA6D;
-        /* #3274d6; */
-        border: 0;
-        cursor: pointer;
-        font-weight: bold;
-        color: #ffffff;
-        transition: background-color 0.2s;
-        margin: 0px auto;
-        border-radius: 4px;
-    }
-
-
-
-
-    .login form input[type="submit"]:hover {
-        background-color: #0a8f5e;
-        /* #08a169; */
-        /* #2868c7; */
-        transition: background-color 0.2s;
-    }
-
-    input {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    select {
-        width: 100%;
-        padding: 10px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    .form {
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        border: 1px solid #555;
-        width: 80%;
-        margin: 25px auto;
-        padding: 30px;
-        border: 1px solid #555;
-        margin-bottom: 10px;
-    }
-
-    .addpatient {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-weight: bold;
-        text-align: center;
-        font-size: 20px;
-        color: green;
-    }
-
-    /* input[type="date"]::-webkit-calendar-picker-indicator {
-            background: transparent;
-            bottom: 0;
-            color: transparent;
-            cursor: pointer;
-            height: auto;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: auto;
-        } */
-    </style>
-
-    <script>
-    var hash = '<?php echo $udf1 ?>';
-
-    function submitPayuForm() {
-        if (hash == 'no_url') {
-            return;
-        }
-        document.querySelector("[submit-old]").style.display = "none";
-        document.querySelector("[submit-new]").style.display = "block";
-        // var payuForm = document.forms.payuForm;
-        // payuForm.submit();
-    }
-    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/template-style.css">
+    <link href="../../includes/css/headers.css" rel="stylesheet">
+    <link href="../../includes/css/insert_card.css" rel="stylesheet">
 </head>
 
-<body onload="submitPayuForm()">
-    <div class="content">
+<body>
+    <?php include '../../headers/header_admin.php'; ?>
+    <div class="lets-do">
         <center>
             <h class="header">Urine RE<label>
         </center>
@@ -198,10 +100,10 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
                 <input type="hidden" name="hash" value="" />
                 <input type="hidden" name="txnid"
                     value="<?php echo substr(hash('sha256', mt_rand() . microtime()), 0, 20); ?>" />
-                <input type="hidden" name="amount" value="22" />
+                <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
                 <input type="hidden" name="firstname" id="firstname" value="<?php echo $name; ?>" />
-                <input type="hidden" name="email" id="email" value="nishalbarman@gmail.com" />
-                <input type="hidden" name="phone" value="9476887301" />
+                <input type="hidden" name="email" id="email" value="<?php echo $_SESSION['email']; ?>" />
+                <input type="hidden" name="phone" value="<?php echo $_SESSION['phone']; ?>" />
                 <input type="hidden" value="<?php echo $age; ?>" name="productinfo">
                 <input type="hidden" name="surl" value="<?php echo $success_url; ?>" size="64" />
                 <input type="hidden" name="furl" value="<?php echo $failure_url; ?>" size="64" />

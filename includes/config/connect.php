@@ -24,7 +24,7 @@ if (in_array($_SERVER['REMOTE_ADDR'], $local)) {
     $username = "healthkind";
     $password = "hk_new21";
     $servername = "localhost";
-    $dbname = "healthkind_new";
+    $dbname = "healthkind";
 }
 
 // Create connection

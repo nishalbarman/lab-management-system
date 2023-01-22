@@ -25,13 +25,12 @@ if ($count > 0) {
     }
 }
 
-
 if (empty($db_name) && empty($db_status) && empty($db_serial) && empty($db_created)) {
     $data = array('success' => false, 'message' => "No details found for the transaction id");
     print_r(json_encode($data));
     exit;
 } else {
-    $url = "http://healthkind.is-great.net/create/" . base64_decode($part1) . base64_decode($part2) . base64_decode($part3) . base64_decode($part4);
+    $url = $BASE_URL . "/templates/srv-repo/" . base64_decode($part1) . base64_decode($part2) . base64_decode($part3) . base64_decode($part4);
     if (empty($url)) {
         $data = array('success' => false, 'message' => "Inputs fields are missing");
         print_r(json_encode($data));
@@ -42,10 +41,7 @@ if (empty($db_name) && empty($db_status) && empty($db_serial) && empty($db_creat
     $shurl = file_get_contents('http://tinyurl.com/api-create.php?url=' . $url_enc_str);
     $fn_url = 'http://13.234.114.167:8000/api/render?url=' . $shurl . '&pdf.pageRanges=1&pdf.format=A4&emulateScreenMedia=false&pdf.margin.top=0cm&pdf.margin.right=0cm&pdf.margin.bottom=0cm&pdf.margin.left=0cm';
 
-
-    // Update the report from here
-
-    $sql = "select * from files where id = '$db_serial'";
+    $sql = "select * from reports where id = '$db_serial'";
     $res = mysqli_query($conn, $sql);
     $count = mysqli_num_rows($res);
     if ($count > 0) {
@@ -58,7 +54,7 @@ if (empty($db_name) && empty($db_status) && empty($db_serial) && empty($db_creat
 
         if ($form_fname === $db_name && $form_age === $db_age && $form_serial === $db_serial) {
             $ch = curl_init($fn_url);
-            $save_file_loc = "temp.pdf";
+            $save_file_loc = "../../uploads/temp/temp.pdf";
             $fp = fopen($save_file_loc, 'wb');
             curl_setopt($ch, CURLOPT_FILE, $fp);
             curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -66,7 +62,7 @@ if (empty($db_name) && empty($db_status) && empty($db_serial) && empty($db_creat
             curl_close($ch);
             fclose($fp);
             $old_file = "../../uploads/" . $db_filename;
-            $new_file = "temp.pdf";
+            $new_file = "../../uploads/temp/temp.pdf";
             unlink($old_file);
             rename($new_file, $old_file);
             $save_file_loc = $old_file;
@@ -74,8 +70,8 @@ if (empty($db_name) && empty($db_status) && empty($db_serial) && empty($db_creat
             date_default_timezone_set("Asia/Calcutta");
             $date = 'Updated (' . $date = date('d/m/Y h:i:s a', time()) . ')';
 
-            $sql = "UPDATE `payments` SET `pdf_onserver`='$date'";
-            mysqli_query($link, $sql);
+            $sql = "UPDATE `transactions` SET `pdf_onserver`='$date'";
+            mysqli_query($conn, $sql);
 
             $data = array('success' => true, 'message' => "Report Updated Successfully");
             print_r(json_encode($data));
@@ -86,29 +82,15 @@ if (empty($db_name) && empty($db_status) && empty($db_serial) && empty($db_creat
             exit;
         }
     } else {
-        echo "ENtered here";
-        exit;
         $data = array('success' => false, 'message' => "Patient detailes is mismatched with previous report");
         print_r(json_encode($data));
         exit;
     }
 }
 
-function getTransactionDetailes($link, $transactionid)
-{
-
-
-
-}
-
-function updateReport($link, $fn_url, $array_of_info, $form_values)
-{
-
-}
-
 function getSerial($link)
 {
-    $selectMaxID = 'SELECT id FROM files ORDER BY id DESC LIMIT 1';
+    $selectMaxID = 'SELECT id FROM reports ORDER BY id DESC LIMIT 1';
     $maxIdResult = mysqli_query($link, $selectMaxID); //run query
 
     if (mysqli_num_rows($maxIdResult) > 0) {

@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-// include('../../headers/header_admin.php');
 include("../../core/base.php");
 include('../../includes/config/connect.php');
 
@@ -57,7 +56,6 @@ if (isset($_POST['create'])) {
     $gender = $_POST['patient_gender'];
     $reffered = $_POST['dr_name'];
     $date = $_POST['report_date'];
-    // $ige = $_POST['ige_val'];
 
     $tlc = $_POST['tlc'];
     $neu = $_POST['neu'];
@@ -86,7 +84,7 @@ if (isset($_POST['create'])) {
     $udf2 = base64_encode($return_url2);
     $udf3 = base64_encode($return_url3);
     $udf4 = base64_encode($return_url4);
-    $udf5 = "Complete Blood Count Template";
+    $udf5 = "Complete Blood Count";
 }
 
 if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === "no_url") {
@@ -107,21 +105,9 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
     <link href="../../includes/css/headers.css" rel="stylesheet">
     <link href="../../includes/css/insert_card.css" rel="stylesheet">
 
-    <script>
-    let hash = '<?php echo $udf1 ?>';
-
-    function submitReportForm() {
-        if (hash != 'no_url') {
-            document.querySelector("[submit-old]").style.display = "none";
-            document.querySelector("[submit-new]").style.display = "block";
-        } else {
-            return;
-        }
-    }
-    </script>
 </head>
 
-<body onload="submitReportForm()">
+<body>
     <?php include '../../headers/header_admin.php'; ?>
     <div class="lets-do">
         <center>
@@ -135,10 +121,10 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
                 <input type="hidden" name="hash" value="" />
                 <input type="hidden" name="txnid"
                     value="<?php echo substr(hash('sha256', mt_rand() . microtime()), 0, 20); ?>" />
-                <input type="hidden" name="amount" value="22" />
+                <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
                 <input type="hidden" name="firstname" id="firstname" value="<?php echo $name; ?>" />
-                <input type="hidden" name="email" id="email" value="nishalbarman@gmail.com" />
-                <input type="hidden" name="phone" value="9476887301" />
+                <input type="hidden" name="email" id="email" value="<?php echo $_SESSION['email']; ?>" />
+                <input type="hidden" name="phone" value="<?php echo $_SESSION['phone']; ?>" />
                 <input type="hidden" value="<?php echo $age; ?>" name="productinfo">
                 <input type="hidden" name="surl" value="<?php echo $success_url; ?>" size="64" />
                 <input type="hidden" name="furl" value="<?php echo $failure_url; ?>" size="64" />
@@ -243,19 +229,15 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
 
                 <br>
                 <br>
-                <input type="submit" name="create" class="button" submit-old />
+                <?php if ($udf1 !== "no_url") { ?>
+                    <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#reportNewUpdate"
+                        submit-new>Submit</button>
+                <?php } else { ?>
+                    <input type="submit" name="create" class="button" submit-old />
+                <?php } ?>
             </form>
-            <?php if ($udf1 !== "no_url") { ?>
-            <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#reportNewUpdate"
-                submit-new>Submit</button>
-            <?php } ?>
         </div>
     </div>
-    </div>
-    </div>
-
-
-
 </body>
 
 </html>

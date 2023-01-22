@@ -45,7 +45,7 @@ updateBtn.addEventListener("click", () => {
     //   }
     // };
 
-    let formData = new FormData(document.getElementById("regForm"));
+    let formData = new FormData(document.getElementById("reportForm"));
 
     let options = {
         header: {
@@ -57,7 +57,7 @@ updateBtn.addEventListener("click", () => {
 
     // document.getElementById("loader").style.display = "flex";
     // xhr.send(formData);
-    fetch(API, options)
+    fetch(BASE_URL + "/" + API, options)
         .then((res) => res.json())
         .then((data) => {
             console.log(data);

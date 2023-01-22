@@ -1,14 +1,16 @@
-<?php include '../header.php';
-include '../config.php';
-include 'sessioncheck.php';
+<?php
 
-$selectMaxID = 'SELECT id FROM files ORDER BY id DESC LIMIT 1';
-$maxIdResult = mysqli_query($link, $selectMaxID); //run query
+session_start();
+include("../../core/base.php");
+include('../../includes/config/connect.php');
+
+$selectMaxID = 'SELECT id FROM reports ORDER BY id DESC LIMIT 1';
+$maxIdResult = mysqli_query($conn, $selectMaxID); //run query
 
 if (mysqli_num_rows($maxIdResult) > 0) {
-  while ($maxid = mysqli_fetch_assoc($maxIdResult)) {
-    $def_serial = $maxid["id"] + 1;
-  }
+    while ($maxid = mysqli_fetch_assoc($maxIdResult)) {
+        $def_serial = $maxid["id"] + 1;
+    }
 }
 
 $action = "";
@@ -18,45 +20,41 @@ $udf3 = "no_url";
 $udf4 = "no_url";
 
 if (isset($_POST['create'])) {
-  if (empty($_POST['p_serial'])) {
-    $serial = $def_serial;
-  } else {
-    $serial = $_POST['p_serial'];
-  }
-  $sample = $_POST['patient_sample'];
-  $name = $_POST['patient_name'];
-  $_age = $_POST['_age'];
-  $age = $_age . ' ' . $_POST['Y_M'];
-  $gender = $_POST['patient_gender'];
-  $reffered = $_POST['dr_name'];
-  $date = $_POST['report_date'];
-  $transaction = $_POST['transaction_id'];
-  $reportname = $_POST['report_name'];
+    if (empty($_POST['p_serial'])) {
+        $serial = $def_serial;
+    } else {
+        $serial = $_POST['p_serial'];
+    }
+    $sample = $_POST['patient_sample'];
+    $name = $_POST['patient_name'];
+    $_age = $_POST['_age'];
+    $age = $_age . ' ' . $_POST['Y_M'];
+    $gender = $_POST['patient_gender'];
+    $reffered = $_POST['dr_name'];
+    $date = $_POST['report_date'];
+    $transaction = $_POST['transaction_id'];
+    $reportname = $_POST['report_name'];
 
-  $abs_eo = $_POST['abs_eo'];
-  $abs_ne = $_POST['abs_ne'];
+    $abs_eo = $_POST['abs_eo'];
+    $abs_ne = $_POST['abs_ne'];
 
-  $return_url1 = "abs.php?serial=" . $serial . "&patient_sample=" . $sample . "&report_date=" . $date . "&dr_name=" . $reffered . "&patient_name=" . $name;
-  $return_url2 = "&patient_age=" . $age . "&patient_gender=" . $gender;
-  $return_url3 = "&eos=" . $abs_eo . "&neo=" . $abs_ne;
-  $return_url4 = "&create=Submit";
+    $return_url1 = "abs.php?serial=" . $serial . "&patient_sample=" . $sample . "&report_date=" . $date . "&dr_name=" . $reffered . "&patient_name=" . $name;
+    $return_url2 = "&patient_age=" . $age . "&patient_gender=" . $gender;
+    $return_url3 = "&eos=" . $abs_eo . "&neo=" . $abs_ne;
+    $return_url4 = "&create=Submit";
 
 
-  $udf1 = base64_encode($return_url1);
-  $udf2 = base64_encode($return_url2);
-  $udf3 = base64_encode($return_url3);
-  $udf4 = base64_encode($return_url4);
-  $udf5 = "Abs Report";
-
-  // echo $udf1."<br>".$udf2."<br>".$udf3;
-  // echo "<br>http://healthkind.is-great.net/create/".$return_url1.$return_url2.$return_url3;
-
+    $udf1 = base64_encode($return_url1);
+    $udf2 = base64_encode($return_url2);
+    $udf3 = base64_encode($return_url3);
+    $udf4 = base64_encode($return_url4);
+    $udf5 = "Abs Report";
 }
 
 if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === "no_url") {
-  $action = "";
+    $action = "";
 } else {
-  $action = "http://healthkind.is-great.net/create/verify/index.php";
+    $action = $BASE_URL . "/checkout/index.php";
 }
 
 
@@ -68,272 +66,13 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-    .header {
-        text-align: center;
-        color: #5b6574;
-        font-size: 30px;
-        font-weight: bold;
-    }
-
-    .form form input[type="submit"],
-    .button {
-        width: 100%;
-        padding: 15px;
-        margin-top: 20px;
-        background-color: #04AA6D;
-        /* #3274d6; */
-        border: 0;
-        cursor: pointer;
-        font-weight: bold;
-        color: #ffffff;
-        transition: background-color 0.2s;
-        margin: 0px auto;
-        border-radius: 4px;
-    }
-
-
-
-
-    .login form input[type="submit"]:hover {
-        background-color: #0a8f5e;
-        /* #08a169; */
-        /* #2868c7; */
-        transition: background-color 0.2s;
-    }
-
-    input {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    select {
-        width: 100%;
-        padding: 10px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    .form {
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        border: 1px solid #555;
-        width: 80%;
-        margin: 25px auto;
-        padding: 30px;
-        border: 1px solid #555;
-        margin-bottom: 10px;
-    }
-
-    .addpatient {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-weight: bold;
-        text-align: center;
-        font-size: 20px;
-        color: green;
-    }
-
-    /* input[type="date"]::-webkit-calendar-picker-indicator {
-      background: transparent;
-      bottom: 0;
-      color: transparent;
-      cursor: pointer;
-      height: auto;
-      left: 0;
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: auto;
-    } */
-
-
-
-    .styled-checkbox {
-        position: absolute; // take it out of document flow
-        opacity: 0; // hide it
-
-        &+label {
-            position: relative;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        // Box.
-        &+label:before {
-            content: '';
-            margin-right: 10px;
-            display: inline-block;
-            vertical-align: text-top;
-            width: 20px;
-            height: 20px;
-            background: white;
-        }
-
-        // Box hover
-        &:hover+label:before {
-            background: #f35429;
-        }
-
-        // Box focus
-        &:focus+label:before {
-            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
-        }
-
-        // Box checked
-        &:checked+label:before {
-            background: #f35429;
-        }
-
-        // Disabled state label.
-        &:disabled+label {
-            color: #b8b8b8;
-            cursor: auto;
-        }
-
-        // Disabled box.
-        &:disabled+label:before {
-            box-shadow: none;
-            background: #ddd;
-        }
-
-        // Checkmark. Could be replaced with an image
-        &:checked+label:after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 9px;
-            background: white;
-            width: 2px;
-            height: 2px;
-            box-shadow:
-                2px 0 0 white,
-                4px 0 0 white,
-                4px -2px 0 white,
-                4px -4px 0 white,
-                4px -6px 0 white,
-                4px -8px 0 white;
-            transform: rotate(45deg);
-        }
-    }
-
-    .unstyled {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
-
-    li {
-        margin: 20px 0;
-    }
-
-    .styled-checkbox {
-        position: absolute; // take it out of document flow
-        opacity: 0; // hide it
-
-        &+label {
-            position: relative;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        // Box.
-        &+label:before {
-            content: '';
-            margin-right: 10px;
-            display: inline-block;
-            vertical-align: text-top;
-            width: 20px;
-            height: 20px;
-            background: white;
-        }
-
-        // Box hover
-        &:hover+label:before {
-            background: #f35429;
-        }
-
-        // Box focus
-        &:focus+label:before {
-            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
-        }
-
-        // Box checked
-        &:checked+label:before {
-            background: #f35429;
-        }
-
-        // Disabled state label.
-        &:disabled+label {
-            color: #b8b8b8;
-            cursor: auto;
-        }
-
-        // Disabled box.
-        &:disabled+label:before {
-            box-shadow: none;
-            background: #ddd;
-        }
-
-        // Checkmark. Could be replaced with an image
-        &:checked+label:after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 9px;
-            background: white;
-            width: 2px;
-            height: 2px;
-            box-shadow:
-                2px 0 0 white,
-                4px 0 0 white,
-                4px -2px 0 white,
-                4px -4px 0 white,
-                4px -6px 0 white,
-                4px -8px 0 white;
-            transform: rotate(45deg);
-        }
-    }
-
-    .unstyled {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
-
-    li {
-        margin: 20px 0;
-    }
-
-    .centered {
-        width: 300px;
-        margin-left: 20px;
-    }
-    </style>
-
-    <script>
-    var hash = '<?php echo $udf1 ?>';
-
-    function submitPayuForm() {
-        if (hash == 'no_url') {
-            return;
-        }
-        document.querySelector("[submit-old]").style.display = "none";
-        document.querySelector("[submit-new]").style.display = "block";
-        // var payuForm = document.forms.payuForm;
-        // payuForm.submit();
-    }
-    </script>
+    <link rel="stylesheet" href="../css/template-style.css">
+    <link href="../../includes/css/headers.css" rel="stylesheet">
+    <link href="../../includes/css/insert_card.css" rel="stylesheet">
 </head>
 
 <body onload="submitPayuForm()">
+    <?php include '../../headers/header_admin.php'; ?>
     <div class="content">
         <center>
             <br>
@@ -346,10 +85,10 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
                 <input type="hidden" name="hash" value="" />
                 <input type="hidden" name="txnid"
                     value="<?php echo substr(hash('sha256', mt_rand() . microtime()), 0, 20); ?>" />
-                <input type="hidden" name="amount" value="22" />
+                <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
                 <input type="hidden" name="firstname" id="firstname" value="<?php echo $name; ?>" />
-                <input type="hidden" name="email" id="email" value="nishalbarman@gmail.com" />
-                <input type="hidden" name="phone" value="9476887301" />
+                <input type="hidden" name="email" id="email" value="<?php echo $_SESSION['email']; ?>" />
+                <input type="hidden" name="phone" value="<?php echo $_SESSION['phone']; ?>" />
                 <input type="hidden" value="<?php echo $age; ?>" name="productinfo">
                 <input type="hidden" name="surl" value="<?php echo $success_url; ?>" size="64" />
                 <input type="hidden" name="furl" value="<?php echo $failure_url; ?>" size="64" />
@@ -358,8 +97,8 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
                 <input type="hidden" name="udf2" value="<?php echo $udf2; ?>" />
                 <input type="hidden" name="udf3" value="<?php echo $udf3; ?>" />
                 <input type="hidden" name="udf4" value="<?php echo $udf4; ?>" />
+                <input type="hidden" name="udf5" value="<?php echo $udf5; ?>" />
                 <input type="hidden" name="address1" value="<?php echo $serial; ?>" />
-                <input type="hidden" name="report_name" value="<?php echo $reportname; ?>" />
 
                 <h3>Patient details</h3>
                 <label>Serial No. :</label>

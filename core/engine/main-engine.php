@@ -3,6 +3,20 @@
 session_start();
 
 include '../../includes/config/connect.php';
+$local = [
+    // IPv4 address
+    '127.0.0.1',
+    'localhost',
+
+    // IPv6 address
+    '::1'
+];
+
+if (in_array($_SERVER['REMOTE_ADDR'], $local)) {
+    $BASE_URL = "http://65.0.101.158";
+} else {
+    $BASE_URL = "http://65.0.101.158";
+}
 
 // $token = getToken($conn);
 $serial = getSerial($conn);
@@ -31,7 +45,7 @@ $filename = time() . '_' . $p_name . '.pdf';
 
 $url_enc_str = str_replace(" ", "%20", $url);
 $shurl = file_get_contents('http://tinyurl.com/api-create.php?url=' . $url_enc_str);
-$fn_url = 'http://13.234.114.167:8000/api/render?url=' . $shurl . '&pdf.pageRanges=1&pdf.format=A4&emulateScreenMedia=false&pdf.margin.top=0cm&pdf.margin.right=0cm&pdf.margin.bottom=0cm&pdf.margin.left=0cm';
+$fn_url = 'http://35.154.35.109:8000/api/render?url=' . $shurl . '&pdf.pageRanges=1&pdf.format=A4&emulateScreenMedia=false&pdf.margin.top=0cm&pdf.margin.right=0cm&pdf.margin.bottom=0cm&pdf.margin.left=0cm';
 
 $sq = "select * from reports where id = '$serial_new'";
 $rowCheck = mysqli_query($conn, $sq);
@@ -40,7 +54,7 @@ $count = mysqli_num_rows($rowCheck);
 if ($count > 0) {
 
     $ch = curl_init($fn_url);
-    $save_file_loc = "temp.pdf";
+    $save_file_loc = "../../uploads/temp/temp.pdf";
     $fp = fopen($save_file_loc, 'wb');
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -52,7 +66,7 @@ if ($count > 0) {
         $file = $row["file_name"];
     }
     $old_file = "../../uploads/repo/" . $file;
-    $new_file = "temp.pdf";
+    $new_file = "../../uploads/temp/temp.pdf";
     $mergedName = mergePdf($old_file, $new_file);
     unlink($old_file);
     unlink($new_file);
@@ -77,10 +91,6 @@ if ($count > 0) {
     // }
 }
 
-// if ($delete === "true") {
-//     unlink('txnids/' . $txnid . '.txt');
-// }
-
 $back_up = '../../backups/' . $serial . '_' . $p_name;
 file_put_contents($back_up, base64_decode($url_enc) . '                                                  ' . $url_enc);
 
@@ -90,11 +100,11 @@ $date = 'Available (' . $date = date('d/m/Y h:i:s a', time()) . ')';
 $sql = "UPDATE `transactions` SET `pdf_created` = 1, `pdf_onserver` = '$date' WHERE serial = '$serial_new'";
 $res = mysqli_query($conn, $sql);
 
-header("location: http://localhost/hk_new/hknew/$save_file_loc");
+header("location:  $BASE_URL/check/$save_file_loc");
 
 function mergePdf($firstPdf, $secondPdf)
 {
-    $target_url = 'http://13.234.114.167:3000/mergepdf';
+    $target_url = 'http://35.154.35.109:3000/mergepdf';
 
     $fPdf = curl_file_create($firstPdf);
     $sPdf = curl_file_create($secondPdf);
@@ -104,13 +114,13 @@ function mergePdf($firstPdf, $secondPdf)
     curl_setopt($ch, CURLOPT_URL, $target_url);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-    $fp = fopen('merged.pdf', 'wb');
+    $fp = fopen('../../uploads/merge/merged.pdf', 'wb');
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_exec($ch);
     curl_close($ch);
     fclose($fp);
-    return 'merged.pdf';
+    return '../../uploads/merge/merged.pdf';
 }
 
 function getToken($conn)

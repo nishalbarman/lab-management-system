@@ -313,12 +313,10 @@ include("../core/base.php");
         </div>
     </div>
 
-    <!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> -->
-
-
     <script src="../includes/js/everyone_dashboard.js"></script>
     <script src="../includes/js/count-card-click.js"></script>
     <script src="../includes/js/print_function.js"></script>
+
 </body>
 
 </html>

@@ -1,11 +1,10 @@
 <!-- Add User Modal -->
 
-<div class="modal fade" id="upload-report-manually" tabindex="-1" aria-labelledby="upload-report-manually"
-    aria-hidden="true">
+<div class="modal fade" id="upload-report-manually" tabindex="-1" aria-labelledby="Mannual Upload" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="upload-report-manually">Upload Report Manually</h1>
+                <h1 class="modal-title fs-5" id="manualadd">Upload Report Manually</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

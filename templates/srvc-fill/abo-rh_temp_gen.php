@@ -1,10 +1,11 @@
 <?php
-include '../../headers/admin_header.php';
-include '../../includes/config/connect.php';
-include '../../core/url-check.php';
+
+session_start();
+include("../../core/base.php");
+include('../../includes/config/connect.php');
 
 $selectMaxID = 'SELECT id FROM reports ORDER BY id DESC LIMIT 1';
-$maxIdResult = mysqli_query($link, $selectMaxID); //run query
+$maxIdResult = mysqli_query($conn, $selectMaxID); //run query
 
 if (mysqli_num_rows($maxIdResult) > 0) {
     while ($maxid = mysqli_fetch_assoc($maxIdResult)) {
@@ -49,293 +50,31 @@ if (isset($_POST['create'])) {
     $udf3 = base64_encode($return_url3);
     $udf4 = base64_encode($return_url4);
 
-    // echo $udf1."<br>".$udf2."<br>".$udf3;
-    // echo "<br>http://healthkind.is-great.net/create/".$return_url1.$return_url2.$return_url3;
-
 }
 
 if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === "no_url") {
     $action = "";
 } else {
-    $action = "http://healthkind.is-great.net/create/verify/index.php";
+    $action = $BASE_URL . "/checkout/index.php";
 }
-
 
 ?>
 <html>
 
 <head>
-    <title>Blood frp value intitialize</title>
+    <title>ABO and RH Grouping - Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-    .header {
-        text-align: center;
-        color: #5b6574;
-        font-size: 30px;
-        font-weight: bold;
-    }
+    <link rel="stylesheet" href="../css/template-style.css">
+    <link href="../../includes/css/headers.css" rel="stylesheet">
+    <link href="../../includes/css/insert_card.css" rel="stylesheet">
 
-    .form form input[type="submit"],
-    .button {
-        width: 100%;
-        padding: 15px;
-        margin-top: 20px;
-        background-color: #04AA6D;
-        /* #3274d6; */
-        border: 0;
-        cursor: pointer;
-        font-weight: bold;
-        color: #ffffff;
-        transition: background-color 0.2s;
-        margin: 0px auto;
-        border-radius: 4px;
-    }
-
-
-
-
-    .login form input[type="submit"]:hover {
-        background-color: #0a8f5e;
-        /* #08a169; */
-        /* #2868c7; */
-        transition: background-color 0.2s;
-    }
-
-    input {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    select {
-        width: 100%;
-        padding: 10px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    .form {
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        border: 1px solid #555;
-        width: 80%;
-        margin: 25px auto;
-        padding: 30px;
-        border: 1px solid #555;
-        margin-bottom: 10px;
-    }
-
-    .addpatient {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-weight: bold;
-        text-align: center;
-        font-size: 20px;
-        color: green;
-    }
-
-    /* input[type="date"]::-webkit-calendar-picker-indicator {
-            background: transparent;
-            bottom: 0;
-            color: transparent;
-            cursor: pointer;
-            height: auto;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: auto;
-        } */
-
-
-
-    .styled-checkbox {
-        position: absolute; // take it out of document flow
-        opacity: 0; // hide it
-
-        &+label {
-            position: relative;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        // Box.
-        &+label:before {
-            content: '';
-            margin-right: 10px;
-            display: inline-block;
-            vertical-align: text-top;
-            width: 20px;
-            height: 20px;
-            background: white;
-        }
-
-        // Box hover
-        &:hover+label:before {
-            background: #f35429;
-        }
-
-        // Box focus
-        &:focus+label:before {
-            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
-        }
-
-        // Box checked
-        &:checked+label:before {
-            background: #f35429;
-        }
-
-        // Disabled state label.
-        &:disabled+label {
-            color: #b8b8b8;
-            cursor: auto;
-        }
-
-        // Disabled box.
-        &:disabled+label:before {
-            box-shadow: none;
-            background: #ddd;
-        }
-
-        // Checkmark. Could be replaced with an image
-        &:checked+label:after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 9px;
-            background: white;
-            width: 2px;
-            height: 2px;
-            box-shadow:
-                2px 0 0 white,
-                4px 0 0 white,
-                4px -2px 0 white,
-                4px -4px 0 white,
-                4px -6px 0 white,
-                4px -8px 0 white;
-            transform: rotate(45deg);
-        }
-    }
-
-    .unstyled {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
-
-    li {
-        margin: 20px 0;
-    }
-
-    .styled-checkbox {
-        position: absolute; // take it out of document flow
-        opacity: 0; // hide it
-
-        &+label {
-            position: relative;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        // Box.
-        &+label:before {
-            content: '';
-            margin-right: 10px;
-            display: inline-block;
-            vertical-align: text-top;
-            width: 20px;
-            height: 20px;
-            background: white;
-        }
-
-        // Box hover
-        &:hover+label:before {
-            background: #f35429;
-        }
-
-        // Box focus
-        &:focus+label:before {
-            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
-        }
-
-        // Box checked
-        &:checked+label:before {
-            background: #f35429;
-        }
-
-        // Disabled state label.
-        &:disabled+label {
-            color: #b8b8b8;
-            cursor: auto;
-        }
-
-        // Disabled box.
-        &:disabled+label:before {
-            box-shadow: none;
-            background: #ddd;
-        }
-
-        // Checkmark. Could be replaced with an image
-        &:checked+label:after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 9px;
-            background: white;
-            width: 2px;
-            height: 2px;
-            box-shadow:
-                2px 0 0 white,
-                4px 0 0 white,
-                4px -2px 0 white,
-                4px -4px 0 white,
-                4px -6px 0 white,
-                4px -8px 0 white;
-            transform: rotate(45deg);
-        }
-    }
-
-    .unstyled {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
-
-    li {
-        margin: 20px 0;
-    }
-
-    .centered {
-        width: 300px;
-        margin-left: 20px;
-    }
-    </style>
-
-    <script>
-    var hash = '<?php echo $udf1 ?>';
-
-    function submitPayuForm() {
-        if (hash == 'no_url') {
-            return;
-        }
-        document.querySelector("[submit-old]").style.display = "none";
-        document.querySelector("[submit-new]").style.display = "block";
-        // var payuForm = document.forms.payuForm;
-        // payuForm.submit();
-    }
-    </script>
 </head>
 
 <body onload="submitPayuForm()">
-    <div class="content">
+    <?php include '../../headers/header_admin.php'; ?>
+    <div class="lets-do">
         <center>
             <br>
             <h class="header">ABO and RH Grouping<label>
@@ -344,13 +83,13 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
             <form action="<?php echo $action; ?>" method="POST" name="payuForm" id="reportForm">
 
                 <input type="hidden" name="key" value="CY4YAH" />
-                <input type="hidden" name="hash" value="23" />
+                <input type="hidden" name="hash" value="" />
                 <input type="hidden" name="txnid"
                     value="<?php echo substr(hash('sha256', mt_rand() . microtime()), 0, 20); ?>" />
-                <input type="hidden" name="amount" value="1" />
+                <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
                 <input type="hidden" name="firstname" id="firstname" value="<?php echo $name; ?>" />
-                <input type="hidden" name="email" id="email" value="nishalbarman@gmail.com" />
-                <input type="hidden" name="phone" value="8473825675" />
+                <input type="hidden" name="email" id="email" value="<?php echo $_SESSION['email']; ?>" />
+                <input type="hidden" name="phone" value="<?php echo $_SESSION['phone']; ?>" />
                 <input type="hidden" value="<?php echo $age; ?>" name="productinfo">
                 <input type="hidden" name="surl" value="<?php echo $success_url; ?>" size="64" />
                 <input type="hidden" name="furl" value="<?php echo $failure_url; ?>" size="64" />
@@ -416,48 +155,17 @@ if ($udf1 === "no_url" || $udf2 === "no_url" || $udf3 === "no_url" || $udf4 === 
 
                 <br>
                 <br>
+                <?php if ($udf1 !== "no_url") { ?>
+                <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#reportNewUpdate"
+                    submit-new>Submit</button>
+                <?php } else { ?>
                 <input type="submit" name="create" class="button" submit-old />
-                <button type="button" class="button" data-toggle="modal" data-target="#exampleModalCenter"
-                    style="display:none" submit-new>Submit</button>
-
+                <?php } ?>
             </form>
+
         </div>
-    </div>
-    </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Choose an option?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Continue to a new report or update an existing report.</p>
-                </div>
-                <div class="modal-footer">
-                    <button id="updateBtn" type="button" class="btn btn-primary" data-dismiss="modal">Update
-                        Existing</button>
-                    <button id="newBtn" type="button" class="btn btn-primary" data-dismiss="modal">New Report</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="js/report.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
 </body>
 
 </html>

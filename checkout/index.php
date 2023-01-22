@@ -109,7 +109,7 @@ if (empty($posted['hash']) && sizeof($posted) > 0) {
         <input type="hidden" name="udf2" value="<?php echo $part2; ?>" />
         <input type="hidden" name="udf3" value="<?php echo $part3; ?>" />
         <input type="hidden" name="udf4" value="<?php echo $part4; ?>" />
-        <input type=" hidden" name="udf5" value="<?php echo $udf5; ?>" />
+        <input type="hidden" name="udf5" value="<?php echo $udf5; ?>" />
         <input type="hidden" name="address1" value="<?php echo $serial; ?>" />
         <input type="hidden" name="service_provider" value="payu_paisa" size="64" />
     </form>
